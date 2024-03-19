@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UTop" Class="dbDatasetDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=MICROSO-ALQASKR;Initial Catalog=UTop;User ID=sa" SettingsObjectName="ProjectTest.Properties.Settings" SettingsPropertyName="UTopConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.SingleSteps" Member="SingleSteps">
+    <Type Name="SingleSteps">
+      <Column Name="StepIndex" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PartNr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SN" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TestTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="StepName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SubStepName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CompareMode" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="LLimit" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ULimit" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Nom" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Unit" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Result" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ErrorCode" Type="System.String" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" CanBeNull="false" />
+      <Column Name="TestKind" Type="System.String" CanBeNull="false" />
+      <Column Member="DayID" Type="System.Int32" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Statistic" Member="Statistic">
+    <Type Name="Statistic">
+      <Column Name="PartNr" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PassCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FailCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

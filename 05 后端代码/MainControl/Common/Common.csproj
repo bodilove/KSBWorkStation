@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{748FA0BE-D55F-4558-8D8B-53FB091A3A11}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="S7.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d5812d469e84c693, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\S7.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GlobalLogHandle.cs" />
+    <Compile Include="CreatSN\ASNCreater.cs" />
+    <Compile Include="CreatSN\LongGanSNCreaterAndCheck.cs" />
+    <Compile Include="CreatSN\DemoSNCreater.cs" />
+    <Compile Include="Part\BLL\PartBLL.cs" />
+    <Compile Include="Part\Model\PartInfo.cs" />
+    <Compile Include="PLCData\BLL\PLCDataCommonBLL.cs" />
+    <Compile Include="PLCData\BLL\PLCData30.cs" />
+    <Compile Include="PLCData\Model\PLCDataCommon.cs" />
+    <Compile Include="PLCServer\Class1.cs" />
+    <Compile Include="PLCServer\frmEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PLCServer\frmEvent.Designer.cs">
+      <DependentUpon>frmEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PLCServer\LimitedConcurrencyLevelTaskScheduler.cs" />
+    <Compile Include="PLCServer\OnePLCMonitor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PLCServer\OnePLCMonitor.Designer.cs">
+      <DependentUpon>OnePLCMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PLCServer\OverallServiceNew.cs" />
+    <Compile Include="PLCServer\PLCHandleNew.cs" />
+    <Compile Include="PLCServer\PLCS7.cs" />
+    <Compile Include="Process\BLL\P_TestItemConfigBLL.cs" />
+    <Compile Include="Process\BLL\ProcessBLL.cs" />
+    <Compile Include="Process\BLL\P_BomPartBLL.cs" />
+    <Compile Include="Process\BLL\P_DetailBLL.cs" />
+    <Compile Include="Process\Model\P_TestItemConfig.cs" />
+    <Compile Include="Process\Model\Process.cs" />
+    <Compile Include="Process\Model\P_BomPart.cs" />
+    <Compile Include="Process\Model\P_Details.cs" />
+    <Compile Include="Product\BLL\ProductConfigInfoBLL.cs" />
+    <Compile Include="Product\BLL\StatisticBLL.cs" />
+    <Compile Include="Product\BLL\ProductBLL.cs" />
+    <Compile Include="Product\BLL\ProductInWork_FinishWork.cs" />
+    <Compile Include="Product\Model\ProductConfigInfo.cs" />
+    <Compile Include="Product\Model\InWorkP_Info.cs" />
+    <Compile Include="Product\Model\ProductInfo.cs" />
+    <Compile Include="Product\BLL\InWorkPBLL.cs" />
+    <Compile Include="Product\Model\Statistic_Info.cs" />
+    <Compile Include="StationProduct\BLL\StationRecord_BLL.cs" />
+    <Compile Include="StationProduct\BLL\AssembleRecord_BLL.cs" />
+    <Compile Include="StationProduct\BLL\TestRecord_BLL.cs" />
+    <Compile Include="StationProduct\Model\AssembleRecord.cs" />
+    <Compile Include="StationProduct\Model\TestRecord.cs" />
+    <Compile Include="StationProduct\Model\StationRecord.cs" />
+    <Compile Include="SysConfig\Model\SysSet.cs" />
+    <Compile Include="User\BLL\UserBLL.cs" />
+    <Compile Include="User\Model\UserInfo.cs" />
+    <Compile Include="WriteLog.cs" />
+    <Compile Include="MyDB_Sql.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GlobalResources.cs" />
+    <Compile Include="XmlHelper.cs" />
+    <Compile Include="XmlSerializeHelp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SysConfig\BLL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PLCServer\frmEvent.resx">
+      <DependentUpon>frmEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PLCServer\OnePLCMonitor.resx">
+      <DependentUpon>OnePLCMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

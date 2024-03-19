@@ -1,0 +1,921 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4D59EABC-2419-4F5F-8DF7-C2A46C8D4800}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MainControl</RootNamespace>
+    <AssemblyName>MainControl</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.5.0.30033, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="frmLoginNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLoginNew.designer.cs">
+      <DependentUpon>frmLoginNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmMainNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmMainNew.designer.cs">
+      <DependentUpon>frmMainNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\WCFServerCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LineHandle\ProcessConfig.cs" />
+    <Compile Include="LineHandle\StationUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LineHandle\StationUI.Designer.cs">
+      <DependentUpon>StationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MdlClass.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPLCconfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPLCconfig.designer.cs">
+      <DependentUpon>frmPLCconfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSysConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSysConfig.designer.cs">
+      <DependentUpon>frmSysConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmMain.designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LineHandle\LineService.cs" />
+    <Compile Include="LineHandle\StationService.cs" />
+    <Compile Include="Model\XmlFile\MyTest.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SNRule.cs" />
+    <Compile Include="System\FrmStationConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="System\FrmStationConfig.designer.cs">
+      <DependentUpon>FrmStationConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="System\FrmUserEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="System\FrmUserEdit.designer.cs">
+      <DependentUpon>FrmUserEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="System\FrmDBConfigEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="System\FrmDBConfigEdit.designer.cs">
+      <DependentUpon>FrmDBConfigEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestDataServer\ITestDataServer.cs" />
+    <Compile Include="TestDataServer\TestDataServer.cs" />
+    <Compile Include="Main\PLCFunctionCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tool\FrmToolTestInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tool\FrmToolTestInfo.Designer.cs">
+      <DependentUpon>FrmToolTestInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\FrmUserInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmUserInfo.Designer.cs">
+      <DependentUpon>FrmUserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLoginNew.resx">
+      <DependentUpon>frmLoginNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPLCconfig.resx">
+      <DependentUpon>frmPLCconfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSysConfig.resx">
+      <DependentUpon>frmSysConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmMainNew.resx">
+      <DependentUpon>frmMainNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LineHandle\StationUI.resx">
+      <DependentUpon>StationUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="System\FrmStationConfig.resx">
+      <DependentUpon>FrmStationConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="System\FrmUserEdit.resx">
+      <DependentUpon>FrmUserEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="System\FrmDBConfigEdit.resx">
+      <DependentUpon>FrmDBConfigEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tool\FrmToolTestInfo.resx">
+      <DependentUpon>FrmToolTestInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmUserInfo.resx">
+      <DependentUpon>FrmUserInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TestProgram\ProjectFileEditor\Test.ProjectFileEditor.csproj">
+      <Project>{4be939f1-ea54-4510-a426-fc3310110247}</Project>
+      <Name>Test.ProjectFileEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TestProgram\StartUp\Test.StartUp.csproj">
+      <Project>{906cdf3f-b7d7-4ff4-a26c-b6d599d6fc0b}</Project>
+      <Name>Test.StartUp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{748FA0BE-D55F-4558-8D8B-53FB091A3A11}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Library.csproj">
+      <Project>{4C8430BE-38C8-4216-9EA2-ADC3404FB1BA}</Project>
+      <Name>Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\多工位.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\guangshan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\EntityFramework.dll" />
+    <Content Include="lib\EntityFramework.SqlServer.dll" />
+    <Content Include="lib\log4net.dll" />
+    <Content Include="lib\Newtonsoft.Json.dll" />
+    <Content Include="lib\WeifenLuo.WinFormsUI.Docking.dll" />
+    <Content Include="Resources\blue.jpg" />
+    <Content Include="Resources\btn_exit.png" />
+    <Content Include="Resources\tnt_Zoom.png" />
+    <Content Include="Resources\login.png" />
+    <Content Include="Resources\登录.jpg" />
+    <Content Include="Resources\login_BackImg.jpg" />
+    <Content Include="Resources\背景4.jpg" />
+    <Content Include="Resources\详情1.gif" />
+    <Content Include="res\32\0.png" />
+    <Content Include="res\32\1.png" />
+    <Content Include="res\32\10.png" />
+    <Content Include="res\32\100.png" />
+    <Content Include="res\32\101.png" />
+    <Content Include="res\32\102.png" />
+    <Content Include="res\32\103.png" />
+    <Content Include="res\32\104.png" />
+    <Content Include="res\32\105.png" />
+    <Content Include="res\32\106.png" />
+    <Content Include="res\32\107.png" />
+    <Content Include="res\32\108.png" />
+    <Content Include="res\32\109.png" />
+    <Content Include="res\32\11.png" />
+    <Content Include="res\32\110.png" />
+    <Content Include="res\32\111.png" />
+    <Content Include="res\32\112.png" />
+    <Content Include="res\32\113.png" />
+    <Content Include="res\32\114.png" />
+    <Content Include="res\32\115.png" />
+    <Content Include="res\32\116.png" />
+    <Content Include="res\32\117.png" />
+    <Content Include="res\32\118.png" />
+    <Content Include="res\32\119.png" />
+    <Content Include="res\32\12.png" />
+    <Content Include="res\32\120.png" />
+    <Content Include="res\32\121.png" />
+    <Content Include="res\32\122.png" />
+    <Content Include="res\32\123.png" />
+    <Content Include="res\32\124.png" />
+    <Content Include="res\32\125.png" />
+    <Content Include="res\32\126.png" />
+    <Content Include="res\32\127.png" />
+    <Content Include="res\32\128.png" />
+    <Content Include="res\32\129.png" />
+    <Content Include="res\32\13.png" />
+    <Content Include="res\32\130.png" />
+    <Content Include="res\32\131.png" />
+    <Content Include="res\32\132.png" />
+    <Content Include="res\32\133.png" />
+    <Content Include="res\32\134.png" />
+    <Content Include="res\32\135.png" />
+    <Content Include="res\32\136.png" />
+    <Content Include="res\32\137.png" />
+    <Content Include="res\32\138.png" />
+    <Content Include="res\32\139.png" />
+    <Content Include="res\32\14.png" />
+    <Content Include="res\32\140.png" />
+    <Content Include="res\32\141.png" />
+    <Content Include="res\32\142.png" />
+    <Content Include="res\32\143.png" />
+    <Content Include="res\32\144.png" />
+    <Content Include="res\32\145.png" />
+    <Content Include="res\32\146.png" />
+    <Content Include="res\32\147.png" />
+    <Content Include="res\32\148.png" />
+    <Content Include="res\32\149.png" />
+    <Content Include="res\32\15.png" />
+    <Content Include="res\32\150.png" />
+    <Content Include="res\32\151.png" />
+    <Content Include="res\32\152.png" />
+    <Content Include="res\32\153.png" />
+    <Content Include="res\32\154.png" />
+    <Content Include="res\32\155.png" />
+    <Content Include="res\32\156.png" />
+    <Content Include="res\32\157.png" />
+    <Content Include="res\32\158.png" />
+    <Content Include="res\32\159.png" />
+    <Content Include="res\32\16.png" />
+    <Content Include="res\32\160.png" />
+    <Content Include="res\32\161.png" />
+    <Content Include="res\32\162.png" />
+    <Content Include="res\32\163.png" />
+    <Content Include="res\32\164.png" />
+    <Content Include="res\32\165.png" />
+    <Content Include="res\32\166.png" />
+    <Content Include="res\32\167.png" />
+    <Content Include="res\32\168.png" />
+    <Content Include="res\32\169.png" />
+    <Content Include="res\32\17.png" />
+    <Content Include="res\32\170.png" />
+    <Content Include="res\32\171.png" />
+    <Content Include="res\32\172.png" />
+    <Content Include="res\32\173.png" />
+    <Content Include="res\32\174.png" />
+    <Content Include="res\32\175.png" />
+    <Content Include="res\32\176.png" />
+    <Content Include="res\32\177.png" />
+    <Content Include="res\32\178.png" />
+    <Content Include="res\32\179.png" />
+    <Content Include="res\32\18.png" />
+    <Content Include="res\32\180.png" />
+    <Content Include="res\32\181.png" />
+    <Content Include="res\32\182.png" />
+    <Content Include="res\32\183.png" />
+    <Content Include="res\32\184.png" />
+    <Content Include="res\32\185.png" />
+    <Content Include="res\32\186.png" />
+    <Content Include="res\32\187.png" />
+    <Content Include="res\32\188.png" />
+    <Content Include="res\32\189.png" />
+    <Content Include="res\32\19.png" />
+    <Content Include="res\32\190.png" />
+    <Content Include="res\32\191.png" />
+    <Content Include="res\32\192.png" />
+    <Content Include="res\32\193.png" />
+    <Content Include="res\32\194.png" />
+    <Content Include="res\32\195.png" />
+    <Content Include="res\32\196.png" />
+    <Content Include="res\32\197.png" />
+    <Content Include="res\32\198.png" />
+    <Content Include="res\32\199.png" />
+    <Content Include="res\32\2.png" />
+    <Content Include="res\32\20.png" />
+    <Content Include="res\32\200.png" />
+    <Content Include="res\32\201.png" />
+    <Content Include="res\32\202.png" />
+    <Content Include="res\32\203.png" />
+    <Content Include="res\32\204.png" />
+    <Content Include="res\32\205.png" />
+    <Content Include="res\32\206.png" />
+    <Content Include="res\32\207.png" />
+    <Content Include="res\32\208.png" />
+    <Content Include="res\32\209.png" />
+    <Content Include="res\32\21.png" />
+    <Content Include="res\32\210.png" />
+    <Content Include="res\32\211.png" />
+    <Content Include="res\32\212.png" />
+    <Content Include="res\32\213.png" />
+    <Content Include="res\32\214.png" />
+    <Content Include="res\32\215.png" />
+    <Content Include="res\32\216.png" />
+    <Content Include="res\32\217.png" />
+    <Content Include="res\32\218.png" />
+    <Content Include="res\32\219.png" />
+    <Content Include="res\32\22.png" />
+    <Content Include="res\32\220.png" />
+    <Content Include="res\32\221.png" />
+    <Content Include="res\32\222.png" />
+    <Content Include="res\32\223.png" />
+    <Content Include="res\32\224.png" />
+    <Content Include="res\32\225.png" />
+    <Content Include="res\32\226.png" />
+    <Content Include="res\32\227.png" />
+    <Content Include="res\32\228.png" />
+    <Content Include="res\32\229.png" />
+    <Content Include="res\32\23.png" />
+    <Content Include="res\32\230.png" />
+    <Content Include="res\32\231.png" />
+    <Content Include="res\32\232.png" />
+    <Content Include="res\32\233.png" />
+    <Content Include="res\32\234.png" />
+    <Content Include="res\32\235.png" />
+    <Content Include="res\32\236.png" />
+    <Content Include="res\32\237.png" />
+    <Content Include="res\32\238.png" />
+    <Content Include="res\32\239.png" />
+    <Content Include="res\32\24.png" />
+    <Content Include="res\32\240.png" />
+    <Content Include="res\32\241.png" />
+    <Content Include="res\32\242.png" />
+    <Content Include="res\32\243.png" />
+    <Content Include="res\32\244.png" />
+    <Content Include="res\32\245.png" />
+    <Content Include="res\32\246.png" />
+    <Content Include="res\32\247.png" />
+    <Content Include="res\32\248.png" />
+    <Content Include="res\32\249.png" />
+    <Content Include="res\32\25.png" />
+    <Content Include="res\32\250.png" />
+    <Content Include="res\32\251.png" />
+    <Content Include="res\32\252.png" />
+    <Content Include="res\32\253.png" />
+    <Content Include="res\32\254.png" />
+    <Content Include="res\32\255.png" />
+    <Content Include="res\32\256.png" />
+    <Content Include="res\32\257.png" />
+    <Content Include="res\32\258.png" />
+    <Content Include="res\32\259.png" />
+    <Content Include="res\32\26.png" />
+    <Content Include="res\32\260.png" />
+    <Content Include="res\32\261.png" />
+    <Content Include="res\32\262.png" />
+    <Content Include="res\32\263.png" />
+    <Content Include="res\32\264.png" />
+    <Content Include="res\32\265.png" />
+    <Content Include="res\32\266.png" />
+    <Content Include="res\32\267.png" />
+    <Content Include="res\32\268.png" />
+    <Content Include="res\32\269.png" />
+    <Content Include="res\32\27.png" />
+    <Content Include="res\32\270.png" />
+    <Content Include="res\32\271.png" />
+    <Content Include="res\32\272.png" />
+    <Content Include="res\32\273.png" />
+    <Content Include="res\32\274.png" />
+    <Content Include="res\32\275.png" />
+    <Content Include="res\32\276.png" />
+    <Content Include="res\32\277.png" />
+    <Content Include="res\32\278.png" />
+    <Content Include="res\32\279.png" />
+    <Content Include="res\32\28.png" />
+    <Content Include="res\32\280.png" />
+    <Content Include="res\32\281.png" />
+    <Content Include="res\32\282.png" />
+    <Content Include="res\32\283.png" />
+    <Content Include="res\32\284.png" />
+    <Content Include="res\32\285.png" />
+    <Content Include="res\32\286.png" />
+    <Content Include="res\32\287.png" />
+    <Content Include="res\32\288.png" />
+    <Content Include="res\32\289.png" />
+    <Content Include="res\32\29.png" />
+    <Content Include="res\32\290.png" />
+    <Content Include="res\32\291.png" />
+    <Content Include="res\32\292.png" />
+    <Content Include="res\32\293.png" />
+    <Content Include="res\32\294.png" />
+    <Content Include="res\32\295.png" />
+    <Content Include="res\32\296.png" />
+    <Content Include="res\32\297.png" />
+    <Content Include="res\32\298.png" />
+    <Content Include="res\32\299.png" />
+    <Content Include="res\32\3.png" />
+    <Content Include="res\32\30.png" />
+    <Content Include="res\32\300.png" />
+    <Content Include="res\32\301.png" />
+    <Content Include="res\32\302.png" />
+    <Content Include="res\32\303.png" />
+    <Content Include="res\32\304.png" />
+    <Content Include="res\32\305.png" />
+    <Content Include="res\32\306.png" />
+    <Content Include="res\32\307.png" />
+    <Content Include="res\32\308.png" />
+    <Content Include="res\32\309.png" />
+    <Content Include="res\32\31.png" />
+    <Content Include="res\32\310.png" />
+    <Content Include="res\32\311.png" />
+    <Content Include="res\32\312.png" />
+    <Content Include="res\32\313.png" />
+    <Content Include="res\32\314.png" />
+    <Content Include="res\32\315.png" />
+    <Content Include="res\32\316.png" />
+    <Content Include="res\32\317.png" />
+    <Content Include="res\32\318.png" />
+    <Content Include="res\32\319.png" />
+    <Content Include="res\32\32.png" />
+    <Content Include="res\32\320.png" />
+    <Content Include="res\32\321.png" />
+    <Content Include="res\32\322.png" />
+    <Content Include="res\32\323.png" />
+    <Content Include="res\32\324.png" />
+    <Content Include="res\32\325.png" />
+    <Content Include="res\32\326.png" />
+    <Content Include="res\32\327.png" />
+    <Content Include="res\32\328.png" />
+    <Content Include="res\32\329.png" />
+    <Content Include="res\32\33.png" />
+    <Content Include="res\32\330.png" />
+    <Content Include="res\32\331.png" />
+    <Content Include="res\32\332.png" />
+    <Content Include="res\32\333.png" />
+    <Content Include="res\32\334.png" />
+    <Content Include="res\32\335.png" />
+    <Content Include="res\32\336.png" />
+    <Content Include="res\32\337.png" />
+    <Content Include="res\32\338.png" />
+    <Content Include="res\32\339.png" />
+    <Content Include="res\32\34.png" />
+    <Content Include="res\32\340.png" />
+    <Content Include="res\32\341.png" />
+    <Content Include="res\32\342.png" />
+    <Content Include="res\32\343.png" />
+    <Content Include="res\32\344.png" />
+    <Content Include="res\32\345.png" />
+    <Content Include="res\32\346.png" />
+    <Content Include="res\32\347.png" />
+    <Content Include="res\32\348.png" />
+    <Content Include="res\32\349.png" />
+    <Content Include="res\32\35.png" />
+    <Content Include="res\32\350.png" />
+    <Content Include="res\32\351.png" />
+    <Content Include="res\32\352.png" />
+    <Content Include="res\32\353.png" />
+    <Content Include="res\32\354.png" />
+    <Content Include="res\32\355.png" />
+    <Content Include="res\32\356.png" />
+    <Content Include="res\32\357.png" />
+    <Content Include="res\32\358.png" />
+    <Content Include="res\32\359.png" />
+    <Content Include="res\32\36.png" />
+    <Content Include="res\32\360.png" />
+    <Content Include="res\32\361.png" />
+    <Content Include="res\32\362.png" />
+    <Content Include="res\32\363.png" />
+    <Content Include="res\32\364.png" />
+    <Content Include="res\32\365.png" />
+    <Content Include="res\32\366.png" />
+    <Content Include="res\32\367.png" />
+    <Content Include="res\32\368.png" />
+    <Content Include="res\32\369.png" />
+    <Content Include="res\32\37.png" />
+    <Content Include="res\32\370.png" />
+    <Content Include="res\32\371.png" />
+    <Content Include="res\32\372.png" />
+    <Content Include="res\32\373.png" />
+    <Content Include="res\32\374.png" />
+    <Content Include="res\32\375.png" />
+    <Content Include="res\32\376.png" />
+    <Content Include="res\32\377.png" />
+    <Content Include="res\32\378.png" />
+    <Content Include="res\32\379.png" />
+    <Content Include="res\32\38.png" />
+    <Content Include="res\32\380.png" />
+    <Content Include="res\32\381.png" />
+    <Content Include="res\32\382.png" />
+    <Content Include="res\32\383.png" />
+    <Content Include="res\32\384.png" />
+    <Content Include="res\32\385.png" />
+    <Content Include="res\32\386.png" />
+    <Content Include="res\32\387.png" />
+    <Content Include="res\32\388.png" />
+    <Content Include="res\32\389.png" />
+    <Content Include="res\32\39.png" />
+    <Content Include="res\32\390.png" />
+    <Content Include="res\32\391.png" />
+    <Content Include="res\32\392.png" />
+    <Content Include="res\32\393.png" />
+    <Content Include="res\32\394.png" />
+    <Content Include="res\32\395.png" />
+    <Content Include="res\32\396.png" />
+    <Content Include="res\32\397.png" />
+    <Content Include="res\32\398.png" />
+    <Content Include="res\32\399.png" />
+    <Content Include="res\32\4.png" />
+    <Content Include="res\32\40.png" />
+    <Content Include="res\32\400.png" />
+    <Content Include="res\32\401.png" />
+    <Content Include="res\32\402.png" />
+    <Content Include="res\32\403.png" />
+    <Content Include="res\32\404.png" />
+    <Content Include="res\32\405.png" />
+    <Content Include="res\32\406.png" />
+    <Content Include="res\32\407.png" />
+    <Content Include="res\32\408.png" />
+    <Content Include="res\32\409.png" />
+    <Content Include="res\32\41.png" />
+    <Content Include="res\32\410.png" />
+    <Content Include="res\32\411.png" />
+    <Content Include="res\32\412.png" />
+    <Content Include="res\32\413.png" />
+    <Content Include="res\32\414.png" />
+    <Content Include="res\32\415.png" />
+    <Content Include="res\32\416.png" />
+    <Content Include="res\32\417.png" />
+    <Content Include="res\32\418.png" />
+    <Content Include="res\32\419.png" />
+    <Content Include="res\32\42.png" />
+    <Content Include="res\32\420.png" />
+    <Content Include="res\32\421.png" />
+    <Content Include="res\32\422.png" />
+    <Content Include="res\32\423.png" />
+    <Content Include="res\32\424.png" />
+    <Content Include="res\32\425.png" />
+    <Content Include="res\32\426.png" />
+    <Content Include="res\32\427.png" />
+    <Content Include="res\32\428.png" />
+    <Content Include="res\32\429.png" />
+    <Content Include="res\32\43.png" />
+    <Content Include="res\32\430.png" />
+    <Content Include="res\32\431.png" />
+    <Content Include="res\32\432.png" />
+    <Content Include="res\32\433.png" />
+    <Content Include="res\32\434.png" />
+    <Content Include="res\32\435.png" />
+    <Content Include="res\32\436.png" />
+    <Content Include="res\32\437.png" />
+    <Content Include="res\32\438.png" />
+    <Content Include="res\32\439.png" />
+    <Content Include="res\32\44.png" />
+    <Content Include="res\32\440.png" />
+    <Content Include="res\32\441.png" />
+    <Content Include="res\32\442.png" />
+    <Content Include="res\32\443.png" />
+    <Content Include="res\32\444.png" />
+    <Content Include="res\32\445.png" />
+    <Content Include="res\32\446.png" />
+    <Content Include="res\32\447.png" />
+    <Content Include="res\32\448.png" />
+    <Content Include="res\32\449.png" />
+    <Content Include="res\32\45.png" />
+    <Content Include="res\32\450.png" />
+    <Content Include="res\32\451.png" />
+    <Content Include="res\32\452.png" />
+    <Content Include="res\32\453.png" />
+    <Content Include="res\32\454.png" />
+    <Content Include="res\32\455.png" />
+    <Content Include="res\32\456.png" />
+    <Content Include="res\32\457.png" />
+    <Content Include="res\32\458.png" />
+    <Content Include="res\32\459.png" />
+    <Content Include="res\32\46.png" />
+    <Content Include="res\32\460.png" />
+    <Content Include="res\32\461.png" />
+    <Content Include="res\32\462.png" />
+    <Content Include="res\32\463.png" />
+    <Content Include="res\32\464.png" />
+    <Content Include="res\32\465.png" />
+    <Content Include="res\32\466.png" />
+    <Content Include="res\32\467.png" />
+    <Content Include="res\32\468.png" />
+    <Content Include="res\32\469.png" />
+    <Content Include="res\32\47.png" />
+    <Content Include="res\32\470.png" />
+    <Content Include="res\32\471.png" />
+    <Content Include="res\32\472.png" />
+    <Content Include="res\32\473.png" />
+    <Content Include="res\32\474.png" />
+    <Content Include="res\32\475.png" />
+    <Content Include="res\32\476.png" />
+    <Content Include="res\32\477.png" />
+    <Content Include="res\32\478.png" />
+    <Content Include="res\32\479.png" />
+    <Content Include="res\32\48.png" />
+    <Content Include="res\32\480.png" />
+    <Content Include="res\32\481.png" />
+    <Content Include="res\32\482.png" />
+    <Content Include="res\32\483.png" />
+    <Content Include="res\32\484.png" />
+    <Content Include="res\32\485.png" />
+    <Content Include="res\32\486.png" />
+    <Content Include="res\32\487.png" />
+    <Content Include="res\32\488.png" />
+    <Content Include="res\32\489.png" />
+    <Content Include="res\32\49.png" />
+    <Content Include="res\32\490.png" />
+    <Content Include="res\32\491.png" />
+    <Content Include="res\32\492.png" />
+    <Content Include="res\32\493.png" />
+    <Content Include="res\32\494.png" />
+    <Content Include="res\32\495.png" />
+    <Content Include="res\32\496.png" />
+    <Content Include="res\32\497.png" />
+    <Content Include="res\32\498.png" />
+    <Content Include="res\32\499.png" />
+    <Content Include="res\32\5.png" />
+    <Content Include="res\32\50.png" />
+    <Content Include="res\32\500.png" />
+    <Content Include="res\32\501.png" />
+    <Content Include="res\32\502.png" />
+    <Content Include="res\32\503.png" />
+    <Content Include="res\32\504.png" />
+    <Content Include="res\32\505.png" />
+    <Content Include="res\32\506.png" />
+    <Content Include="res\32\507.png" />
+    <Content Include="res\32\508.png" />
+    <Content Include="res\32\509.png" />
+    <Content Include="res\32\51.png" />
+    <Content Include="res\32\510.png" />
+    <Content Include="res\32\511.png" />
+    <Content Include="res\32\512.png" />
+    <Content Include="res\32\513.png" />
+    <Content Include="res\32\514.png" />
+    <Content Include="res\32\515.png" />
+    <Content Include="res\32\516.png" />
+    <Content Include="res\32\517.png" />
+    <Content Include="res\32\518.png" />
+    <Content Include="res\32\519.png" />
+    <Content Include="res\32\52.png" />
+    <Content Include="res\32\520.png" />
+    <Content Include="res\32\521.png" />
+    <Content Include="res\32\522.png" />
+    <Content Include="res\32\523.png" />
+    <Content Include="res\32\524.png" />
+    <Content Include="res\32\525.png" />
+    <Content Include="res\32\526.png" />
+    <Content Include="res\32\527.png" />
+    <Content Include="res\32\528.png" />
+    <Content Include="res\32\529.png" />
+    <Content Include="res\32\53.png" />
+    <Content Include="res\32\530.png" />
+    <Content Include="res\32\531.png" />
+    <Content Include="res\32\532.png" />
+    <Content Include="res\32\533.png" />
+    <Content Include="res\32\534.png" />
+    <Content Include="res\32\535.png" />
+    <Content Include="res\32\536.png" />
+    <Content Include="res\32\537.png" />
+    <Content Include="res\32\538.png" />
+    <Content Include="res\32\539.png" />
+    <Content Include="res\32\54.png" />
+    <Content Include="res\32\540.png" />
+    <Content Include="res\32\541.png" />
+    <Content Include="res\32\542.png" />
+    <Content Include="res\32\543.png" />
+    <Content Include="res\32\544.png" />
+    <Content Include="res\32\545.png" />
+    <Content Include="res\32\546.png" />
+    <Content Include="res\32\547.png" />
+    <Content Include="res\32\548.png" />
+    <Content Include="res\32\549.png" />
+    <Content Include="res\32\55.png" />
+    <Content Include="res\32\550.png" />
+    <Content Include="res\32\551.png" />
+    <Content Include="res\32\552.png" />
+    <Content Include="res\32\553.png" />
+    <Content Include="res\32\554.png" />
+    <Content Include="res\32\555.png" />
+    <Content Include="res\32\556.png" />
+    <Content Include="res\32\557.png" />
+    <Content Include="res\32\558.png" />
+    <Content Include="res\32\559.png" />
+    <Content Include="res\32\56.png" />
+    <Content Include="res\32\560.png" />
+    <Content Include="res\32\561.png" />
+    <Content Include="res\32\562.png" />
+    <Content Include="res\32\563.png" />
+    <Content Include="res\32\564.png" />
+    <Content Include="res\32\565.png" />
+    <Content Include="res\32\566.png" />
+    <Content Include="res\32\567.png" />
+    <Content Include="res\32\568.png" />
+    <Content Include="res\32\569.png" />
+    <Content Include="res\32\57.png" />
+    <Content Include="res\32\570.png" />
+    <Content Include="res\32\571.png" />
+    <Content Include="res\32\572.png" />
+    <Content Include="res\32\573.png" />
+    <Content Include="res\32\574.png" />
+    <Content Include="res\32\575.png" />
+    <Content Include="res\32\576.png" />
+    <Content Include="res\32\577.png" />
+    <Content Include="res\32\578.png" />
+    <Content Include="res\32\579.png" />
+    <Content Include="res\32\58.png" />
+    <Content Include="res\32\580.png" />
+    <Content Include="res\32\581.png" />
+    <Content Include="res\32\582.png" />
+    <Content Include="res\32\583.png" />
+    <Content Include="res\32\584.png" />
+    <Content Include="res\32\585.png" />
+    <Content Include="res\32\586.png" />
+    <Content Include="res\32\587.png" />
+    <Content Include="res\32\588.png" />
+    <Content Include="res\32\589.png" />
+    <Content Include="res\32\59.png" />
+    <Content Include="res\32\590.png" />
+    <Content Include="res\32\591.png" />
+    <Content Include="res\32\592.png" />
+    <Content Include="res\32\593.png" />
+    <Content Include="res\32\594.png" />
+    <Content Include="res\32\595.png" />
+    <Content Include="res\32\596.png" />
+    <Content Include="res\32\597.png" />
+    <Content Include="res\32\598.png" />
+    <Content Include="res\32\599.png" />
+    <Content Include="res\32\6.png" />
+    <Content Include="res\32\60.png" />
+    <Content Include="res\32\600.png" />
+    <Content Include="res\32\601.png" />
+    <Content Include="res\32\602.png" />
+    <Content Include="res\32\603.png" />
+    <Content Include="res\32\604.png" />
+    <Content Include="res\32\605.png" />
+    <Content Include="res\32\606.png" />
+    <Content Include="res\32\607.png" />
+    <Content Include="res\32\608.png" />
+    <Content Include="res\32\609.png" />
+    <Content Include="res\32\61.png" />
+    <Content Include="res\32\610.png" />
+    <Content Include="res\32\611.png" />
+    <Content Include="res\32\612.png" />
+    <Content Include="res\32\613.png" />
+    <Content Include="res\32\614.png" />
+    <Content Include="res\32\615.png" />
+    <Content Include="res\32\616.png" />
+    <Content Include="res\32\617.png" />
+    <Content Include="res\32\618.png" />
+    <Content Include="res\32\619.png" />
+    <Content Include="res\32\62.png" />
+    <Content Include="res\32\620.png" />
+    <Content Include="res\32\621.png" />
+    <Content Include="res\32\622.png" />
+    <Content Include="res\32\623.png" />
+    <Content Include="res\32\624.png" />
+    <Content Include="res\32\625.png" />
+    <Content Include="res\32\626.png" />
+    <Content Include="res\32\627.png" />
+    <Content Include="res\32\628.png" />
+    <Content Include="res\32\629.png" />
+    <Content Include="res\32\63.png" />
+    <Content Include="res\32\630.png" />
+    <Content Include="res\32\631.png" />
+    <Content Include="res\32\632.png" />
+    <Content Include="res\32\633.png" />
+    <Content Include="res\32\634.png" />
+    <Content Include="res\32\635.png" />
+    <Content Include="res\32\636.png" />
+    <Content Include="res\32\637.png" />
+    <Content Include="res\32\638.png" />
+    <Content Include="res\32\639.png" />
+    <Content Include="res\32\64.png" />
+    <Content Include="res\32\640.png" />
+    <Content Include="res\32\641.png" />
+    <Content Include="res\32\642.png" />
+    <Content Include="res\32\643.png" />
+    <Content Include="res\32\644.png" />
+    <Content Include="res\32\645.png" />
+    <Content Include="res\32\65.png" />
+    <Content Include="res\32\66.png" />
+    <Content Include="res\32\67.png" />
+    <Content Include="res\32\68.png" />
+    <Content Include="res\32\69.png" />
+    <Content Include="res\32\7.png" />
+    <Content Include="res\32\70.png" />
+    <Content Include="res\32\71.png" />
+    <Content Include="res\32\72.png" />
+    <Content Include="res\32\73.png" />
+    <Content Include="res\32\74.png" />
+    <Content Include="res\32\75.png" />
+    <Content Include="res\32\76.png" />
+    <Content Include="res\32\77.png" />
+    <Content Include="res\32\78.png" />
+    <Content Include="res\32\79.png" />
+    <Content Include="res\32\8.png" />
+    <Content Include="res\32\80.png" />
+    <Content Include="res\32\81.png" />
+    <Content Include="res\32\82.png" />
+    <Content Include="res\32\83.png" />
+    <Content Include="res\32\84.png" />
+    <Content Include="res\32\85.png" />
+    <Content Include="res\32\86.png" />
+    <Content Include="res\32\87.png" />
+    <Content Include="res\32\88.png" />
+    <Content Include="res\32\89.png" />
+    <Content Include="res\32\9.png" />
+    <Content Include="res\32\90.png" />
+    <Content Include="res\32\91.png" />
+    <Content Include="res\32\92.png" />
+    <Content Include="res\32\93.png" />
+    <Content Include="res\32\94.png" />
+    <Content Include="res\32\95.png" />
+    <Content Include="res\32\96.png" />
+    <Content Include="res\32\97.png" />
+    <Content Include="res\32\98.png" />
+    <Content Include="res\32\99.png" />
+    <Content Include="res\brush.png" />
+    <Content Include="res\delete.png" />
+    <Content Include="res\edit.png" />
+    <Content Include="res\file.png" />
+    <Content Include="res\folder.png" />
+    <Content Include="res\plus.png" />
+    <Content Include="res\save.png" />
+    <Content Include="res\serch.png" />
+    <Content Include="TestSequence.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MyTest>
+    <TestSequences StationNum="OPH30">
+      <TS ID="1">
+        <Name>P2000</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\P2000.prj</FilePath>
+      </TS>
+      <TS ID="2">
+        <Name>Project1</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Project1.prj</FilePath>
+      </TS>
+      <TS ID="3">
+        <Name>Project3</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Project3.prj</FilePath>
+      </TS>
+      <TS ID="4">
+        <Name>Demo</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Demo.prj</FilePath>
+      </TS>
+      <TS ID="5">
+        <Name>Test</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Test.prj</FilePath>
+      </TS>
+      <TS ID="6">
+        <Name>WCTest</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\WCTest.prj</FilePath>
+      </TS>
+      <TS ID="7">
+        <Name>WCNew</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\WCNew.prj</FilePath>
+      </TS>
+      <TS ID="8">
+        <Name>ABC</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\ABC.prj</FilePath>
+      </TS>
+    </TestSequences>
+    <TestSequences StationNum="OPH40_1">
+      <TS ID="1">
+        <Name>P2000</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\P2000.prj</FilePath>
+      </TS>
+      <TS ID="2">
+        <Name>Project1</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Project1.prj</FilePath>
+      </TS>
+      <TS ID="3">
+        <Name>Project3</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Project3.prj</FilePath>
+      </TS>
+      <TS ID="4">
+        <Name>Demo</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Demo.prj</FilePath>
+      </TS>
+      <TS ID="5">
+        <Name>Test</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\Test.prj</FilePath>
+      </TS>
+      <TS ID="6">
+        <Name>WCTest</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\WCTest.prj</FilePath>
+      </TS>
+      <TS ID="7">
+        <Name>WCNew</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\WCNew.prj</FilePath>
+      </TS>
+      <TS ID="8">
+        <Name>ABC</Name>
+        <FilePath>D:\拷贝盘符数据\E盘\Work7\KSBWorkStation\05 后端代码\TestProgram\Release\Projects\ABC.prj</FilePath>
+      </TS>
+    </TestSequences>
+</MyTest>
