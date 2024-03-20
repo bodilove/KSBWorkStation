@@ -90,7 +90,7 @@ namespace Test.ProjectTest
             Prj = new Project();
             Prj.File = ProjectFile;
             Prj.Load();
-            statusUser.Text = "用户名：" + mUser.Name + "[" + mUser.Description + "]";
+            statusUser.Text = $"用户名：{ mUser.Name} [ { mUser.Description}]";
             IsBreakOnErrorEnable = Right;
             this.ShowDialog();
         }
@@ -1849,6 +1849,11 @@ namespace Test.ProjectTest
         }
         public string ProjectFile = "";
 
+        /// <summary>
+        /// 加载测试程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmTest_Wide_Shown(object sender, EventArgs e)
         {
 
@@ -3508,7 +3513,10 @@ namespace Test.ProjectTest
             return bRet;
         }
 
-
+        /// <summary>
+        /// 创建设备名：反射
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         private void CreateObjects()
         {
             string[] AsmFiles = Directory.GetFiles(Application.StartupPath + "\\Device");
@@ -3537,7 +3545,7 @@ namespace Test.ProjectTest
 
             foreach (AssemblyName asmname in asmNames)
             {
-                if (asmname.Name == "Library")
+                if (asmname.Name == "Test.Library")
                 {
                     asm = Assembly.Load(asmname);
                     AssList.Add(asm);
@@ -3550,7 +3558,7 @@ namespace Test.ProjectTest
             foreach (KeyValuePair<String, Device> d in Prj.Devices)
             {
                 bool CreatObjectResult = false;
-                if (d.Value.Class.Contains("ProjectTest"))
+                if (d.Value.Class.Contains("Test.ProjectTest"))
                 {
                     d.Value.Instance = this;
                 }
@@ -3932,6 +3940,9 @@ namespace Test.ProjectTest
             //    TestThread.Join(1000);
             //}
             //Prj.ExitTest();
+
+            
+
             this.Close();
         }
 

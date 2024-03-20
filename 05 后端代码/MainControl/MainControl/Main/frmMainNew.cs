@@ -114,7 +114,11 @@ namespace MainControl
         //    frmSysConfig fm = new frmSysConfig();
         //    fm.ShowDialog();
         //}
-
+        /// <summary>
+        /// 菜单-工具-PLC 引擎
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 选项OToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPLCconfig fm = new frmPLCconfig();
@@ -135,7 +139,7 @@ namespace MainControl
 
          
                 PLCOToolStripMenuItem.Enabled = true;
-                lblUserId.Text = "用户ID：" + MdlClass.userInfo.UserNum + "   用户名称: " + MdlClass.userInfo.UserName;
+                lblUserId.Text = $"用户ID：{ MdlClass.userInfo.UserNum}   用户名称: { MdlClass.userInfo.UserName}";
                 lblMessage.Text = "登录成功。";
 
                 OVserver.ConnectAllPlc(tabConrolMonitor);
@@ -173,7 +177,7 @@ namespace MainControl
         {
 
             PLCOToolStripMenuItem.Enabled = true;
-            lblUserId.Text = "用户ID：" + MdlClass.userInfo.UserNum + "   用户名称: " + MdlClass.userInfo.UserName;
+            lblUserId.Text = $"用户ID：{MdlClass.userInfo.UserNum}   用户名称: {MdlClass.userInfo.UserName}";
             lblMessage.Text = "登录成功。";
 
             OVserver.ConnectAllPlc(tabConrolMonitor);
@@ -235,7 +239,7 @@ namespace MainControl
             退出XToolStripMenuItem.Enabled = false;
             tlayPanlAll.Enabled = false;
 
-            lblUserId.Text = "用户ID：" + "  " + "   用户名称: " + "  ";
+            lblUserId.Text = "用户ID：  " + "   用户名称:   ";
             MdlClass.sysSet = MdlClass.sysSet.Load(MdlClass.SysConfigPath + @"\SysConfig.cfg");
 
             Common.GlobalResources.dbserver = MdlClass.sysSet.DataSource;
@@ -275,7 +279,7 @@ namespace MainControl
                 //tlayPanlAll.Enabled = false;//禁用控件
                 //  PLCOToolStripMenuItem.Enabled = false;
 
-                lblUserId.Text = "用户ID：" + "  " + "   用户名称: " + "  ";
+                lblUserId.Text = "用户ID：  " + "   用户名称:   ";
                 lblMessage.Text = "未登录。";
                 OVserver.DisConnectAllPlc();
                 toolStripMenuItem1.Enabled = true;

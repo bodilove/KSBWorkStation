@@ -25,6 +25,11 @@ namespace Test.StartUp
             get { return this.m_dbConnection; }
         }
 
+        public UserManager()
+        {
+            Connect();
+
+        }
         public bool SubmitChanges()
         {
             bool bSucc = true;

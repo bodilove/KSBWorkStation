@@ -214,9 +214,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TestProgram\Common\Test.Common.csproj">
+      <Project>{200c6ddc-1715-43a9-bb2c-d43a6d20f44a}</Project>
+      <Name>Test.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TestProgram\ProjectFileEditor\Test.ProjectFileEditor.csproj">
       <Project>{4be939f1-ea54-4510-a426-fc3310110247}</Project>
       <Name>Test.ProjectFileEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TestProgram\ProjectTest\Test.ProjectTest.csproj">
+      <Project>{dc5de82b-8d45-4584-b704-c543837c29c5}</Project>
+      <Name>Test.ProjectTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TestProgram\StartUp\Test.StartUp.csproj">
       <Project>{906cdf3f-b7d7-4ff4-a26c-b6d599d6fc0b}</Project>
@@ -897,6 +905,9 @@
     <Content Include="res\32\97.png" />
     <Content Include="res\32\98.png" />
     <Content Include="res\32\99.png" />
+    <None Include="res\502.png" />
+    <None Include="res\506.png" />
+    <None Include="res\530.png" />
     <Content Include="res\brush.png" />
     <Content Include="res\delete.png" />
     <Content Include="res\edit.png" />

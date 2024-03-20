@@ -20,6 +20,8 @@ using Test;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Xml.Linq;
 using static Test.ProjectFileEditor.frmMain;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Test.ProjectTest;
 
 namespace MainControl
 {
@@ -30,6 +32,8 @@ namespace MainControl
         //SystemUserInfo_Bll user_bll = new SystemUserInfo_Bll();
         //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
         //TSHandler TShandler = new TSHandler(Application.StartupPath + @"\TestSequence.xml");
+
+        UserManager m_UserManage = new UserManager();
 
         string filePath = Application.StartupPath + @"\TestSequence.xml";
         MyTest m = null;
@@ -650,6 +654,76 @@ namespace MainControl
         }
 
 
+        frmTest_Wide frm = null;
+        /// <summary>
+        /// 运行测试
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_StartTest_ButtonClick(object sender, EventArgs e)
+        {
+
+            try
+            {
+
+                //判断是否选择编辑的行
+                if (dataGridView1.DataSource == null)
+                {
+                    MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else
+                {
+                    DataGridViewRow dr = null;
+                    if (dataGridView1.SelectedRows == null)
+                    {
+                        MessageBox.Show("请选择要删除的测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else
+                    {
+                        dr = dataGridView1.SelectedRows[0];
+
+                    }
+                    if (dr != null)
+                    {
+                        string ID = dr.Cells["ID"].Value.ToString();
+                        string Name = dr.Cells["Name"].Value.ToString();
+                        string FilePath = dr.Cells["FilePath"].Value.ToString();
+
+                        this.Hide();
+                        //$"用户ID：{MdlClass.userInfo.UserNum}   用户名称: {MdlClass.userInfo.UserName}";
+                        //Dictionary<int, string> dicPath = TShandler.GetTS_FilePathLst();
+                        string userName = MdlClass.userInfo.UserName;
+                        frm = new frmTest_Wide();
+                        frm.mUser.Name = userName;
+                        frm.mUser.Description = m_UserManage.Description(userName);
+                        frm.m_dbConnection = m_UserManage.DbConnection;
+
+                        frm.ProjectFile = FilePath;
+                        frm.ShowDialog();
+                        this.Show();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //System_Bll.WriteLogToDB(new Entity.Base_Log
+                //{
+                //    CreateUserID = FrmLogin.LoginUserID,
+                //    CreateUserName = FrmLogin.loginUserName,
+                //    LocalIP = FrmLogin.LocalIP,
+                //    LogMessage = ex.Message,
+                //    Type = "系统错误！",
+                //    ClassName = typeof(FrmUserInfo).ToString()
+                //});
+                MessageBox.Show(ex.Message);
+            }
+
+           
+        }
+
         #region  读取xml
         public XmlDocument LoadXmlDoc(string filePath)
         {
@@ -713,5 +787,7 @@ namespace MainControl
 
         }
         #endregion
+
+       
     }
 }
