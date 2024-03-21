@@ -1,9 +1,6 @@
-﻿using Common;
-using Common.User.Model;
-using MainControl.BLL;
+﻿using MainControl.BLL;
 using MainControl.Entity;
-using MainControl.User;
-using ORMSqlSugar;
+using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,48 +11,49 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 using WeifenLuo.WinFormsUI.Docking;
 //using YX.BLL;
 //using YX.Entity;
 namespace MainControl
 {
-    public partial class FrmUserInfo : WindowParent
+    public partial class FrmSysMenuInfo : WindowParent
     {
-
-        UserService bll=new UserService();
-        //SystemOrganization_Bll organization_bll = new SystemOrganization_Bll();
-        //// SystemUserInfo_Dal user_dal = new SystemUserInfo_Dal();
-        //SystemUserInfo_Bll user_bll = new SystemUserInfo_Bll();
-        //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
+        SysMenuService bll = new SysMenuService();
 
         //public FrmUserInfo(string ParentId)
-
-        FrmUserInfoEdit edit;//编辑窗口
-        public FrmUserInfo()
+        public FrmSysMenuInfo()
         {
             InitializeComponent();
             //SetButton(ParentId, this.toolStrip1);//设置按钮权限
             this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//列自动填充
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//填充满
 
+            // 假设有一个实体类
+            var entity = new SysMenuModel();
+            // 使用反射获取实体的属性
+            PropertyInfo[] properties = entity.GetType().GetProperties();
+
             // 创建DataGridView的数据源
             DataTable dataTable = new DataTable();
 
-           
-
+            foreach (PropertyInfo property in properties)
+            {
+                // 添加列，列名为中文字段名
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                column.HeaderText = property.GetCustomAttribute<DescriptionAttribute>()?.Description ?? property.Name;
+                column.DataPropertyName = property.Name;
+                dataGridView1.Columns.Add(column);
+            }
         }
    
-        private void FrmUserInfo_Load(object sender, EventArgs e)
+        private void FrmSysMenuInfo_Load(object sender, EventArgs e)
         {
             GetComboxList();
-
-            BindView();
-            //BindTreeView(organization_bll.GetOrganizations());
-            //if (treeView1.Nodes.Count > 0)//展开一级节点
-            //{
-            //    treeView1.Nodes[0].Expand();
-            //}
+            BindTreeView();
+            if (treeView1.Nodes.Count > 0)//展开一级节点
+            {
+                treeView1.Nodes[0].Expand();
+            }
 
         }
         private void GetComboxList()
@@ -85,31 +83,23 @@ namespace MainControl
 
             this.com_Searchwhere.ComboBox.DataSource = dt;
         }
-        private  async void BindView()
+        private async void BindTreeView()
         {
             try
             {
-                this.dataGridView1.DataSource =null;
-                // 假设有一个实体类
-                var entity = new UserModel();
-                // 使用反射获取实体的属性
-                PropertyInfo[] properties = entity.GetType().GetProperties();
-                foreach (PropertyInfo property in properties)
+                this.treeView1.Nodes.Clear();
+                this.treeView1.ImageList = imageList1;
+                var list = bll.QueryList();
+                var parents = list.Where(o => o.ParentId == 0);
+                foreach (var item in parents)
                 {
-                    // 添加列，列名为中文字段名
-                    DataGridViewColumn column = new DataGridViewTextBoxColumn();
-                    column.HeaderText = property.GetCustomAttribute<DescriptionAttribute>()?.Description ?? property.Name;
-                    column.DataPropertyName = property.Name;
-                    dataGridView1.Columns.Add(column);
-                    if (property.Name == "CreateUserId" || property.Name == "ModifyUserId"|| property.Name == "Password"
-                        || property.Name == "RoleID")
-                    {
-                        column.Visible = false;
-                    }
+                    TreeNode tn = new TreeNode();
+                    tn.Text = item.Menu_Name;
+                    tn.Tag = item.Menu_Id;
+                    tn.ImageIndex = 0;
+                    FillTree(tn, list);
+                    treeView1.Nodes.Add(tn);
                 }
-                List<UserModel> list = await bll.QueryListAsync();
-               
-                this.dataGridView1.DataSource = list;
             }
             catch (Exception ex)
             {
@@ -126,46 +116,45 @@ namespace MainControl
             }
         }
 
-        //private void FillTree(TreeNode node, List<Base_Organization> list)
-        //{
+        private void FillTree(TreeNode node, List<SysMenuModel> list)
+        {
 
-        //    var childs = list.Where(o => o.ParentId == node.Tag.ToString());
-        //    if (childs.Count() > 0)
-        //    {
-        //        foreach (var item in childs)
-        //        {
-        //            TreeNode tnn = new TreeNode();
-        //            tnn.Text = item.Organization_Name;
-        //            tnn.Tag = item.Organization_ID;
-        //            tnn.ImageIndex = 0;
-        //            if (item.ParentId == node.Tag.ToString())
-        //            {
-        //                FillTree(tnn, list);
-        //            }
-        //            node.Nodes.Add(tnn);
-        //        }
+            var childs = list.Where(o => o.ParentId == node.Tag.ObjToInt());
+            if (childs.Count() > 0)
+            {
+                foreach (var item in childs)
+                {
+                    TreeNode tnn = new TreeNode();
+                    tnn.Text = item.Menu_Name.ToString();
+                    tnn.Tag = item.Menu_Id;
+                    tnn.ImageIndex = 0;
+                    if (item.ParentId == node.Tag.ObjToInt())
+                    {
+                        FillTree(tnn, list);
+                    }
+                    node.Nodes.Add(tnn);
+                }
 
-        //    }
-        //}
+            }
+        }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private async void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string Organization_ID = e.Node.Tag.ToString();
             StringBuilder SqlWhere = new StringBuilder();
-            IList<SqlParameter> IList_param = new List<SqlParameter>();
-            if (!string.IsNullOrEmpty(Organization_ID))
-            {
-                SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
-                IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID ));
-            }
-            //this.dataGridView1.DataSource = user_bll.GetUserInfoByOrganization_Id(SqlWhere, IList_param);
-     
+            //IList<SqlParameter> IList_param = new List<SqlParameter>();
+            //if (!string.IsNullOrEmpty(Organization_ID))
+            //{
+            //    SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
+            //    IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID ));
+            //}
+            List<SysMenuModel> list = await bll.QueryListAsync();
+
+            this.dataGridView1.DataSource = null;
+            this.dataGridView1.DataSource = list;
+
         }
-        /// <summary>
-        /// data gridview 数据绑定完成执行（颜色）
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             if (this.dataGridView1.Rows.Count != 0)
@@ -177,11 +166,7 @@ namespace MainControl
                 }
             } 
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void btn_select_Click(object sender, EventArgs e)
         {
           //  StringBuilder SqlWhere = new StringBuilder();
@@ -198,24 +183,13 @@ namespace MainControl
           //  }
           //this.dataGridView1.DataSource= user_bll.GetUserInfoByOrganization_Id(SqlWhere, IList_param);
         }
-        /// <summary>
-        /// 添加数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            edit = new FrmUserInfoEdit(this);
-            // 订阅子窗体的事件
-            edit.DataUpdated += btn_refresh_Click;
-            edit.ShowDialog();
+            //FrmUserInfoEdit edit = new FrmUserInfoEdit(this);
+            //edit.ShowDialog();
         }
 
-        /// <summary>
-        /// 编辑数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btn_edit_Click(object sender, EventArgs e)
         {
             if (dataGridView1.DataSource == null)
@@ -226,22 +200,15 @@ namespace MainControl
             {
                 DataGridViewRow dr = dataGridView1.SelectedRows[0];
 
-                if (dr != null)
-                {
-                    edit = new FrmUserInfoEdit(this, ref dr);
-                    // 订阅子窗体的事件
-                    edit.DataUpdated += btn_refresh_Click;
-                    edit.ShowDialog();
-                }
+                //if (dr != null)
+                //{
+                //    FrmUserInfoEdit edit = new FrmUserInfoEdit(this,ref dr);
+                //    edit.ShowDialog();
+                //}
             } 
         
         }
 
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btn_delete_Click(object sender, EventArgs e)
         {
 
@@ -250,17 +217,16 @@ namespace MainControl
                 DataGridViewRow dr = dataGridView1.SelectedRows[0];
                 if (dr != null)
                 {
-                    UserModel m = dr.DataBoundItem as UserModel;
-                    int result = bll.DeleteIsLogic(m.UserID.StrToInt(-1));
-                    if (result == 1)
-                    {
+                    //int result = bll.DeleteSysMenu(dr.Cells["Menu_Id"].Value.ToString());
+                   // if (result == 1)
+                   // {
                         MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BindView();
-                    }
-                    else
-                    {
+                       // this.dataGridView1.DataSource = dal.GetSysMenuChilds(this.listView1.SelectedItems[0].Tag.ToString());
+                   // }
+                    //else
+                   // {
                         MessageBox.Show("删除失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                   // }
                 }
             }
             catch (Exception ex)
@@ -278,11 +244,6 @@ namespace MainControl
             }
         }
 
-        /// <summary>
-        /// 刷新主窗口，（添加、修改也可以订阅）
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btn_refresh_Click(object sender, EventArgs e)
         {
             //if (treeView1.SelectedNode != null)
@@ -297,8 +258,7 @@ namespace MainControl
             //    }
             //    this.dataGridView1.DataSource = user_bll.GetUserInfoByOrganization_Id(SqlWhere, IList_param);
             //}
-            BindView();
-
+           
         }
 
         private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)

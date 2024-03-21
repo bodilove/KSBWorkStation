@@ -1,4 +1,6 @@
 ﻿using Common;
+using MainControl.BLL;
+using MainControl.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,46 +13,79 @@ using System.Windows.Forms;
 //using YX.Common.DotNetEncrypt;
 //using YX.Entity;
 
-namespace MainControl
+namespace MainControl.User
 {
-    public partial class FrmUserEdit : Form
+    public partial class FrmUserInfoEdit : Form
     {
+        UserService bll=new UserService();
+        RoleService role_bll = new RoleService();
         FrmUserInfo _frmUserInfo;
         //SystemAppendProperty_Bll app_bll = new SystemAppendProperty_Bll();
         //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
         //SystemUserInfo_Bll user_bll = new SystemUserInfo_Bll();
         //SystemOrganization_Bll org_bll = new SystemOrganization_Bll();
         //SystemRole_Bll role_bll = new SystemRole_Bll();
-        string User_ID = "";
-        OperationType type;
-        public FrmUserEdit(FrmUserInfo frmUserInfo)
-        {
 
-            this._frmUserInfo = frmUserInfo;
-            InitializeComponent();
-            this.Text = "用户信息-添加";
-            type = OperationType.Add;
+        string UserID = "";
+        OperationType type;
+
+        UserModel m ;
+        #region 订阅窗口关闭事件
+        // 声明一个事件委托
+        public delegate void DataUpdatedEventHandler(object sender, EventArgs e);
+        // 声明一个事件
+        public event DataUpdatedEventHandler DataUpdated;
+        // 在关闭窗口前触发事件
+        private void FrmUserInfoEdit_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // 触发事件
+            DataUpdated?.Invoke(this, EventArgs.Empty);
         }
-        public FrmUserEdit(FrmUserInfo frmUserInfo, ref DataGridViewRow dvr)
+        #endregion
+        public FrmUserInfoEdit(FrmUserInfo frmUserInfo)
         {
             InitializeComponent();
-            type = OperationType.Edit;
+            Init();
+
+            type = OperationType.Add;
+
+            m = new UserModel();
             this._frmUserInfo = frmUserInfo;
-            User_ID = dvr.Cells["User_ID"].Value.ToString();
-            txt_Email.Text = dvr.Cells["邮箱"].Value.ToString();
-            txt_Title.Text = dvr.Cells["职称"].Value.ToString();
-            txt_User_Account.Text = dvr.Cells["登录账户"].Value.ToString();
-            txt_User_Code.Text = dvr.Cells["用户工号"].Value.ToString();
-            txt_User_Name.Text = dvr.Cells["用户名称"].Value.ToString();
-            // txt_User_Pwd.Text = dvr.Cells["登陆密码"].Value.ToString();
-            com_User_Sex.Text = dvr.Cells["性别"].Value.ToString();
-            richTextBox1.Text = dvr.Cells["备注"].Value.ToString();
+
+            this.Text = "用户信息-添加";
+        }
+        public FrmUserInfoEdit(FrmUserInfo frmUserInfo, ref DataGridViewRow dvr)
+        {
+            InitializeComponent();
+            Init();
+
+            type = OperationType.Edit;
+            m = dvr.DataBoundItem as UserModel;
+            this._frmUserInfo = frmUserInfo;
+            UserID = m.UserID.ToStringExt();
+            txt_Email.Text = m.Email.ToStringExt();
+            txt_User_Account.Text = m.UserNum.ToStringExt();
+            txt_User_Name.Text = m.UserName.ToStringExt();
+            //Md5Helper.Md5( txt_Password.Text)
+            txt_Password.Text = m.Password.ToStringExt();  
+            com_User_Sex.Text = m.Gender.ToStringExt();
+            richTextBox1.Text = m.Remark.ToStringExt();
+            com_RoleId.SelectedValue = m.RoleID == null ? -1 : m.RoleID;
+
+
             this.Text = "用户信息-编辑";
+        }
+        void Init()
+        {
+            com_RoleId.DataSource = role_bll.QueryList();
+            com_RoleId.DisplayMember = "RoleName";
+            com_RoleId.ValueMember = "RoleID";
         }
 
         private void FrmUserInfoEdit_Load(object sender, EventArgs e)
         {
-          
+           
+
             //GetAppendProperty();
             //BindUsertRightTreeView();
             //BindUserDeptTreeView();
@@ -68,75 +103,68 @@ namespace MainControl
             //    tree_UserRole.Nodes[0].Expand();
             //}
         }
-        #region 用户权限
-        
 
-       
+      
+
+        #region 用户权限
+
+
+
         #endregion
 
-       
+
 
         #region 保存事件
         private void btn_save_Click(object sender, EventArgs e)
         {
             try
             {
-                //Base_UserInfo userinfo = new Base_UserInfo();
-                //if (!string.IsNullOrEmpty(User_ID))
-                //{
-                //    userinfo.ModifyDate = DateTime.Now;
-                //    userinfo.ModifyUserId = FrmLogin.LoginUserID;
-                //    userinfo.ModifyUserName = FrmLogin.loginUserName;
+                
+                if (!string.IsNullOrEmpty(UserID))
+                {
+                   
+                    m.ModifyDate = DateTime.Now;
+                    //m.ModifyUserId = FrmLogin.LoginUserID;
+                    //m.ModifyUserName = FrmLogin.loginUserName;
+                }
+                else
+                {
+                    
+                    
+                    m.CreateDate = DateTime.Now;
+                    m.CreateUserId = 1;
+                    m.CreateUserName = "超级管理员";
+                    //m.CreateUserId = frmLoginNew.LoginUserID;
+                    //m.CreateUserName = frmLoginNew.loginUserName;
 
-                //}
-                //else
-                //{
-                //    userinfo.CreateDate = DateTime.Now;
-                //    userinfo.CreateUserId = FrmLogin.LoginUserID;
-                //    userinfo.CreateUserName = FrmLogin.loginUserName;
+                }
+                m.UserNum = txt_User_Account.Text.ToStringExt();
+                m.UserName = txt_User_Name.Text.ToStringExt();
+                m.Password = txt_Password.Text.ToStringExt("123456");//Md5Helper.Md5( txt_User_Pwd.Text);
+                m.Email = txt_Email.Text.ToStringExt();
+                m.Gender = com_User_Sex.Text.ToStringExt();
+                m.RoleID = com_RoleId.SelectedValue.StrToInt(-1);
+                m.Remark = richTextBox1.Text;
+                
+                int isOk = 0;
+                if (type == OperationType.Add)
+                {
+                    isOk = bll.Add(m);
+                }
+                else
+                {
+                    isOk = bll.Edit(m);
+                }
 
-                //    User_ID = Guid.NewGuid().ToString();
-                //}
-                //userinfo.DeleteMark = 1;
-                //userinfo.Email = txt_Email.Text;
-                //userinfo.Title = txt_Title.Text;
-                //userinfo.User_Account = txt_User_Account.Text;
-                //userinfo.User_Code = txt_User_Code.Text;
-                //userinfo.User_ID = User_ID;
-                //userinfo.User_Name = txt_User_Name.Text;
-                ////userinfo.User_Pwd =Md5Helper.Md5( txt_User_Pwd.Text);
-                //userinfo.User_Remark = richTextBox1.Text;
-                //userinfo.User_Sex = com_User_Sex.Text;
-                //StaffOrgList.Clear();
-                //UserRightList.Clear();
-                //RoleList.Clear();
-                //CheckRoleTreeViewNode(tree_UserRole.Nodes);
-                //CheckUsertRightTreeViewNode(this.tree_UserRight.Nodes);//获取勾选值
-                //CheckUsertDeptTreeViewNode(this.tree_Dept.Nodes);//获取勾选值
-                //GetAllAppendValue();//获取附加属性值
-                //userinfo.Base_UserRight = UserRightList;
-                //userinfo.Base_StaffOrganize = StaffOrgList;
-                //userinfo.Base_UserRole = RoleList;
-                //userinfo.Base_AppendPropertyInstance = appendList;
-                //int isOk = 0;
-                //if (type == OperationType.Add)
-                //{
-                //    isOk = user_bll.AddUserInfo(userinfo);
-                //}
-                //else
-                //{
-                //    isOk = user_bll.EditUserInfo(userinfo);
-                //}
-
-                //if (isOk > 0)
-                //{
-                //    MessageBox.Show("保存成功！");
-                //    this.Close();
-                //}
-                //else
-                //{
-                //    MessageBox.Show("保存失败！");
-                //}
+                if (isOk > 0)
+                {
+                    MessageBox.Show("保存成功！");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("保存失败！");
+                }
             }
             catch (Exception ex)
             {
@@ -275,5 +303,7 @@ namespace MainControl
         {
             this.Close();
         }
+
+        
     }
 }

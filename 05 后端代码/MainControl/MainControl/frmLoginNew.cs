@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.SysConfig.Model;
+using ORMSqlSugar;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,9 @@ namespace MainControl
 {
     public partial class frmLoginNew : Form
     {
+        SqlsugarMyClient helper=new SqlsugarMyClient();
+
+
         SystemConfig sysConfig = new SystemConfig();
         public frmLoginNew()
         {
@@ -26,27 +30,35 @@ namespace MainControl
         /// <param name="e"></param>
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            MdlClass.sysSet = MdlClass.sysSet.Load(MdlClass.SysConfigPath + @"\SysConfig.cfg");
-            if (MdlClass.sysSet == null)
+            try
             {
-                lblMessage.Text = "缺少配置文件:SysConfig.cfg！";
-                return;
+                MdlClass.sysSet = MdlClass.sysSet.Load(MdlClass.SysConfigPath + @"\SysConfig.cfg");
+                if (MdlClass.sysSet == null)
+                {
+                    lblMessage.Text = "缺少配置文件:SysConfig.cfg！";
+                    return;
+                }
+                Common.GlobalResources.dbserver = MdlClass.sysSet.DataSource;
+                Common.GlobalResources.dbname = MdlClass.sysSet.InitialCatalog;
+                Common.GlobalResources.userid = MdlClass.sysSet.UserID;
+                Common.GlobalResources.password = MdlClass.sysSet.Password;
+                lblMessage.Text = "正在连接数据库。。。";
+                //Application.DoEvents();
+                Thread.Sleep(100);
+                bool IsValidConnection = helper.GetClient().Ado.IsValidConnection();
+                if (!GlobalResources.SqlConnectTest())
+                {
+                    MessageBox.Show("连接数据库失败");
+                    lblMessage.Text = "连接数据库失败！";
+                }
+                else
+                {
+                    lblMessage.Text = "连接数据库成功！";
+                }
             }
-            Common.GlobalResources.dbserver = MdlClass.sysSet.DataSource;
-            Common.GlobalResources.dbname = MdlClass.sysSet.InitialCatalog;
-            Common.GlobalResources.userid = MdlClass.sysSet.UserID;
-            Common.GlobalResources.password = MdlClass.sysSet.Password;
-            lblMessage.Text = "正在连接数据库。。。";
-            //Application.DoEvents();
-            Thread.Sleep(100);
-            if (!GlobalResources.SqlConnectTest())
+            catch (Exception ex)
             {
-                MessageBox.Show("连接数据库失败");
                 lblMessage.Text = "连接数据库失败！";
-            }
-            else
-            {
-                lblMessage.Text = "连接数据库成功！";
             }
         }
         /// <summary>
@@ -109,38 +121,35 @@ namespace MainControl
 
             try
             {
-
-                //if (txt_UserName.Text.Trim() != "")
-                //{
-                    MdlClass.userInfo = MdlClass.userbll.GetUserInfoByUserNum(UserName, Password);
-                    if (MdlClass.userInfo != null)
+                MdlClass.userInfo = MdlClass.userbll.GetUserInfoByUserNum(UserName, Password);
+                if (MdlClass.userInfo != null)
+                {
+                    if (MdlClass.userInfo.PassWord.ToUpper() != Password.ToUpper())
                     {
-                        if (MdlClass.userInfo.PassWord.ToUpper() != Password.ToUpper())
-                        {
-                            MessageBox.Show("用户名密码错误，请重新输入！", "");
-                            return;
-                        }
-                        else
-                        {
-                            //this.DialogResult = DialogResult.OK;
-                            //this.Close();
-                            Program.CurrentConfig = sysConfig.Load(MdlClass.SysConfigPath + @"\SysConfig.cfg");
-                            this.Visible = false;
-                            frmMainNew fm = new frmMainNew();
-                            //fm.userName = this.txt_UserName.Text.ToUpper();
-                            fm.ShowDialog();
-                            this.Close();
-                            
-                        }
+                        MessageBox.Show("用户名密码错误，请重新输入！", "");
+                        return;
                     }
                     else
                     {
-                        MessageBox.Show("用户名密码错误，请重新输入！", "");
-                        txt_UserName.Focus();
-                        txt_UserName.SelectAll();
-                        return;
+                        //this.DialogResult = DialogResult.OK;
+                        //this.Close();
+                        Program.CurrentConfig = sysConfig.Load(MdlClass.SysConfigPath + @"\SysConfig.cfg");
+                        this.Visible = false;
+                        frmMainNew fm = new frmMainNew();
+                        //fm.userName = this.txt_UserName.Text.ToUpper();
+                        fm.ShowDialog();
+                        this.Close();
+                            
                     }
-                //}
+                }
+                else
+                {
+                    MessageBox.Show("用户名密码错误，请重新输入！", "");
+                    txt_UserName.Focus();
+                    txt_UserName.SelectAll();
+                    return;
+                }
+                
             }
             catch (Exception ex){
 

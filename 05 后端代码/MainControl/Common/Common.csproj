@@ -31,14 +31,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.16.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.16\lib\net40\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="S7.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d5812d469e84c693, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\S7.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,10 +52,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AppConfig.cs" />
+    <Compile Include="Common\Cast.cs" />
+    <Compile Include="Common\ClearMemoryService.cs" />
+    <Compile Include="Common\OperationType.cs" />
+    <Compile Include="Common\SysConfig.cs" />
+    <Compile Include="Common\Utils.cs" />
     <Compile Include="GlobalLogHandle.cs" />
     <Compile Include="CreatSN\ASNCreater.cs" />
     <Compile Include="CreatSN\LongGanSNCreaterAndCheck.cs" />
     <Compile Include="CreatSN\DemoSNCreater.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="Part\BLL\PartBLL.cs" />
     <Compile Include="Part\Model\PartInfo.cs" />
     <Compile Include="PLCData\BLL\PLCDataCommonBLL.cs" />
@@ -116,6 +128,9 @@
     <EmbeddedResource Include="PLCServer\OnePLCMonitor.resx">
       <DependentUpon>OnePLCMonitor.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

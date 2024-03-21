@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MainControl</RootNamespace>
     <AssemblyName>MainControl</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -37,6 +37,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SqlSugar, Version=5.1.4.146, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -144,6 +145,30 @@
     <Compile Include="Tool\FrmToolTestInfo.Designer.cs">
       <DependentUpon>FrmToolTestInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="User\FrmSysMenuInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmSysMenuInfo.Designer.cs">
+      <DependentUpon>FrmSysMenuInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\FrmRoleInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmRoleInfo.Designer.cs">
+      <DependentUpon>FrmRoleInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\FrmPermissionInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmPermissionInfo.Designer.cs">
+      <DependentUpon>FrmPermissionInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\FrmUserInfoEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmUserInfoEdit.designer.cs">
+      <DependentUpon>FrmUserInfoEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="User\FrmUserInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,6 +224,18 @@
     <EmbeddedResource Include="Tool\FrmToolTestInfo.resx">
       <DependentUpon>FrmToolTestInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmSysMenuInfo.resx">
+      <DependentUpon>FrmSysMenuInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmRoleInfo.resx">
+      <DependentUpon>FrmRoleInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmPermissionInfo.resx">
+      <DependentUpon>FrmPermissionInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmUserInfoEdit.resx">
+      <DependentUpon>FrmUserInfoEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="User\FrmUserInfo.resx">
       <DependentUpon>FrmUserInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -237,6 +274,18 @@
     <ProjectReference Include="..\Library\Library.csproj">
       <Project>{4C8430BE-38C8-4216-9EA2-ADC3404FB1BA}</Project>
       <Name>Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainControl.BLL\MainControl.BLL.csproj">
+      <Project>{0E75D003-C2B5-4E51-A7D1-3A5101157205}</Project>
+      <Name>MainControl.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainControl.Entity\MainControl.Entity.csproj">
+      <Project>{450C5908-0313-4B2F-BC7F-C9E185418B8B}</Project>
+      <Name>MainControl.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ORMSqlSugar\ORMSqlSugar.csproj">
+      <Project>{3fd9da1b-7a3f-476e-87b5-4ce829507112}</Project>
+      <Name>ORMSqlSugar</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1217,7 +1217,7 @@ namespace MainControl
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
-
+        #region 用户管理
         /// <summary>
         /// 用户管理
         /// </summary>
@@ -1230,5 +1230,36 @@ namespace MainControl
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
+        /// <summary>
+        /// 角色管理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 角色管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmRoleInfo fm = new FrmRoleInfo();
+            fm.StartPosition = FormStartPosition.CenterParent;
+            fm.ShowDialog();
+        }
+        /// <summary>
+        /// 权限管理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 权限管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmPermissionInfo fm = new FrmPermissionInfo();
+            fm.StartPosition = FormStartPosition.CenterParent;
+            fm.ShowDialog();
+        }
+        private void 菜单管理toolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmSysMenuInfo fm = new FrmSysMenuInfo();
+            fm.StartPosition = FormStartPosition.CenterParent;
+            fm.ShowDialog();
+        }
+        #endregion
+
+
     }
 }

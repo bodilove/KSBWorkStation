@@ -30,27 +30,27 @@
         {
             this.components = new System.ComponentModel.Container();
             Infragistics.Win.UltraWinGrid.UltraGridBand ultraGridBand1 = new Infragistics.Win.UltraWinGrid.UltraGridBand("Band 0", -1);
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn12 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Band 1");
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn13 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Test Result", 0);
-            Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn14 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("StepNr", 1);
-            Infragistics.Win.Appearance appearance13 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn15 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Description", 2);
-            Infragistics.Win.Appearance appearance14 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn1 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Band 1");
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn2 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Test Result", 0);
+            Infragistics.Win.Appearance appearance1 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn3 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("StepNr", 1);
+            Infragistics.Win.Appearance appearance2 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn4 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Description", 2);
+            Infragistics.Win.Appearance appearance3 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinGrid.UltraGridBand ultraGridBand2 = new Infragistics.Win.UltraWinGrid.UltraGridBand("Band 1", 0);
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn16 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("StepNr", 0);
-            Infragistics.Win.Appearance appearance15 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn17 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Test Result", 1);
-            Infragistics.Win.Appearance appearance16 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn18 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Expected Value", 2);
-            Infragistics.Win.Appearance appearance17 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn19 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Test Value", 3);
-            Infragistics.Win.Appearance appearance18 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn20 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Unit", 4);
-            Infragistics.Win.Appearance appearance19 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn21 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("ErrorCode", 5);
-            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn22 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Description", 6);
-            Infragistics.Win.Appearance appearance20 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn5 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("StepNr", 0);
+            Infragistics.Win.Appearance appearance4 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn6 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Test Result", 1);
+            Infragistics.Win.Appearance appearance5 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn7 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Expected Value", 2);
+            Infragistics.Win.Appearance appearance6 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn8 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Test Value", 3);
+            Infragistics.Win.Appearance appearance7 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn9 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Unit", 4);
+            Infragistics.Win.Appearance appearance8 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn10 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("ErrorCode", 5);
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn11 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Description", 6);
+            Infragistics.Win.Appearance appearance9 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance10 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance11 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinDataSource.UltraDataBand ultraDataBand1 = new Infragistics.Win.UltraWinDataSource.UltraDataBand("Band 1");
@@ -72,8 +72,6 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTestTime = new System.Windows.Forms.Label();
             this.lblResult = new System.Windows.Forms.Label();
-            this.btnClearCount = new System.Windows.Forms.Button();
-            this.btnQuit = new System.Windows.Forms.Button();
             this.btnClearCounter = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.lblFail = new System.Windows.Forms.Label();
@@ -83,7 +81,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.chkBreakOnError = new System.Windows.Forms.CheckBox();
-            this.btnTogglePPM = new System.Windows.Forms.Button();
             this.tblChooseKind = new System.Windows.Forms.TableLayoutPanel();
             this.ckbNormalTest = new System.Windows.Forms.RadioButton();
             this.ckbAnalysis = new System.Windows.Forms.RadioButton();
@@ -96,6 +93,9 @@
             this.ColRes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnClearCount = new System.Windows.Forms.Button();
+            this.btnQuit = new System.Windows.Forms.Button();
+            this.btnTogglePPM = new System.Windows.Forms.Button();
             this.SubStepBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusInfo.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -300,38 +300,6 @@
             this.lblResult.Text = "PASS";
             this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnClearCount
-            // 
-            this.btnClearCount.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
-            this.btnClearCount.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnClearCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnClearCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnClearCount.ForeColor = System.Drawing.SystemColors.Info;
-            this.btnClearCount.Location = new System.Drawing.Point(2, 376);
-            this.btnClearCount.Margin = new System.Windows.Forms.Padding(2);
-            this.btnClearCount.Name = "btnClearCount";
-            this.btnClearCount.Size = new System.Drawing.Size(217, 56);
-            this.btnClearCount.TabIndex = 4;
-            this.btnClearCount.Text = "清除计数";
-            this.btnClearCount.UseVisualStyleBackColor = true;
-            this.btnClearCount.Click += new System.EventHandler(this.btnClearCount_Click);
-            // 
-            // btnQuit
-            // 
-            this.btnQuit.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
-            this.btnQuit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnQuit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnQuit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnQuit.ForeColor = System.Drawing.SystemColors.Info;
-            this.btnQuit.Location = new System.Drawing.Point(2, 436);
-            this.btnQuit.Margin = new System.Windows.Forms.Padding(2);
-            this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(217, 56);
-            this.btnQuit.TabIndex = 1;
-            this.btnQuit.Text = "退出";
-            this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
-            // 
             // btnClearCounter
             // 
             this.btnClearCounter.Controls.Add(this.tableLayoutPanel6);
@@ -459,21 +427,6 @@
             this.chkBreakOnError.Visible = false;
             this.chkBreakOnError.CheckedChanged += new System.EventHandler(this.chkBreakOnError_CheckedChanged);
             // 
-            // btnTogglePPM
-            // 
-            this.btnTogglePPM.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
-            this.btnTogglePPM.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTogglePPM.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnTogglePPM.ForeColor = System.Drawing.SystemColors.Info;
-            this.btnTogglePPM.Location = new System.Drawing.Point(2, 316);
-            this.btnTogglePPM.Margin = new System.Windows.Forms.Padding(2);
-            this.btnTogglePPM.Name = "btnTogglePPM";
-            this.btnTogglePPM.Size = new System.Drawing.Size(216, 56);
-            this.btnTogglePPM.TabIndex = 5;
-            this.btnTogglePPM.Text = "切换PPM/%";
-            this.btnTogglePPM.UseVisualStyleBackColor = true;
-            this.btnTogglePPM.Click += new System.EventHandler(this.btnTogglePPM_Click);
-            // 
             // tblChooseKind
             // 
             this.tblChooseKind.ColumnCount = 3;
@@ -559,84 +512,84 @@
             // 
             this.DataGrid.DataSource = this.ultraDataSource1;
             this.DataGrid.DisplayLayout.AutoFitStyle = Infragistics.Win.UltraWinGrid.AutoFitStyle.ExtendLastColumn;
-            ultraGridColumn12.Header.VisiblePosition = 3;
-            ultraGridColumn13.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            appearance12.TextHAlignAsString = "Center";
-            ultraGridColumn13.CellAppearance = appearance12;
-            ultraGridColumn13.Header.VisiblePosition = 0;
-            ultraGridColumn13.RowLayoutColumnInfo.OriginX = 2;
-            ultraGridColumn13.RowLayoutColumnInfo.OriginY = 0;
-            ultraGridColumn13.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(117, 0);
-            ultraGridColumn13.RowLayoutColumnInfo.SpanX = 2;
-            ultraGridColumn13.RowLayoutColumnInfo.SpanY = 2;
-            ultraGridColumn13.Width = 72;
-            ultraGridColumn14.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            appearance13.TextHAlignAsString = "Center";
-            ultraGridColumn14.CellAppearance = appearance13;
-            ultraGridColumn14.Header.VisiblePosition = 1;
-            ultraGridColumn14.RowLayoutColumnInfo.OriginX = 0;
-            ultraGridColumn14.RowLayoutColumnInfo.OriginY = 0;
-            ultraGridColumn14.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(123, 0);
-            ultraGridColumn14.RowLayoutColumnInfo.SpanX = 2;
-            ultraGridColumn14.RowLayoutColumnInfo.SpanY = 2;
-            ultraGridColumn14.Width = 85;
-            ultraGridColumn15.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            ultraGridColumn15.Header.VisiblePosition = 2;
-            ultraGridColumn15.RowLayoutColumnInfo.OriginX = 4;
-            ultraGridColumn15.RowLayoutColumnInfo.OriginY = 0;
-            ultraGridColumn15.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(504, 0);
-            ultraGridColumn15.RowLayoutColumnInfo.SpanX = 2;
-            ultraGridColumn15.RowLayoutColumnInfo.SpanY = 2;
-            ultraGridColumn15.Width = 355;
+            ultraGridColumn1.Header.VisiblePosition = 3;
+            ultraGridColumn2.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            appearance1.TextHAlignAsString = "Center";
+            ultraGridColumn2.CellAppearance = appearance1;
+            ultraGridColumn2.Header.VisiblePosition = 0;
+            ultraGridColumn2.RowLayoutColumnInfo.OriginX = 2;
+            ultraGridColumn2.RowLayoutColumnInfo.OriginY = 0;
+            ultraGridColumn2.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(117, 0);
+            ultraGridColumn2.RowLayoutColumnInfo.SpanX = 2;
+            ultraGridColumn2.RowLayoutColumnInfo.SpanY = 2;
+            ultraGridColumn2.Width = 72;
+            ultraGridColumn3.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            appearance2.TextHAlignAsString = "Center";
+            ultraGridColumn3.CellAppearance = appearance2;
+            ultraGridColumn3.Header.VisiblePosition = 1;
+            ultraGridColumn3.RowLayoutColumnInfo.OriginX = 0;
+            ultraGridColumn3.RowLayoutColumnInfo.OriginY = 0;
+            ultraGridColumn3.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(123, 0);
+            ultraGridColumn3.RowLayoutColumnInfo.SpanX = 2;
+            ultraGridColumn3.RowLayoutColumnInfo.SpanY = 2;
+            ultraGridColumn3.Width = 85;
+            ultraGridColumn4.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            ultraGridColumn4.Header.VisiblePosition = 2;
+            ultraGridColumn4.RowLayoutColumnInfo.OriginX = 4;
+            ultraGridColumn4.RowLayoutColumnInfo.OriginY = 0;
+            ultraGridColumn4.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(504, 0);
+            ultraGridColumn4.RowLayoutColumnInfo.SpanX = 2;
+            ultraGridColumn4.RowLayoutColumnInfo.SpanY = 2;
+            ultraGridColumn4.Width = 355;
             ultraGridBand1.Columns.AddRange(new object[] {
-            ultraGridColumn12,
-            ultraGridColumn13,
-            ultraGridColumn14,
-            ultraGridColumn15});
-            appearance14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            ultraGridBand1.Override.HeaderAppearance = appearance14;
+            ultraGridColumn1,
+            ultraGridColumn2,
+            ultraGridColumn3,
+            ultraGridColumn4});
+            appearance3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            ultraGridBand1.Override.HeaderAppearance = appearance3;
             ultraGridBand1.RowLayoutStyle = Infragistics.Win.UltraWinGrid.RowLayoutStyle.ColumnLayout;
-            ultraGridColumn16.AutoSizeEdit = Infragistics.Win.DefaultableBoolean.True;
-            ultraGridColumn16.AutoSizeMode = Infragistics.Win.UltraWinGrid.ColumnAutoSizeMode.VisibleRows;
-            ultraGridColumn16.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            appearance15.TextHAlignAsString = "Center";
-            ultraGridColumn16.CellAppearance = appearance15;
-            ultraGridColumn16.Header.VisiblePosition = 0;
-            ultraGridColumn16.Width = 103;
-            ultraGridColumn17.AutoSizeEdit = Infragistics.Win.DefaultableBoolean.True;
-            ultraGridColumn17.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            appearance16.TextHAlignAsString = "Center";
-            ultraGridColumn17.CellAppearance = appearance16;
-            ultraGridColumn17.Header.VisiblePosition = 1;
-            ultraGridColumn17.Width = 118;
-            ultraGridColumn18.AutoSizeMode = Infragistics.Win.UltraWinGrid.ColumnAutoSizeMode.VisibleRows;
-            ultraGridColumn18.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            appearance17.TextHAlignAsString = "Right";
-            ultraGridColumn18.CellAppearance = appearance17;
-            ultraGridColumn18.Header.VisiblePosition = 2;
-            ultraGridColumn18.Width = 129;
-            ultraGridColumn19.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            appearance18.TextHAlignAsString = "Right";
-            ultraGridColumn19.CellAppearance = appearance18;
-            ultraGridColumn19.Header.VisiblePosition = 3;
-            ultraGridColumn19.Width = 121;
-            ultraGridColumn20.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-            appearance19.TextHAlignAsString = "Center";
-            ultraGridColumn20.CellAppearance = appearance19;
-            ultraGridColumn20.Header.VisiblePosition = 4;
-            ultraGridColumn20.Width = 100;
-            ultraGridColumn21.Header.VisiblePosition = 5;
-            ultraGridColumn22.Header.VisiblePosition = 6;
+            ultraGridColumn5.AutoSizeEdit = Infragistics.Win.DefaultableBoolean.True;
+            ultraGridColumn5.AutoSizeMode = Infragistics.Win.UltraWinGrid.ColumnAutoSizeMode.VisibleRows;
+            ultraGridColumn5.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            appearance4.TextHAlignAsString = "Center";
+            ultraGridColumn5.CellAppearance = appearance4;
+            ultraGridColumn5.Header.VisiblePosition = 0;
+            ultraGridColumn5.Width = 103;
+            ultraGridColumn6.AutoSizeEdit = Infragistics.Win.DefaultableBoolean.True;
+            ultraGridColumn6.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            appearance5.TextHAlignAsString = "Center";
+            ultraGridColumn6.CellAppearance = appearance5;
+            ultraGridColumn6.Header.VisiblePosition = 1;
+            ultraGridColumn6.Width = 118;
+            ultraGridColumn7.AutoSizeMode = Infragistics.Win.UltraWinGrid.ColumnAutoSizeMode.VisibleRows;
+            ultraGridColumn7.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            appearance6.TextHAlignAsString = "Right";
+            ultraGridColumn7.CellAppearance = appearance6;
+            ultraGridColumn7.Header.VisiblePosition = 2;
+            ultraGridColumn7.Width = 129;
+            ultraGridColumn8.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            appearance7.TextHAlignAsString = "Right";
+            ultraGridColumn8.CellAppearance = appearance7;
+            ultraGridColumn8.Header.VisiblePosition = 3;
+            ultraGridColumn8.Width = 121;
+            ultraGridColumn9.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+            appearance8.TextHAlignAsString = "Center";
+            ultraGridColumn9.CellAppearance = appearance8;
+            ultraGridColumn9.Header.VisiblePosition = 4;
+            ultraGridColumn9.Width = 100;
+            ultraGridColumn10.Header.VisiblePosition = 5;
+            ultraGridColumn11.Header.VisiblePosition = 6;
             ultraGridBand2.Columns.AddRange(new object[] {
-            ultraGridColumn16,
-            ultraGridColumn17,
-            ultraGridColumn18,
-            ultraGridColumn19,
-            ultraGridColumn20,
-            ultraGridColumn21,
-            ultraGridColumn22});
-            appearance20.BackColor = System.Drawing.Color.LemonChiffon;
-            ultraGridBand2.Override.HeaderAppearance = appearance20;
+            ultraGridColumn5,
+            ultraGridColumn6,
+            ultraGridColumn7,
+            ultraGridColumn8,
+            ultraGridColumn9,
+            ultraGridColumn10,
+            ultraGridColumn11});
+            appearance9.BackColor = System.Drawing.Color.LemonChiffon;
+            ultraGridBand2.Override.HeaderAppearance = appearance9;
             ultraGridBand2.Override.HeaderStyle = Infragistics.Win.HeaderStyle.Standard;
             this.DataGrid.DisplayLayout.BandsSerializer.Add(ultraGridBand1);
             this.DataGrid.DisplayLayout.BandsSerializer.Add(ultraGridBand2);
@@ -745,6 +698,53 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "点检";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnClearCount
+            // 
+            this.btnClearCount.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
+            this.btnClearCount.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClearCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClearCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnClearCount.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnClearCount.Location = new System.Drawing.Point(2, 376);
+            this.btnClearCount.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClearCount.Name = "btnClearCount";
+            this.btnClearCount.Size = new System.Drawing.Size(217, 56);
+            this.btnClearCount.TabIndex = 4;
+            this.btnClearCount.Text = "清除计数";
+            this.btnClearCount.UseVisualStyleBackColor = true;
+            this.btnClearCount.Click += new System.EventHandler(this.btnClearCount_Click);
+            // 
+            // btnQuit
+            // 
+            this.btnQuit.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
+            this.btnQuit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnQuit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnQuit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnQuit.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnQuit.Location = new System.Drawing.Point(2, 436);
+            this.btnQuit.Margin = new System.Windows.Forms.Padding(2);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(217, 56);
+            this.btnQuit.TabIndex = 1;
+            this.btnQuit.Text = "退出";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            // 
+            // btnTogglePPM
+            // 
+            this.btnTogglePPM.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
+            this.btnTogglePPM.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTogglePPM.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnTogglePPM.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnTogglePPM.Location = new System.Drawing.Point(2, 316);
+            this.btnTogglePPM.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTogglePPM.Name = "btnTogglePPM";
+            this.btnTogglePPM.Size = new System.Drawing.Size(216, 56);
+            this.btnTogglePPM.TabIndex = 5;
+            this.btnTogglePPM.Text = "切换PPM/%";
+            this.btnTogglePPM.UseVisualStyleBackColor = true;
+            this.btnTogglePPM.Click += new System.EventHandler(this.btnTogglePPM_Click);
             // 
             // SubStepBindingSource
             // 

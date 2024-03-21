@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using ORMSqlSugar;
 
 namespace MainControl
 {
     static class Program
     {
+        
         public static SystemConfig CurrentConfig = null;
         /// <summary>
         /// 应用程序的主入口点。
