@@ -20,6 +20,8 @@ namespace MainControl.User
     {
         UserService bll=new UserService();
         RoleService role_bll = new RoleService();
+        SysLogService System_Bll = new SysLogService();
+
         FrmUserInfo _frm;
         //SystemAppendProperty_Bll app_bll = new SystemAppendProperty_Bll();
         //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
@@ -29,10 +31,9 @@ namespace MainControl.User
 
         string UserID = "";
         OperationType type;
-
         UserModel m ;
 
-        SysLogService System_Bll = new SysLogService();
+       
         string title = string.Empty;
         #region 订阅窗口关闭事件
         // 声明一个事件委托
@@ -40,7 +41,7 @@ namespace MainControl.User
         // 声明一个事件
         public event DataUpdatedEventHandler DataUpdated;
         // 在关闭窗口前触发事件
-        private void FrmUserInfoEdit_FormClosed(object sender, FormClosedEventArgs e)
+        private void FrmEdit_FormClosed(object sender, FormClosedEventArgs e)
         {
             // 触发事件
             DataUpdated?.Invoke(this, EventArgs.Empty);

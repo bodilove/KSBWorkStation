@@ -43,9 +43,7 @@
             this.工具TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PLCOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.测试配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.测试构建ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.运行测试ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.自定义CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.装配配置CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.用户管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.用户管理ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.角色管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +51,8 @@
             this.菜单管理toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.系统日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labtime = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -309,8 +309,6 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
-            this.日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.系统日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlayPanlAll.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
@@ -549,7 +547,7 @@
             this.工具TToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.PLCOToolStripMenuItem,
             this.测试配置ToolStripMenuItem,
-            this.自定义CToolStripMenuItem});
+            this.装配配置CToolStripMenuItem});
             this.工具TToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.工具TToolStripMenuItem.Name = "工具TToolStripMenuItem";
             this.工具TToolStripMenuItem.Size = new System.Drawing.Size(73, 44);
@@ -558,38 +556,23 @@
             // PLCOToolStripMenuItem
             // 
             this.PLCOToolStripMenuItem.Name = "PLCOToolStripMenuItem";
-            this.PLCOToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.PLCOToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.PLCOToolStripMenuItem.Text = "PLC配置";
             this.PLCOToolStripMenuItem.Click += new System.EventHandler(this.选项OToolStripMenuItem_Click);
             // 
             // 测试配置ToolStripMenuItem
             // 
-            this.测试配置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.测试构建ToolStripMenuItem1,
-            this.运行测试ToolStripMenuItem1});
             this.测试配置ToolStripMenuItem.Name = "测试配置ToolStripMenuItem";
-            this.测试配置ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.测试配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.测试配置ToolStripMenuItem.Text = "测试配置";
             this.测试配置ToolStripMenuItem.Click += new System.EventHandler(this.测试配置ToolStripMenuItem_Click);
             // 
-            // 测试构建ToolStripMenuItem1
+            // 装配配置CToolStripMenuItem
             // 
-            this.测试构建ToolStripMenuItem1.Name = "测试构建ToolStripMenuItem1";
-            this.测试构建ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
-            this.测试构建ToolStripMenuItem1.Text = "测试构建";
-            // 
-            // 运行测试ToolStripMenuItem1
-            // 
-            this.运行测试ToolStripMenuItem1.Name = "运行测试ToolStripMenuItem1";
-            this.运行测试ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
-            this.运行测试ToolStripMenuItem1.Text = "运行测试";
-            // 
-            // 自定义CToolStripMenuItem
-            // 
-            this.自定义CToolStripMenuItem.Name = "自定义CToolStripMenuItem";
-            this.自定义CToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
-            this.自定义CToolStripMenuItem.Text = "装配配置";
-            this.自定义CToolStripMenuItem.Click += new System.EventHandler(this.自定义CToolStripMenuItem_Click_1);
+            this.装配配置CToolStripMenuItem.Name = "装配配置CToolStripMenuItem";
+            this.装配配置CToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.装配配置CToolStripMenuItem.Text = "装配配置";
+            this.装配配置CToolStripMenuItem.Click += new System.EventHandler(this.装配配置CToolStripMenuItem_Click);
             // 
             // 用户管理ToolStripMenuItem
             // 
@@ -643,8 +626,24 @@
             // 关于AToolStripMenuItem
             // 
             this.关于AToolStripMenuItem.Name = "关于AToolStripMenuItem";
-            this.关于AToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.关于AToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
             this.关于AToolStripMenuItem.Text = "关于(&A)...";
+            // 
+            // 日志ToolStripMenuItem
+            // 
+            this.日志ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.系统日志ToolStripMenuItem});
+            this.日志ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.日志ToolStripMenuItem.Name = "日志ToolStripMenuItem";
+            this.日志ToolStripMenuItem.Size = new System.Drawing.Size(54, 44);
+            this.日志ToolStripMenuItem.Text = "日志";
+            // 
+            // 系统日志ToolStripMenuItem
+            // 
+            this.系统日志ToolStripMenuItem.Name = "系统日志ToolStripMenuItem";
+            this.系统日志ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.系统日志ToolStripMenuItem.Text = "系统日志";
+            this.系统日志ToolStripMenuItem.Click += new System.EventHandler(this.系统日志ToolStripMenuItem_Click);
             // 
             // panel2
             // 
@@ -3494,22 +3493,6 @@
             this.timer4.Interval = 1000;
             this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
             // 
-            // 日志ToolStripMenuItem
-            // 
-            this.日志ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.系统日志ToolStripMenuItem});
-            this.日志ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.日志ToolStripMenuItem.Name = "日志ToolStripMenuItem";
-            this.日志ToolStripMenuItem.Size = new System.Drawing.Size(54, 44);
-            this.日志ToolStripMenuItem.Text = "日志";
-            // 
-            // 系统日志ToolStripMenuItem
-            // 
-            this.系统日志ToolStripMenuItem.Name = "系统日志ToolStripMenuItem";
-            this.系统日志ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.系统日志ToolStripMenuItem.Text = "系统日志";
-            this.系统日志ToolStripMenuItem.Click += new System.EventHandler(this.系统日志ToolStripMenuItem_Click);
-            // 
             // frmMainNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -3918,11 +3901,9 @@
         private System.Windows.Forms.ToolStripMenuItem 数据库配置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 站位配置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 工具TToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 自定义CToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 装配配置CToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PLCOToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 测试配置ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 测试构建ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 运行测试ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 用户管理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 用户管理ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 角色管理ToolStripMenuItem;

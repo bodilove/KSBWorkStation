@@ -151,11 +151,29 @@
     <Compile Include="Main\PLCFunctionCode.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Tool\FrmToolHmiInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tool\FrmToolHmiInfo.Designer.cs">
+      <DependentUpon>FrmToolHmiInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tool\FrmToolTestInfo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tool\FrmToolTestInfo.Designer.cs">
       <DependentUpon>FrmToolTestInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\FrmListImages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmListImages.designer.cs">
+      <DependentUpon>FrmListImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\FrmMenuEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmMenuEdit.designer.cs">
+      <DependentUpon>FrmMenuEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="User\FrmSysMenuInfo.cs">
       <SubType>Form</SubType>
@@ -245,8 +263,17 @@
     <EmbeddedResource Include="System\FrmDBConfigEdit.resx">
       <DependentUpon>FrmDBConfigEdit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tool\FrmToolHmiInfo.resx">
+      <DependentUpon>FrmToolHmiInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tool\FrmToolTestInfo.resx">
       <DependentUpon>FrmToolTestInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmListImages.resx">
+      <DependentUpon>FrmListImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmMenuEdit.resx">
+      <DependentUpon>FrmMenuEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User\FrmSysMenuInfo.resx">
       <DependentUpon>FrmSysMenuInfo.cs</DependentUpon>

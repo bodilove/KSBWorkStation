@@ -50,16 +50,11 @@ namespace MainControl.Entity
         [Description("排序")]
         public int SortCode { get; set; }
 
-        ///// <summary>
-        ///// 角色 0：操作工 1：工程师 2：主管
-        ///// </summary>
-        //public int UserRole { get; set; }
-
-        ///// <summary>
-        ///// 删除标记 0：否；1：是
-        ///// </summary>
-        //[Description("删除标记")]
-        //public int DeleteMark { get; set; }
+        /// <summary>
+        /// 删除标记 0：否；1：是
+        /// </summary>
+        [Description("删除标记")]
+        public int DeleteMark { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

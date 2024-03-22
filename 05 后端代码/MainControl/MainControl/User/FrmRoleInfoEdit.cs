@@ -140,6 +140,7 @@ namespace MainControl.User
                 m.RoleName = txt_RoleName.Text.ToStringExt();
                 m.Remark = richTextBox1.Text;
 
+
                 if (String.IsNullOrEmpty(m.RoleName))
                 {
                     MessageBox.Show($"角色不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);

@@ -1178,10 +1178,7 @@ namespace MainControl
 
         #endregion
 
-        private void 自定义CToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-
-        }
+       
 
         /// <summary>
         /// 数据库配置
@@ -1219,6 +1216,15 @@ namespace MainControl
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
+        private void 装配配置CToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmToolHmiInfo fm = new FrmToolHmiInfo();
+
+            fm.StartPosition = FormStartPosition.CenterParent;
+            fm.ShowDialog();
+            
+        }
+
         #region 用户管理
         /// <summary>
         /// 用户管理
@@ -1272,5 +1278,7 @@ namespace MainControl
             fm.ShowDialog();
         }
         #endregion
+
+        
     }
 }

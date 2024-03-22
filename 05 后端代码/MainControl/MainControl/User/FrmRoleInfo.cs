@@ -261,18 +261,19 @@ namespace MainControl.User
 
         private void btn_refresh_Click(object sender, EventArgs e)
         {
-            //if (treeView1.SelectedNode != null)
-            //{
-            //    string Organization_ID = treeView1.SelectedNode.Tag.ToString();
-            //    StringBuilder SqlWhere = new StringBuilder();
-            //    IList<SqlParameter> IList_param = new List<SqlParameter>();
-            //    if (!string.IsNullOrEmpty(Organization_ID))
-            //    {
-            //        SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
-            //        IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID));
-            //    }
-            //    this.dataGridView1.DataSource = user_bll.GetUserInfoByOrganization_Id(SqlWhere, IList_param);
-            //}
+            ////if (treeView1.SelectedNode != null)
+            ////{
+            ////    string Organization_ID = treeView1.SelectedNode.Tag.ToString();
+            ////    StringBuilder SqlWhere = new StringBuilder();
+            ////    IList<SqlParameter> IList_param = new List<SqlParameter>();
+            ////    if (!string.IsNullOrEmpty(Organization_ID))
+            ////    {
+            ////        SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
+            ////        IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID));
+            ////    }
+            ////    this.dataGridView1.DataSource = user_bll.GetUserInfoByOrganization_Id(SqlWhere, IList_param);
+            ////}
+            BindView();
            
         }
 

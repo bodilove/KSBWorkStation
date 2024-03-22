@@ -11,8 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-//using YX.BLL;
-//using YX.Entity;
+
 namespace MainControl
 {
     public partial class FrmPermissionInfo : WindowParent

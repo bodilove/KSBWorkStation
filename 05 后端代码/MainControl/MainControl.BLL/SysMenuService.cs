@@ -24,88 +24,98 @@ namespace MainControl.BLL
             db = client.GetClient(); //非线程安全 (性能好)
   
         }
+
+        /// <summary>
+        /// 判断是否存在菜单名称
+        /// </summary>
+        /// <param name="MenuName"></param>
+        /// <param name="ParentId"></param>
+        /// <returns></returns>
+        public bool IsExistMenuName(string MenuName,int ParentId)
+        {
+            var result = db.Queryable<SysMenuModel>().Where(p => p.DeleteMark == 0 && p.Menu_Name == MenuName&&p.ParentId== ParentId).First();
+            if (result != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// 获取数据列表同步
         /// </summary>
         /// <returns></returns>
         public   List<SysMenuModel> QueryList()
         {
-             List<SysMenuModel> list =  db.Queryable<SysMenuModel>().ToList();
+             List<SysMenuModel> list =  db.Queryable<SysMenuModel>().Where(p => p.DeleteMark == 0).ToList();
              return list;
             
         }
         /// <summary>
-        /// 查询用户列表 异步
+        /// 查询所有下级列表 异步
         /// </summary>
         /// <returns></returns>
-        public async Task<List<SysMenuModel>> QueryListAsync()
+        public async Task<List<SysMenuModel>> QueryAllChildListAsync(int MenuID)
         {
-            //var db = client.Queryable<List<UserInfo>>(null, "dbo.U_User").ToList();
+            //List<SysMenuModel> list = await db.Queryable<SysMenuModel>().Where(p=>p.Menu_Id==MenuID).ToListAsync();
+            var list = await db.Queryable<SysMenuModel>().Where(p=>p.DeleteMark==0).ToChildListAsync(it => it.ParentId, MenuID);//MenuID是主键，查主键为MenuID下面所有
+            return list;
 
-            List<SysMenuModel> list = await db.Queryable<SysMenuModel>().ToListAsync();
+        }
+
+        /// <summary>
+        /// 查询一个下级列表 异步
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<SysMenuModel>> QueryListAsync(int MenuID)
+        {
+            //List<SysMenuModel> list = await db.Queryable<SysMenuModel>().Where(p=>p.Menu_Id==MenuID).ToListAsync();
+           var list= await db.Queryable<SysMenuModel>().Where(p => p.ParentId== MenuID&& p.DeleteMark==0).ToListAsync();//MenuID是主键，查主键为MenuID下面第一个
             return list;
             
         }
-        ///// <summary>
-        ///// 多删
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <param name="accountID"></param>
-        ///// <param name="businessUserID"></param>
-        ///// <returns></returns>
-        //public async Task<string> DelOrder(object[] id)
-        //{
-
-        //    var od = await Task.Run(() => GetListByAsc(t => id.Contains(t.FID), t => t.FID));
-        //    if (od == null)
-        //    {
-        //        return "找不到";
-        //    }
-        //    var b = await Task.Run(() => Delete(od)) > 0;
-        //    if (b)
-        //        return result.Success("操作成功");
-        //    return result.Error("操作失败");
-        //}
+        /// <summary>
+        /// 添加 同步
+        /// </summary>
+        /// <returns></returns>
+        public int Add(SysMenuModel m)
+        {
+            int result = db.Insertable(m).ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
-        /// 数据库联查
+        /// 更新 同步
         /// </summary>
-        /// <param name="year"></param>
-        /// <param name="month"></param>
-        /// <param name="accountID"></param>
-        /// <param name="private_key"></param>
         /// <returns></returns>
-        //public async Task<Object> GroupPerformanceRanking(int year, int month, long accountID)
-        //{
-        //    DateTime start = Convert.ToDateTime($@"{year}-{month}-01 00:00:00");
-        //    DateTime end = start.AddMonths(1);
-
-        //    var lst = await Task.Run(() => db.Queryable<tOrder, tGroup>((o, g) => new JoinQueryInfos(
-        //        JoinType.Left, o.FGroupID.Equals(g.FID)
-        //        ))
-        //    .Where((o, g) => o.FAccounID.Equals(accountID) && o.FOrderDate > start && o.FOrderDate < end)
-        //    .Select((o, g) => new
-        //    {
-        //        g.FGroupName,
-        //        g.FGroupLogo,
-        //        o.FDollar,
-        //        o.FRMB,
-        //    }).MergeTable().GroupBy(g => new
-        //    {
-        //        g.FGroupName,
-        //        g.FGroupLogo
-        //    }).Select(t => new
-        //    {
-        //        t.FGroupName,
-        //        FDollar = SqlFunc.AggregateSum(t.FDollar),
-        //        FRMB = SqlFunc.AggregateSum(t.FRMB)
-        //    }).OrderBy(t => t.FRMB, OrderByType.Desc).ToList());
-
-        //    return result.Success(lst);
-        //}
-
-
-
+        public int Edit(SysMenuModel m)
+        {
+            int result = db.Updateable(m).ExecuteCommand();
+            return result;
+        }
+        /// <summary>
+        /// 删除 同步(逻辑删除)
+        /// </summary>
+        /// <returns></returns>
+        public int DeleteIsLogic(int id)
+        {
+            int result = 0;
+            //int result = db.Updateable<SysMenuModel>().In(m.Menu_Id).IsLogic()
+            //    .ExecuteCommand("DeleteMark", 1, "ModifyDate", DateTime.Now);
+            var m = db.Queryable<SysMenuModel>().Where(x => x.Menu_Id == id).First();
+            if (m != null)
+            {
+                m.DeleteMark = 1;
+                m.ModifyUserId = 1;
+                m.ModifyUserName = "超级管理员";
+                m.ModifyDate = DateTime.Now;
+                result = db.Updateable(m).ExecuteCommand();
+            }
+            return result;
+        }
 
     }
 }
