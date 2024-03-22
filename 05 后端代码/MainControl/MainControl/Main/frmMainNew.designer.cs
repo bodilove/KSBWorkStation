@@ -309,6 +309,8 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
+            this.日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.系统日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlayPanlAll.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
@@ -478,7 +480,8 @@
             this.基础配置ToolStripMenuItem,
             this.工具TToolStripMenuItem,
             this.用户管理ToolStripMenuItem,
-            this.帮助HToolStripMenuItem});
+            this.帮助HToolStripMenuItem,
+            this.日志ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
@@ -603,28 +606,28 @@
             // 用户管理ToolStripMenuItem1
             // 
             this.用户管理ToolStripMenuItem1.Name = "用户管理ToolStripMenuItem1";
-            this.用户管理ToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
+            this.用户管理ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.用户管理ToolStripMenuItem1.Text = "用户管理";
             this.用户管理ToolStripMenuItem1.Click += new System.EventHandler(this.用户管理ToolStripMenuItem1_Click);
             // 
             // 角色管理ToolStripMenuItem
             // 
             this.角色管理ToolStripMenuItem.Name = "角色管理ToolStripMenuItem";
-            this.角色管理ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.角色管理ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.角色管理ToolStripMenuItem.Text = "角色管理";
             this.角色管理ToolStripMenuItem.Click += new System.EventHandler(this.角色管理ToolStripMenuItem_Click);
             // 
             // 权限管理ToolStripMenuItem
             // 
             this.权限管理ToolStripMenuItem.Name = "权限管理ToolStripMenuItem";
-            this.权限管理ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.权限管理ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.权限管理ToolStripMenuItem.Text = "权限管理";
             this.权限管理ToolStripMenuItem.Click += new System.EventHandler(this.权限管理ToolStripMenuItem_Click);
             // 
             // 菜单管理toolStripMenuItem
             // 
             this.菜单管理toolStripMenuItem.Name = "菜单管理toolStripMenuItem";
-            this.菜单管理toolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.菜单管理toolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.菜单管理toolStripMenuItem.Text = "菜单管理";
             this.菜单管理toolStripMenuItem.Click += new System.EventHandler(this.菜单管理toolStripMenuItem_Click);
             // 
@@ -640,7 +643,7 @@
             // 关于AToolStripMenuItem
             // 
             this.关于AToolStripMenuItem.Name = "关于AToolStripMenuItem";
-            this.关于AToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
+            this.关于AToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.关于AToolStripMenuItem.Text = "关于(&A)...";
             // 
             // panel2
@@ -3491,6 +3494,22 @@
             this.timer4.Interval = 1000;
             this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
             // 
+            // 日志ToolStripMenuItem
+            // 
+            this.日志ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.系统日志ToolStripMenuItem});
+            this.日志ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.日志ToolStripMenuItem.Name = "日志ToolStripMenuItem";
+            this.日志ToolStripMenuItem.Size = new System.Drawing.Size(54, 44);
+            this.日志ToolStripMenuItem.Text = "日志";
+            // 
+            // 系统日志ToolStripMenuItem
+            // 
+            this.系统日志ToolStripMenuItem.Name = "系统日志ToolStripMenuItem";
+            this.系统日志ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.系统日志ToolStripMenuItem.Text = "系统日志";
+            this.系统日志ToolStripMenuItem.Click += new System.EventHandler(this.系统日志ToolStripMenuItem_Click);
+            // 
             // frmMainNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -3914,5 +3933,7 @@
         private System.Windows.Forms.Label labtime;
         private System.Windows.Forms.Timer timer4;
         private System.Windows.Forms.ToolStripMenuItem 菜单管理toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 日志ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 系统日志ToolStripMenuItem;
     }
 }

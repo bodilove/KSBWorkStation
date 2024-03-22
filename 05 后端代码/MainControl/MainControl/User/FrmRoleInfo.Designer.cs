@@ -1,4 +1,4 @@
-﻿namespace MainControl
+﻿namespace MainControl.User
 {
     partial class FrmRoleInfo
     {
@@ -65,7 +65,7 @@
             this.btn_select});
             this.toolStrip2.Location = new System.Drawing.Point(0, 25);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(825, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(1076, 25);
             this.toolStrip2.TabIndex = 6;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -108,7 +108,7 @@
             this.btn_refresh});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(825, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1076, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -176,7 +176,7 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(630, 420);
+            this.dataGridView1.Size = new System.Drawing.Size(881, 499);
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
@@ -186,7 +186,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 50);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(189, 424);
+            this.panel1.Size = new System.Drawing.Size(189, 503);
             this.panel1.TabIndex = 8;
             // 
             // treeView1
@@ -200,7 +200,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Scrollable = false;
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(189, 424);
+            this.treeView1.Size = new System.Drawing.Size(189, 503);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -228,7 +228,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(825, 474);
+            this.ClientSize = new System.Drawing.Size(1076, 553);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.toolStrip2);

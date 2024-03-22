@@ -45,6 +45,7 @@
     <Compile Include="RoleService.cs" />
     <Compile Include="PermissionService.cs" />
     <Compile Include="SysMenuService.cs" />
+    <Compile Include="SysLogService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

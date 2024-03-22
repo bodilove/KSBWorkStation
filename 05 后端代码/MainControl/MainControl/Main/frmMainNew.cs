@@ -21,6 +21,8 @@ using System.IO.Ports;
 using System.Reflection;
 using System.Timers;
 using Test.StartUp;
+using MainControl.User;
+using MainControl.Log;
 
 namespace MainControl
 {
@@ -1258,8 +1260,17 @@ namespace MainControl
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
+
         #endregion
 
 
+        #region 日志
+        private void 系统日志ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmSysLogInfo fm = new FrmSysLogInfo();
+            fm.StartPosition = FormStartPosition.CenterParent;
+            fm.ShowDialog();
+        }
+        #endregion
     }
 }

@@ -63,6 +63,18 @@
     <Compile Include="frmLoginNew.designer.cs">
       <DependentUpon>frmLoginNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="Log\FrmSysLogInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Log\FrmSysLogInfo.Designer.cs">
+      <DependentUpon>FrmSysLogInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Log\FrmSysLogInfoEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Log\FrmSysLogInfoEdit.designer.cs">
+      <DependentUpon>FrmSysLogInfoEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmMainNew.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +175,12 @@
     <Compile Include="User\FrmPermissionInfo.Designer.cs">
       <DependentUpon>FrmPermissionInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="User\FrmRoleInfoEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\FrmRoleInfoEdit.designer.cs">
+      <DependentUpon>FrmRoleInfoEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="User\FrmUserInfoEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +210,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSysConfig.resx">
       <DependentUpon>frmSysConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Log\FrmSysLogInfo.resx">
+      <DependentUpon>FrmSysLogInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Log\FrmSysLogInfoEdit.resx">
+      <DependentUpon>FrmSysLogInfoEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmMainNew.resx">
       <DependentUpon>frmMainNew.cs</DependentUpon>
@@ -232,6 +256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User\FrmPermissionInfo.resx">
       <DependentUpon>FrmPermissionInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\FrmRoleInfoEdit.resx">
+      <DependentUpon>FrmRoleInfoEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User\FrmUserInfoEdit.resx">
       <DependentUpon>FrmUserInfoEdit.cs</DependentUpon>

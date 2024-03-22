@@ -11,7 +11,7 @@ namespace MainControl.Entity
     /// <summary>
     /// 返回用户
     /// </summary>
-    public class UserViewModelOutput:UserModel
+    public class UserViewModelOutput
     {
         /// <summary>
         /// 角色名称

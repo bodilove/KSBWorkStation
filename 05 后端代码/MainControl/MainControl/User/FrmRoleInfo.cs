@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 //using YX.BLL;
 //using YX.Entity;
-namespace MainControl
+namespace MainControl.User
 {
     public partial class FrmRoleInfo : WindowParent
     {
