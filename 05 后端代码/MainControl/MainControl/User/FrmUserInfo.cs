@@ -24,6 +24,7 @@ namespace MainControl
     {
 
         UserService bll=new UserService();
+        SysLogService System_Bll = new SysLogService();
         //SystemOrganization_Bll organization_bll = new SystemOrganization_Bll();
         //// SystemUserInfo_Dal user_dal = new SystemUserInfo_Dal();
         //SystemUserInfo_Bll user_bll = new SystemUserInfo_Bll();
@@ -32,31 +33,23 @@ namespace MainControl
         //public FrmUserInfo(string ParentId)
 
         FrmUserInfoEdit edit;//编辑窗口
+
+       
+        string title =string.Empty;
         public FrmUserInfo()
         {
             InitializeComponent();
             //SetButton(ParentId, this.toolStrip1);//设置按钮权限
             this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//列自动填充
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//填充满
-
-            // 创建DataGridView的数据源
-            DataTable dataTable = new DataTable();
-
            
-
         }
    
         private void FrmUserInfo_Load(object sender, EventArgs e)
         {
+            title = this.Text;
             GetComboxList();
-
             BindView();
-            //BindTreeView(organization_bll.GetOrganizations());
-            //if (treeView1.Nodes.Count > 0)//展开一级节点
-            //{
-            //    treeView1.Nodes[0].Expand();
-            //}
-
         }
         private void GetComboxList()
         {
@@ -67,19 +60,15 @@ namespace MainControl
             dt.Columns.Add(Value);
 
             DataRow dr1 = dt.NewRow();
-            dr1["Name"] = "工号";
-            dr1["Value"] = "User_Code";
+            dr1["Name"] = "账户";
+            dr1["Value"] = "UserNum";
 
             DataRow dr2 = dt.NewRow();
-            dr2["Name"] = "账户";
-            dr2["Value"] = "User_Account";
+            dr2["Name"] = "用户名";
+            dr2["Value"] = "UserName";
 
-            DataRow dr3 = dt.NewRow();
-            dr3["Name"] = "姓名";
-            dr3["Value"] = "User_Name";
             dt.Rows.Add(dr1);
             dt.Rows.Add(dr2);
-            dt.Rows.Add(dr3);
             this.com_Searchwhere.ComboBox.DisplayMember = "Name";
             this.com_Searchwhere.ComboBox.ValueMember = "Value";
 
@@ -113,15 +102,17 @@ namespace MainControl
             }
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module= title,
+                    Method= MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }
@@ -205,10 +196,28 @@ namespace MainControl
         /// <param name="e"></param>
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            edit = new FrmUserInfoEdit(this);
-            // 订阅子窗体的事件
-            edit.DataUpdated += btn_refresh_Click;
-            edit.ShowDialog();
+            try
+            {
+                edit = new FrmUserInfoEdit(this);
+                // 订阅子窗体的事件
+                edit.DataUpdated += btn_refresh_Click;
+                edit.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>
@@ -218,23 +227,41 @@ namespace MainControl
         /// <param name="e"></param>
         private void btn_edit_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.DataSource == null)
+            try
             {
-                MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                DataGridViewRow dr = dataGridView1.SelectedRows[0];
-
-                if (dr != null)
+                if (dataGridView1.DataSource == null)
                 {
-                    edit = new FrmUserInfoEdit(this, ref dr);
-                    // 订阅子窗体的事件
-                    edit.DataUpdated += btn_refresh_Click;
-                    edit.ShowDialog();
+                    MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            } 
-        
+                else
+                {
+                    DataGridViewRow dr = dataGridView1.SelectedRows[0];
+
+                    if (dr != null)
+                    {
+                        edit = new FrmUserInfoEdit(this, ref dr);
+                        // 订阅子窗体的事件
+                        edit.DataUpdated += btn_refresh_Click;
+                        edit.ShowDialog();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         /// <summary>
@@ -251,10 +278,26 @@ namespace MainControl
                 if (dr != null)
                 {
                     UserModel m = dr.DataBoundItem as UserModel;
+                    if (m != null&&m.UserNum.ToUpper()== "SuperAdmin")
+                    {
+                        MessageBox.Show($"{m.UserNum}为超级账号，不可以删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     int result = bll.DeleteIsLogic(m.UserID.StrToInt(-1));
                     if (result == 1)
                     {
                         MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        System_Bll.AddLog(new SysLogModel
+                        {
+                            CreateUserID = GlobalUserHandle.LoginUserID,
+                            CreateUserName = GlobalUserHandle.loginUserName,
+                            LocalIP = GlobalUserHandle.LocalIP,
+                            Module = title,
+                            Method = MethodBase.GetCurrentMethod().Name,
+                            LogMessage =$"{title}-删除账号：{m.UserNum}，用户名：{m.UserName}" ,
+                            Type = "系统消息",
+                            ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                        });
                         BindView();
                     }
                     else
@@ -265,15 +308,17 @@ namespace MainControl
             }
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }

@@ -1,4 +1,5 @@
-﻿using MainControl.BLL;
+﻿using Common;
+using MainControl.BLL;
 using MainControl.Entity;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,12 @@ namespace MainControl.User
     public partial class FrmRoleInfo : WindowParent
     {
         RoleService bll = new RoleService();
+        SysLogService System_Bll = new SysLogService();
 
+        FrmRoleInfoEdit edit;
         //public FrmUserInfo(string ParentId)
+
+        string title = string.Empty;
         public FrmRoleInfo()
         {
             InitializeComponent();
@@ -27,33 +32,13 @@ namespace MainControl.User
             this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//列自动填充
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//填充满
 
-            // 假设有一个实体类
-            var entity = new RoleModel();
-            // 使用反射获取实体的属性
-            PropertyInfo[] properties = entity.GetType().GetProperties();
-
-            // 创建DataGridView的数据源
-            DataTable dataTable = new DataTable();
-
-            foreach (PropertyInfo property in properties)
-            {
-                // 添加列，列名为中文字段名
-                DataGridViewColumn column = new DataGridViewTextBoxColumn();
-                column.HeaderText = property.GetCustomAttribute<DescriptionAttribute>()?.Description ?? property.Name;
-                column.DataPropertyName = property.Name;
-                dataGridView1.Columns.Add(column);
-            }
         }
    
         private void FrmRoleInfo_Load(object sender, EventArgs e)
         {
+            title = this.Text;
             GetComboxList();
-            BindTreeView();
-            //if (treeView1.Nodes.Count > 0)//展开一级节点
-            //{
-            //    treeView1.Nodes[0].Expand();
-            //}
-               
+            BindView();
         }
         private void GetComboxList()
         {
@@ -64,69 +49,57 @@ namespace MainControl.User
             dt.Columns.Add(Value);
 
             DataRow dr1 = dt.NewRow();
-            dr1["Name"] = "工号";
-            dr1["Value"] = "User_Code";
+            dr1["Name"] = "角色名称";
+            dr1["Value"] = "RoleName";
 
-            DataRow dr2 = dt.NewRow();
-            dr2["Name"] = "账户";
-            dr2["Value"] = "User_Account";
-
-            DataRow dr3 = dt.NewRow();
-            dr3["Name"] = "姓名";
-            dr3["Value"] = "User_Name";
             dt.Rows.Add(dr1);
-            dt.Rows.Add(dr2);
-            dt.Rows.Add(dr3);
+           
             this.com_Searchwhere.ComboBox.DisplayMember = "Name";
             this.com_Searchwhere.ComboBox.ValueMember = "Value";
 
             this.com_Searchwhere.ComboBox.DataSource = dt;
         }
-        private async void BindTreeView()
+        private async void BindView()
         {
             try
             {
+                this.dataGridView1.DataSource = null;
+                // 假设有一个实体类
+                var entity = new RoleModel();
+                // 使用反射获取实体的属性
+                PropertyInfo[] properties = entity.GetType().GetProperties();
+
+
+                foreach (PropertyInfo property in properties)
+                {
+                    // 添加列，列名为中文字段名
+                    DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                    column.HeaderText = property.GetCustomAttribute<DescriptionAttribute>()?.Description ?? property.Name;
+                    column.DataPropertyName = property.Name;
+                    dataGridView1.Columns.Add(column);
+                }
+
                 List<RoleModel> list = await bll.QueryListAsync();
 
-                this.dataGridView1.DataSource = null;
+              
                 this.dataGridView1.DataSource = list;
             }
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }
-
-        //private void FillTree(TreeNode node, List<Base_Organization> list)
-        //{
-
-        //    var childs = list.Where(o => o.ParentId == node.Tag.ToString());
-        //    if (childs.Count() > 0)
-        //    {
-        //        foreach (var item in childs)
-        //        {
-        //            TreeNode tnn = new TreeNode();
-        //            tnn.Text = item.Organization_Name;
-        //            tnn.Tag = item.Organization_ID;
-        //            tnn.ImageIndex = 0;
-        //            if (item.ParentId == node.Tag.ToString())
-        //            {
-        //                FillTree(tnn, list);
-        //            }
-        //            node.Nodes.Add(tnn);
-        //        }
-
-        //    }
-        //}
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -173,27 +146,68 @@ namespace MainControl.User
 
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            //FrmUserInfoEdit edit = new FrmUserInfoEdit(this);
-            //edit.ShowDialog();
+            try
+            {
+                edit = new FrmRoleInfoEdit(this);
+                // 订阅子窗体的事件
+                edit.DataUpdated += btn_refresh_Click;
+                edit.ShowDialog();
+            }
+            
+            catch (Exception ex)
+            {
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_edit_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.DataSource == null)
+            try
             {
-                MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                DataGridViewRow dr = dataGridView1.SelectedRows[0];
+                if (dataGridView1.DataSource == null)
+                {
+                    MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    DataGridViewRow dr = dataGridView1.SelectedRows[0];
 
-                //if (dr != null)
-                //{
-                //    FrmUserInfoEdit edit = new FrmUserInfoEdit(this,ref dr);
-                //    edit.ShowDialog();
-                //}
-            } 
-        
+                    if (dr != null)
+                    {
+                        edit = new FrmRoleInfoEdit(this, ref dr);
+                        // 订阅子窗体的事件
+                        edit.DataUpdated += btn_refresh_Click;
+                        edit.ShowDialog();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void btn_delete_Click(object sender, EventArgs e)
@@ -204,29 +218,43 @@ namespace MainControl.User
                 DataGridViewRow dr = dataGridView1.SelectedRows[0];
                 if (dr != null)
                 {
-                    //int result = bll.DeleteSysMenu(dr.Cells["Menu_Id"].Value.ToString());
-                   // if (result == 1)
-                   // {
+                    RoleModel m = dr.DataBoundItem as RoleModel;
+                    int result = bll.DeleteIsLogic(m.RoleID.StrToInt(-1));
+                    if (result == 1)
+                    {
                         MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                       // this.dataGridView1.DataSource = dal.GetSysMenuChilds(this.listView1.SelectedItems[0].Tag.ToString());
-                   // }
-                    //else
-                   // {
+                        System_Bll.AddLog(new SysLogModel
+                        {
+                            CreateUserID = GlobalUserHandle.LoginUserID,
+                            CreateUserName = GlobalUserHandle.loginUserName,
+                            LocalIP = GlobalUserHandle.LocalIP,
+                            Module = title,
+                            Method = MethodBase.GetCurrentMethod().Name,
+                            LogMessage = $"{title}-删除角色ID：{m.RoleID}，角色名：{m.RoleName}",
+                            Type = "系统消息",
+                            ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                        });
+                        BindView();
+                    }
+                    else
+                    {
                         MessageBox.Show("删除失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                   // }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }

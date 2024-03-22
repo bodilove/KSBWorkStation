@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 //using YX.BLL;
@@ -19,7 +20,7 @@ namespace MainControl.User
     {
         UserService bll=new UserService();
         RoleService role_bll = new RoleService();
-        FrmUserInfo _frmUserInfo;
+        FrmUserInfo _frm;
         //SystemAppendProperty_Bll app_bll = new SystemAppendProperty_Bll();
         //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
         //SystemUserInfo_Bll user_bll = new SystemUserInfo_Bll();
@@ -30,6 +31,9 @@ namespace MainControl.User
         OperationType type;
 
         UserModel m ;
+
+        SysLogService System_Bll = new SysLogService();
+        string title = string.Empty;
         #region 订阅窗口关闭事件
         // 声明一个事件委托
         public delegate void DataUpdatedEventHandler(object sender, EventArgs e);
@@ -42,7 +46,7 @@ namespace MainControl.User
             DataUpdated?.Invoke(this, EventArgs.Empty);
         }
         #endregion
-        public FrmUserInfoEdit(FrmUserInfo frmUserInfo)
+        public FrmUserInfoEdit(FrmUserInfo frm)
         {
             InitializeComponent();
             Init();
@@ -50,18 +54,19 @@ namespace MainControl.User
             type = OperationType.Add;
 
             m = new UserModel();
-            this._frmUserInfo = frmUserInfo;
+            this._frm = frm;
 
             this.Text = "用户信息-添加";
+            title = this.Text;
         }
-        public FrmUserInfoEdit(FrmUserInfo frmUserInfo, ref DataGridViewRow dvr)
+        public FrmUserInfoEdit(FrmUserInfo frm, ref DataGridViewRow dvr)
         {
             InitializeComponent();
             Init();
 
             type = OperationType.Edit;
             m = dvr.DataBoundItem as UserModel;
-            this._frmUserInfo = frmUserInfo;
+            this._frm = frm;
             UserID = m.UserID.ToStringExt();
             txt_Email.Text = m.Email.ToStringExt();
             txt_User_Account.Text = m.UserNum.ToStringExt();
@@ -72,8 +77,9 @@ namespace MainControl.User
             richTextBox1.Text = m.Remark.ToStringExt();
             com_RoleId.SelectedValue = m.RoleID == null ? -1 : m.RoleID;
 
-
+            this.txt_User_Account.Enabled = false;
             this.Text = "用户信息-编辑";
+            title = this.Text;
         }
         void Init()
         {
@@ -145,11 +151,51 @@ namespace MainControl.User
                 m.Gender = com_User_Sex.Text.ToStringExt();
                 m.RoleID = com_RoleId.SelectedValue.StrToInt(-1);
                 m.Remark = richTextBox1.Text;
-                
+
+                if (String.IsNullOrEmpty(m.UserNum))
+                {
+                    MessageBox.Show($"用户账号不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (String.IsNullOrEmpty(m.UserName))
+                {
+                    MessageBox.Show($"用户名称不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (String.IsNullOrEmpty(m.Gender))
+                {
+                    MessageBox.Show($"性别不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //if (m.RoleID!=null&&m.RoleID>0)
+                //{
+                //    MessageBox.Show($"用户角色不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
+
                 int isOk = 0;
                 if (type == OperationType.Add)
                 {
-                    isOk = bll.Add(m);
+                    if (bll.IsExistUserNum(m.UserNum))
+                    {
+                        MessageBox.Show($"账号：{m.UserNum}，已经存在，无法重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        System_Bll.AddLog(new SysLogModel
+                        {
+                            CreateUserID = GlobalUserHandle.LoginUserID,
+                            CreateUserName = GlobalUserHandle.loginUserName,
+                            LocalIP = GlobalUserHandle.LocalIP,
+                            Module = title,
+                            Method = MethodBase.GetCurrentMethod().Name,
+                            LogMessage = $"{title}-账号：{m.UserNum}，用户名：{m.UserName} 已经存在，无法重复添加！",
+                            Type = "系统消息",
+                            ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                        });
+                        return;
+                    }
+                    else
+                    {
+                        isOk = bll.Add(m);
+                    }
                 }
                 else
                 {
@@ -159,6 +205,17 @@ namespace MainControl.User
                 if (isOk > 0)
                 {
                     MessageBox.Show("保存成功！");
+                    System_Bll.AddLog(new SysLogModel
+                    {
+                        CreateUserID = GlobalUserHandle.LoginUserID,
+                        CreateUserName = GlobalUserHandle.loginUserName,
+                        LocalIP = GlobalUserHandle.LocalIP,
+                        Module = title,
+                        Method = MethodBase.GetCurrentMethod().Name,
+                        LogMessage = $"{title}-账号：{m.UserNum}，用户名：{m.UserName} 成功！",
+                        Type = "系统消息",
+                        ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                    });
                     this.Close();
                 }
                 else
@@ -169,15 +226,17 @@ namespace MainControl.User
             catch (Exception ex)
             {
 
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmDBConfigEdit).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }

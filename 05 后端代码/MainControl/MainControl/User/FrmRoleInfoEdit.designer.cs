@@ -29,26 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUserInfoEdit));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmRoleInfoEdit));
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_concel = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tab_baseInfo = new System.Windows.Forms.TabPage();
-            this.com_RoleId = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txt_Email = new System.Windows.Forms.TextBox();
-            this.txt_User_Account = new System.Windows.Forms.TextBox();
-            this.txt_User_Name = new System.Windows.Forms.TextBox();
+            this.txt_RoleName = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.com_User_Sex = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.txt_Password = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tab_baseInfo.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -728,20 +718,10 @@
             // 
             // tab_baseInfo
             // 
-            this.tab_baseInfo.Controls.Add(this.txt_Password);
-            this.tab_baseInfo.Controls.Add(this.label1);
-            this.tab_baseInfo.Controls.Add(this.com_RoleId);
-            this.tab_baseInfo.Controls.Add(this.label10);
-            this.tab_baseInfo.Controls.Add(this.txt_Email);
-            this.tab_baseInfo.Controls.Add(this.txt_User_Account);
-            this.tab_baseInfo.Controls.Add(this.txt_User_Name);
+            this.tab_baseInfo.Controls.Add(this.txt_RoleName);
             this.tab_baseInfo.Controls.Add(this.richTextBox1);
-            this.tab_baseInfo.Controls.Add(this.com_User_Sex);
             this.tab_baseInfo.Controls.Add(this.label12);
-            this.tab_baseInfo.Controls.Add(this.label5);
-            this.tab_baseInfo.Controls.Add(this.label6);
             this.tab_baseInfo.Controls.Add(this.label4);
-            this.tab_baseInfo.Controls.Add(this.label2);
             this.tab_baseInfo.Location = new System.Drawing.Point(4, 22);
             this.tab_baseInfo.Name = "tab_baseInfo";
             this.tab_baseInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -750,108 +730,38 @@
             this.tab_baseInfo.Text = "基本信息";
             this.tab_baseInfo.UseVisualStyleBackColor = true;
             // 
-            // com_RoleId
+            // txt_RoleName
             // 
-            this.com_RoleId.FormattingEnabled = true;
-            this.com_RoleId.Location = new System.Drawing.Point(364, 96);
-            this.com_RoleId.Name = "com_RoleId";
-            this.com_RoleId.Size = new System.Drawing.Size(197, 20);
-            this.com_RoleId.TabIndex = 36;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(292, 99);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 12);
-            this.label10.TabIndex = 34;
-            this.label10.Text = "角色选择：";
-            // 
-            // txt_Email
-            // 
-            this.txt_Email.Location = new System.Drawing.Point(364, 59);
-            this.txt_Email.Name = "txt_Email";
-            this.txt_Email.Size = new System.Drawing.Size(197, 21);
-            this.txt_Email.TabIndex = 33;
-            // 
-            // txt_User_Account
-            // 
-            this.txt_User_Account.Location = new System.Drawing.Point(90, 25);
-            this.txt_User_Account.Name = "txt_User_Account";
-            this.txt_User_Account.Size = new System.Drawing.Size(197, 21);
-            this.txt_User_Account.TabIndex = 30;
-            // 
-            // txt_User_Name
-            // 
-            this.txt_User_Name.Location = new System.Drawing.Point(364, 25);
-            this.txt_User_Name.Name = "txt_User_Name";
-            this.txt_User_Name.Size = new System.Drawing.Size(197, 21);
-            this.txt_User_Name.TabIndex = 29;
+            this.txt_RoleName.Location = new System.Drawing.Point(90, 30);
+            this.txt_RoleName.Name = "txt_RoleName";
+            this.txt_RoleName.Size = new System.Drawing.Size(197, 21);
+            this.txt_RoleName.TabIndex = 30;
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(72, 145);
+            this.richTextBox1.Location = new System.Drawing.Point(90, 95);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(489, 117);
+            this.richTextBox1.Size = new System.Drawing.Size(440, 117);
             this.richTextBox1.TabIndex = 23;
             this.richTextBox1.Text = "";
-            // 
-            // com_User_Sex
-            // 
-            this.com_User_Sex.FormattingEnabled = true;
-            this.com_User_Sex.Items.AddRange(new object[] {
-            "男",
-            "女"});
-            this.com_User_Sex.Location = new System.Drawing.Point(91, 96);
-            this.com_User_Sex.Name = "com_User_Sex";
-            this.com_User_Sex.Size = new System.Drawing.Size(196, 20);
-            this.com_User_Sex.TabIndex = 32;
-            this.com_User_Sex.Text = "男";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(25, 190);
+            this.label12.Location = new System.Drawing.Point(25, 140);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(41, 12);
             this.label12.TabIndex = 22;
             this.label12.Text = "备注：";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(293, 64);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 12);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "电子邮件：";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 99);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 12);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "职工性别：";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 31);
+            this.label4.Location = new System.Drawing.Point(19, 36);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 4;
-            this.label4.Text = "登录账户：";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(293, 31);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "职工姓名：";
+            this.label4.Text = "角色名称：";
             // 
             // tabControl1
             // 
@@ -865,25 +775,7 @@
             this.tabControl1.Size = new System.Drawing.Size(588, 314);
             this.tabControl1.TabIndex = 0;
             // 
-            // txt_Password
-            // 
-            this.txt_Password.Location = new System.Drawing.Point(91, 59);
-            this.txt_Password.Name = "txt_Password";
-            this.txt_Password.PasswordChar = '*';
-            this.txt_Password.Size = new System.Drawing.Size(197, 21);
-            this.txt_Password.TabIndex = 38;
-            this.txt_Password.UseSystemPasswordChar = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "登录密码：";
-            // 
-            // FrmUserInfoEdit
+            // FrmRoleInfoEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -894,9 +786,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmUserInfoEdit";
+            this.Name = "FrmRoleInfoEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "用户管理编辑";
+            this.Text = "角色管理编辑";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEdit_FormClosed);
             this.Load += new System.EventHandler(this.FrmRoleInfoEdit_Load);
             this.tab_baseInfo.ResumeLayout(false);
@@ -911,20 +803,10 @@
         private System.Windows.Forms.Button btn_concel;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TabPage tab_baseInfo;
-        private System.Windows.Forms.TextBox txt_Email;
-        private System.Windows.Forms.TextBox txt_User_Account;
-        private System.Windows.Forms.TextBox txt_User_Name;
+        private System.Windows.Forms.TextBox txt_RoleName;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.ComboBox com_User_Sex;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.ComboBox com_RoleId;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txt_Password;
-        private System.Windows.Forms.Label label1;
     }
 }

@@ -12,7 +12,7 @@ namespace MainControl.BLL
 {
     public class RoleService
     {
-       SqlsugarMyClient client=new SqlsugarMyClient();
+        SqlsugarMyClient client=new SqlsugarMyClient();
         ISqlSugarClient db = null;
 
         /// <summary>
@@ -25,6 +25,24 @@ namespace MainControl.BLL
   
         }
         /// <summary>
+        /// 判断是否存在角色名称
+        /// </summary>
+        /// <param name="RoleName"></param>
+        /// <returns></returns>
+        public bool IsExistRoleName(string RoleName)
+        {
+            var result = db.Queryable<RoleModel>().Where(p => p.DeleteMark == 0 && p.RoleName == RoleName).First();
+            if (result != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 获取数据列表同步
         /// </summary>
         /// <returns></returns>
@@ -35,79 +53,121 @@ namespace MainControl.BLL
             
         }
 
-
-
         /// <summary>
         /// 查询用户列表 异步
         /// </summary>
         /// <returns></returns>
         public async Task<List<RoleModel>> QueryListAsync()
         {
-            //var db = client.Queryable<List<UserInfo>>(null, "dbo.U_User").ToList();
-
             List<RoleModel> list = await db.Queryable<RoleModel>().ToListAsync();
             return list;
             
         }
-        ///// <summary>
-        ///// 多删
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <param name="accountID"></param>
-        ///// <param name="businessUserID"></param>
-        ///// <returns></returns>
-        //public async Task<string> DelOrder(object[] id)
-        //{
-
-        //    var od = await Task.Run(() => GetListByAsc(t => id.Contains(t.FID), t => t.FID));
-        //    if (od == null)
-        //    {
-        //        return "找不到";
-        //    }
-        //    var b = await Task.Run(() => Delete(od)) > 0;
-        //    if (b)
-        //        return result.Success("操作成功");
-        //    return result.Error("操作失败");
-        //}
+        /// <summary>
+        /// 添加 同步
+        /// </summary>
+        /// <returns></returns>
+        public int Add(RoleModel m)
+        {
+            int result = db.Insertable(m).ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
-        /// 数据库联查
+        /// 更新 同步
         /// </summary>
-        /// <param name="year"></param>
-        /// <param name="month"></param>
-        /// <param name="accountID"></param>
-        /// <param name="private_key"></param>
         /// <returns></returns>
-        //public async Task<Object> GroupPerformanceRanking(int year, int month, long accountID)
-        //{
-        //    DateTime start = Convert.ToDateTime($@"{year}-{month}-01 00:00:00");
-        //    DateTime end = start.AddMonths(1);
+        public int Edit(RoleModel m)
+        {
+            int result = db.Updateable(m).ExecuteCommand();
+            return result;
+        }
+        /// <summary>
+        /// 删除 同步
+        /// </summary>
+        /// <returns></returns>
+        public int Delete(RoleModel m)
+        {
+            int result = db.Deleteable(m).ExecuteCommand();
+            return result;
+        }
 
-        //    var lst = await Task.Run(() => db.Queryable<tOrder, tGroup>((o, g) => new JoinQueryInfos(
-        //        JoinType.Left, o.FGroupID.Equals(g.FID)
-        //        ))
-        //    .Where((o, g) => o.FAccounID.Equals(accountID) && o.FOrderDate > start && o.FOrderDate < end)
-        //    .Select((o, g) => new
-        //    {
-        //        g.FGroupName,
-        //        g.FGroupLogo,
-        //        o.FDollar,
-        //        o.FRMB,
-        //    }).MergeTable().GroupBy(g => new
-        //    {
-        //        g.FGroupName,
-        //        g.FGroupLogo
-        //    }).Select(t => new
-        //    {
-        //        t.FGroupName,
-        //        FDollar = SqlFunc.AggregateSum(t.FDollar),
-        //        FRMB = SqlFunc.AggregateSum(t.FRMB)
-        //    }).OrderBy(t => t.FRMB, OrderByType.Desc).ToList());
+        /// <summary>
+        /// 删除 同步(逻辑删除)
+        /// </summary>
+        /// <returns></returns>
+        public int DeleteIsLogic(int id)
+        {
+            int result = 0;
+            
+            var m = db.Queryable<RoleModel>().Where(x => x.RoleID == id).First();
+            if (m != null)
+            {
+                m.DeleteMark = 1;
+                //m.ModifyUserId = 1;
+                //m.ModifyUserName = "超级管理员";
+                //m.ModifyDate = DateTime.Now;
+                result = db.Updateable(m).ExecuteCommand();
 
-        //    return result.Success(lst);
-        //}
+            }
+            return result;
+        }
+        /// <summary>
+        /// 多删
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="accountID"></param>
+        /// <param name="businessUserID"></param>
+        /// <returns></returns>
+        public int DelAll(object[] ids)
+        {
+            int result = db.Deleteable<RoleModel>().Where(p => ids.Contains(p.RoleID)).ExecuteCommand(); //批量删除
+            return result;
+        }
 
+        
+        /// <summary>
+        /// 添加 同步
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> AddAsync(RoleModel m)
+        {
+            int result = await db.Insertable(m).ExecuteCommandAsync();
+            return result;
+        }
+        /// <summary>
+        /// 更新 异步
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> EditAsync(RoleModel m)
+        {
+            int result = await db.Updateable(m).ExecuteCommandAsync();
+            return result;
 
+        }
+        /// <summary>
+        /// 更新 异步
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> DeleteAsync(RoleModel m)
+        {
+            int result = await db.Deleteable(m).ExecuteCommandAsync();
+            return result;
+
+        }
+
+        /// <summary>
+        /// 多删
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="accountID"></param>
+        /// <param name="businessUserID"></param>
+        /// <returns></returns>
+        public async Task<int> DelAll2(object[] ids)
+        {
+            int result = await db.Deleteable<RoleModel>().Where(p => ids.Contains(p.RoleID)).ExecuteCommandAsync(); //批量删除.ExecuteCommandAsync();
+            return result;
+        }
 
 
     }

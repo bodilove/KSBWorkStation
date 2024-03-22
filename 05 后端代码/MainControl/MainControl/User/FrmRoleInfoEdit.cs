@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 //using YX.BLL;
@@ -17,8 +18,8 @@ namespace MainControl.User
 {
     public partial class FrmRoleInfoEdit : Form
     {
-        UserService bll=new UserService();
-        RoleService role_bll = new RoleService();
+       
+        RoleService bll = new RoleService();
         FrmRoleInfo _frm;
         //SystemAppendProperty_Bll app_bll = new SystemAppendProperty_Bll();
         //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
@@ -26,10 +27,13 @@ namespace MainControl.User
         //SystemOrganization_Bll org_bll = new SystemOrganization_Bll();
         //SystemRole_Bll role_bll = new SystemRole_Bll();
 
-        string UserID = "";
+        string ID = "";
         OperationType type;
 
-        UserModel m ;
+        RoleModel m ;
+        SysLogService System_Bll = new SysLogService();
+        string title = string.Empty;
+
         #region 订阅窗口关闭事件
         // 声明一个事件委托
         public delegate void DataUpdatedEventHandler(object sender, EventArgs e);
@@ -49,37 +53,32 @@ namespace MainControl.User
 
             type = OperationType.Add;
 
-            m = new UserModel();
+            m = new RoleModel();
             this._frm = frm;
 
-            this.Text = "用户信息-添加";
+            this.Text = "角色信息-添加";
+            title = this.Text;
         }
         public FrmRoleInfoEdit(FrmRoleInfo frm, ref DataGridViewRow dvr)
         {
             InitializeComponent();
-            Init();
+            //Init();
 
             type = OperationType.Edit;
-            m = dvr.DataBoundItem as UserModel;
+            m = dvr.DataBoundItem as RoleModel;
             this._frm = frm;
-            UserID = m.UserID.ToStringExt();
-            txt_Email.Text = m.Email.ToStringExt();
-            txt_User_Account.Text = m.UserNum.ToStringExt();
-            txt_User_Name.Text = m.UserName.ToStringExt();
-            //Md5Helper.Md5( txt_Password.Text)
-            txt_Password.Text = m.Password.ToStringExt();  
-            com_User_Sex.Text = m.Gender.ToStringExt();
+            ID = m.RoleID.ToStringExt();
+            txt_RoleName.Text = m.RoleName.ToStringExt();
             richTextBox1.Text = m.Remark.ToStringExt();
-            com_RoleId.SelectedValue = m.RoleID == null ? -1 : m.RoleID;
-
-
-            this.Text = "用户信息-编辑";
+          
+            this.Text = "角色信息-编辑";
+            title = this.Text;
         }
         void Init()
         {
-            com_RoleId.DataSource = role_bll.QueryList();
-            com_RoleId.DisplayMember = "RoleName";
-            com_RoleId.ValueMember = "RoleID";
+            //com_RoleId.DataSource = role_bll.QueryList();
+            //com_RoleId.DisplayMember = "RoleName";
+            //com_RoleId.ValueMember = "RoleID";
         }
 
         private void FrmRoleInfoEdit_Load(object sender, EventArgs e)
@@ -120,10 +119,10 @@ namespace MainControl.User
             try
             {
                 
-                if (!string.IsNullOrEmpty(UserID))
+                if (!string.IsNullOrEmpty(ID))
                 {
                    
-                    m.ModifyDate = DateTime.Now;
+                    //m.ModifyDate = DateTime.Now;
                     //m.ModifyUserId = FrmLogin.LoginUserID;
                     //m.ModifyUserName = FrmLogin.loginUserName;
                 }
@@ -131,25 +130,45 @@ namespace MainControl.User
                 {
                     
                     
-                    m.CreateDate = DateTime.Now;
-                    m.CreateUserId = 1;
-                    m.CreateUserName = "超级管理员";
+                    //m.CreateDate = DateTime.Now;
+                    //m.CreateUserId = 1;
+                    //m.CreateUserName = "超级管理员";
                     //m.CreateUserId = frmLoginNew.LoginUserID;
                     //m.CreateUserName = frmLoginNew.loginUserName;
 
                 }
-                m.UserNum = txt_User_Account.Text.ToStringExt();
-                m.UserName = txt_User_Name.Text.ToStringExt();
-                m.Password = txt_Password.Text.ToStringExt("123456");//Md5Helper.Md5( txt_User_Pwd.Text);
-                m.Email = txt_Email.Text.ToStringExt();
-                m.Gender = com_User_Sex.Text.ToStringExt();
-                m.RoleID = com_RoleId.SelectedValue.StrToInt(-1);
+                m.RoleName = txt_RoleName.Text.ToStringExt();
                 m.Remark = richTextBox1.Text;
-                
+
+                if (String.IsNullOrEmpty(m.RoleName))
+                {
+                    MessageBox.Show($"角色不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+              
+
                 int isOk = 0;
                 if (type == OperationType.Add)
                 {
-                    isOk = bll.Add(m);
+                    if (bll.IsExistRoleName(m.RoleName))
+                    {
+                        MessageBox.Show($"角色：{m.RoleName}，已经存在，无法重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        System_Bll.AddLog(new SysLogModel
+                        {
+                            CreateUserID = GlobalUserHandle.LoginUserID,
+                            CreateUserName = GlobalUserHandle.loginUserName,
+                            LocalIP = GlobalUserHandle.LocalIP,
+                            Module = title,
+                            Method = MethodBase.GetCurrentMethod().Name,
+                            LogMessage = $"{title}-角色：{m.RoleName}已经存在，无法重复添加！",
+                            Type = "系统消息",
+                            ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                        });
+                        return;
+                    }
+                    else
+                    {
+                        isOk = bll.Add(m);
+                    }
                 }
                 else
                 {
@@ -159,6 +178,17 @@ namespace MainControl.User
                 if (isOk > 0)
                 {
                     MessageBox.Show("保存成功！");
+                    System_Bll.AddLog(new SysLogModel
+                    {
+                        CreateUserID = GlobalUserHandle.LoginUserID,
+                        CreateUserName = GlobalUserHandle.loginUserName,
+                        LocalIP = GlobalUserHandle.LocalIP,
+                        Module = title,
+                        Method = MethodBase.GetCurrentMethod().Name,
+                         LogMessage = $"{title}-角色ID：{m.RoleID}，角色名：{m.RoleName} 成功！",
+                        Type = "系统消息",
+                        ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                    });
                     this.Close();
                 }
                 else
@@ -169,15 +199,17 @@ namespace MainControl.User
             catch (Exception ex)
             {
 
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmDBConfigEdit).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }

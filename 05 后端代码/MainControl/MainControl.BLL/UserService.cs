@@ -25,6 +25,36 @@ namespace MainControl.BLL
   
         }
         /// <summary>
+        /// 获取用户登录信息
+        /// </summary>
+        /// <param name="UserNum">账号</param>
+        /// <param name="Password">密码</param>
+        /// <returns></returns>
+        public UserModel GetUserLoginInfo(string UserNum,string Password)
+        {
+           
+            var result =  db.Queryable<UserModel>().Where(p=>p.DeleteMark==0 && p.UserNum==UserNum && p.Password==Password).First();
+            return result;
+        }
+        /// <summary>
+        /// 判断是否存在用户账号
+        /// </summary>
+        /// <param name="UserNum"></param>
+        /// <returns></returns>
+        public bool IsExistUserNum(string UserNum)
+        {
+            var result = db.Queryable<UserModel>().Where(p => p.DeleteMark == 0 && p.UserNum == UserNum).First();
+            if (result != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 获取数据列表同步
         /// </summary>
         /// <returns></returns>

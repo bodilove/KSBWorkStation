@@ -1,5 +1,7 @@
 ﻿using Common;
 using Common.SysConfig.Model;
+using MainControl.BLL;
+using MainControl.Entity;
 using ORMSqlSugar;
 using System;
 using System.Collections.Generic;
@@ -7,9 +9,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace MainControl
 {
@@ -17,11 +22,25 @@ namespace MainControl
     {
         SqlsugarMyClient helper=new SqlsugarMyClient();
 
-
+        UserService bll= new UserService();
+        SysLogService System_Bll = new SysLogService();
         SystemConfig sysConfig = new SystemConfig();
+        string title = string.Empty;
+        string LocalIP=string.Empty;
         public frmLoginNew()
         {
             InitializeComponent();
+            title = this.Text;
+
+            // 获取本机的主机名
+            string hostname = Dns.GetHostName();
+
+            // 获取本机的IP地址列表
+            IPAddress[] addresses = Dns.GetHostAddresses(hostname);
+
+            // 获取第一个IPv4地址
+            IPAddress ipv4Address = Array.Find(addresses, address => address.AddressFamily == AddressFamily.InterNetwork);
+            LocalIP=ipv4Address.ToString();
         }
         /// <summary>
         /// 加载数据库配置
@@ -45,8 +64,11 @@ namespace MainControl
                 lblMessage.Text = "正在连接数据库。。。";
                 //Application.DoEvents();
                 Thread.Sleep(100);
+                GlobalResources.SqlConnectTest();
+
                 bool IsValidConnection = helper.GetClient().Ado.IsValidConnection();
-                if (!GlobalResources.SqlConnectTest())
+                //if (!GlobalResources.SqlConnectTest())
+                if (!IsValidConnection)
                 {
                     MessageBox.Show("连接数据库失败");
                     lblMessage.Text = "连接数据库失败！";
@@ -59,6 +81,17 @@ namespace MainControl
             catch (Exception ex)
             {
                 lblMessage.Text = "连接数据库失败！";
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = 0,
+                    CreateUserName = "",
+                    LocalIP = LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
             }
         }
         /// <summary>
@@ -72,7 +105,19 @@ namespace MainControl
             DialogResult dr = MessageBox.Show("确定要退出系统么？", "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (dr == DialogResult.OK)
             {
+
                 this.Close();
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage ="退出登录",
+                    Type = "系统消息！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
             }
         }
         /// <summary>
@@ -121,30 +166,51 @@ namespace MainControl
 
             try
             {
-                MdlClass.userInfo = MdlClass.userbll.GetUserInfoByUserNum(UserName, Password);
-                if (MdlClass.userInfo != null)
+                UserModel m= bll.GetUserLoginInfo(UserName, DESEncrypt.Encrypt(Password, "1"));
+
+                if (m != null)
                 {
-                    if (MdlClass.userInfo.PassWord.ToUpper() != Password.ToUpper())
+                    GlobalUserHandle.LoginUserID= m.UserID;
+                    GlobalUserHandle.UserNum = m.UserNum;
+                    GlobalUserHandle.loginUserName = m.UserName;
+                    GlobalUserHandle.Password = m.Password;
+                    GlobalUserHandle.LocalIP = LocalIP;
+                    GlobalUserHandle.RoleID = m.RoleID;
+
+                    if (m.Password.ToUpper() != DESEncrypt.Encrypt(Password, "1").ToUpper())
                     {
                         MessageBox.Show("用户名密码错误，请重新输入！", "");
                         return;
                     }
                     else
                     {
-                        //this.DialogResult = DialogResult.OK;
-                        //this.Close();
                         Program.CurrentConfig = sysConfig.Load(MdlClass.SysConfigPath + @"\SysConfig.cfg");
                         this.Visible = false;
+                        System_Bll.AddLog(new SysLogModel
+                        {
+                            CreateUserID = GlobalUserHandle.LoginUserID,
+                            CreateUserName = GlobalUserHandle.loginUserName,
+                            LocalIP = LocalIP,
+                            Module = title,
+                            Method = MethodBase.GetCurrentMethod().Name,
+                            LogMessage = "登录成功",
+                            Type = "系统消息！",
+                            ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                        });
+
+                        //进入主窗口
                         frmMainNew fm = new frmMainNew();
-                        //fm.userName = this.txt_UserName.Text.ToUpper();
                         fm.ShowDialog();
+
+                        //关闭登录框
                         this.Close();
-                            
+                        
+
                     }
                 }
                 else
                 {
-                    MessageBox.Show("用户名密码错误，请重新输入！", "");
+                    MessageBox.Show("用户名或密码错误，请重新输入！", "");
                     txt_UserName.Focus();
                     txt_UserName.SelectAll();
                     return;
@@ -156,30 +222,20 @@ namespace MainControl
                 MessageBox.Show($"系统错误：{ex.Message}！", "错误");
                 txt_UserName.Focus();
                 //txt_UserName.SelectAll();
-                return;
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
+
 
             }
-
-            //if (this.txt_UserName.Text.Trim() != "")
-            //{
-       
-
-            //        this.Visible = false;
-
-            //        frmMain fm = new frmMain();
-            //        //fm.userName = this.txt_UserName.Text.ToUpper();
-            //        fm.ShowDialog();
-            //        this.Close();
-
-            //}
-            //else 
-            //{
-            //    MessageBox.Show("请输入用户名密码！", "");
-            //    this.txt_UserName.Focus();
-            //    this.txt_UserName.SelectAll();
-            //    return;
-            //}
-
         }
         /// <summary>
         /// 点击登录按钮
