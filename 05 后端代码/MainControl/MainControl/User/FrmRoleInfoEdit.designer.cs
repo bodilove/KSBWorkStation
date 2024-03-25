@@ -33,14 +33,17 @@
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_concel = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.tab_baseInfo = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txt_RoleName = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tab_baseInfo.SuspendLayout();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tree_RoleRight = new System.Windows.Forms.TreeView();
+            this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_save
@@ -716,19 +719,19 @@
             this.imageList1.Images.SetKeyName(644, "644.png");
             this.imageList1.Images.SetKeyName(645, "645.png");
             // 
-            // tab_baseInfo
+            // tabPage1
             // 
-            this.tab_baseInfo.Controls.Add(this.txt_RoleName);
-            this.tab_baseInfo.Controls.Add(this.richTextBox1);
-            this.tab_baseInfo.Controls.Add(this.label12);
-            this.tab_baseInfo.Controls.Add(this.label4);
-            this.tab_baseInfo.Location = new System.Drawing.Point(4, 22);
-            this.tab_baseInfo.Name = "tab_baseInfo";
-            this.tab_baseInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_baseInfo.Size = new System.Drawing.Size(580, 288);
-            this.tab_baseInfo.TabIndex = 0;
-            this.tab_baseInfo.Text = "基本信息";
-            this.tab_baseInfo.UseVisualStyleBackColor = true;
+            this.tabPage1.Controls.Add(this.txt_RoleName);
+            this.tabPage1.Controls.Add(this.richTextBox1);
+            this.tabPage1.Controls.Add(this.label12);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(580, 288);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "基本信息";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // txt_RoleName
             // 
@@ -768,12 +771,34 @@
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tab_baseInfo);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(0, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(588, 314);
             this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.tree_RoleRight);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(580, 288);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "分配权限";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tree_RoleRight
+            // 
+            this.tree_RoleRight.CheckBoxes = true;
+            this.tree_RoleRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tree_RoleRight.ItemHeight = 25;
+            this.tree_RoleRight.Location = new System.Drawing.Point(3, 3);
+            this.tree_RoleRight.Name = "tree_RoleRight";
+            this.tree_RoleRight.Size = new System.Drawing.Size(574, 282);
+            this.tree_RoleRight.TabIndex = 2;
             // 
             // FrmRoleInfoEdit
             // 
@@ -791,9 +816,10 @@
             this.Text = "角色管理编辑";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEdit_FormClosed);
             this.Load += new System.EventHandler(this.FrmRoleInfoEdit_Load);
-            this.tab_baseInfo.ResumeLayout(false);
-            this.tab_baseInfo.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -802,11 +828,13 @@
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Button btn_concel;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.TabPage tab_baseInfo;
+        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TextBox txt_RoleName;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TreeView tree_RoleRight;
     }
 }

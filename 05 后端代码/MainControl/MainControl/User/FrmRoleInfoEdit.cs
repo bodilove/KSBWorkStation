@@ -20,9 +20,10 @@ namespace MainControl.User
     {
        
         RoleService bll = new RoleService();
+        SysMenuService menu_bll = new SysMenuService();
         FrmRoleInfo _frm;
         //SystemAppendProperty_Bll app_bll = new SystemAppendProperty_Bll();
-        //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
+        
         //SystemUserInfo_Bll user_bll = new SystemUserInfo_Bll();
         //SystemOrganization_Bll org_bll = new SystemOrganization_Bll();
         //SystemRole_Bll role_bll = new SystemRole_Bll();
@@ -83,30 +84,81 @@ namespace MainControl.User
 
         private void FrmRoleInfoEdit_Load(object sender, EventArgs e)
         {
-           
 
-            //GetAppendProperty();
-            //BindUsertRightTreeView();
-            //BindUserDeptTreeView();
-            //BindRoleTreeView();
-            //if (tree_Dept.Nodes.Count > 0)//展开一级节点
-            //{
-            //    tree_Dept.Nodes[0].Expand();
-            //}
-            //if (tree_UserRight.Nodes.Count > 0)//展开一级节点
-            //{
-            //    tree_UserRight.Nodes[0].Expand();
-            //}
-            //if (tree_UserRight.Nodes.Count > 0)//展开一级节点
-            //{
-            //    tree_UserRole.Nodes[0].Expand();
-            //}
+            BindRoleRightTreeView();
+            if (tree_RoleRight.Nodes.Count > 0)
+            {
+                tree_RoleRight.Nodes[0].Expand();
+            }
         }
 
-      
+
 
         #region 用户权限
+        /// <summary>
+        /// 用户权限菜单树列表
+        /// </summary>
+        public void BindRoleRightTreeView()
+        {
+            try
+            {
+                this.tree_RoleRight.ImageList = imageList1;
+                this.tree_RoleRight.Nodes.Clear();
+                var list = menu_bll.QueryList();
+                var role_right_list = menu_bll.GetRoleRightByCondition(ID.StrToInt(-1));
+                var parents = list.Where(o => o.ParentId == 0);
+                foreach (var item in parents)
+                {
+                    TreeNode tn = new TreeNode();
+                    tn.Text = item.Menu_Name;
+                    tn.Tag = item.Menu_Id;
+                    tn.ImageIndex = item.Menu_Img == null ? 0 : item.Menu_Img;
+                    foreach (var role_right in role_right_list)
+                    {
+                        if (item.Menu_Id == role_right.Menu_Id)
+                        {
+                            tn.Checked = true;
+                        }
+                    }
+                    RoleRightFillTree(tn, list, role_right_list);
+                    tree_RoleRight.Nodes.Add(tn);
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
+
+        private void RoleRightFillTree(TreeNode node, List<SysMenuModel> list, List<RoleRightModel> role_right_list)
+        {
+
+            var childs = list.Where(o => o.ParentId == node.Tag.StrToInt(-1));
+            if (childs.Count() > 0)
+            {
+                foreach (var item in childs)
+                {
+                    TreeNode tnn = new TreeNode();
+                    tnn.Text = item.Menu_Name;
+                    tnn.Tag = item.Menu_Id;
+                    tnn.ImageIndex = item.Menu_Img == null ? 0 : item.Menu_Img;
+                    foreach (var role_right in role_right_list)
+                    {
+                        if (item.Menu_Id == role_right.Menu_Id)
+                        {
+                            tnn.Checked = true;
+                        }
+                    }
+                    if (item.ParentId == node.Tag.StrToInt(-1))
+                    {
+                        RoleRightFillTree(tnn, list, role_right_list);
+                    }
+                    node.Nodes.Add(tnn);
+                }
+
+            }
+        }
 
 
         #endregion
@@ -140,6 +192,13 @@ namespace MainControl.User
                 m.RoleName = txt_RoleName.Text.ToStringExt();
                 m.Remark = richTextBox1.Text;
 
+                RoleRightList.Clear();
+                CheckRoleRightTreeViewNode(tree_RoleRight.Nodes);
+                m.RoleRightList = RoleRightList;
+                //roles.ParentId = com_ParentId.SelectedValue.ToString();
+                //roles.Roles_Name = txt_RoleName.Text;
+                //roles.Roles_Remark = txt_RoleRemark.Text;
+                //roles.SortCode = int.Parse(txt_SortCode.Text);
 
                 if (String.IsNullOrEmpty(m.RoleName))
                 {
@@ -214,120 +273,30 @@ namespace MainControl.User
                 MessageBox.Show(ex.Message);
             }
         }
-        //List<Base_UserRight> UserRightList = new List<Base_UserRight>();
-        //List<Base_StaffOrganize> StaffOrgList = new List<Base_StaffOrganize>();
-        //List<Base_AppendPropertyInstance> appendList = new List<Base_AppendPropertyInstance>();
-        //List<Base_UserRole> RoleList = new List<Base_UserRole>();
-        /// <summary>
-        /// 遍历用户权限选中节点
-        /// </summary>
-        /// <param name="node"></param>
-        public void CheckUsertRightTreeViewNode(TreeNodeCollection node)
-        {
-       
-            foreach (TreeNode n in node)
-            {
-                if (n.Checked)
-                {
-                    //UserRightList.Add(new Base_UserRight { UserRight_ID = Guid.NewGuid().ToString(), Menu_Id = n.Tag.ToString(),
-                    //    CreateUserName=FrmLogin.loginUserName, CreateUserId=FrmLogin.LoginUserID, CreateDate=DateTime .Now });
-                }
-                CheckUsertRightTreeViewNode(n.Nodes);
-            }
-        }
-        /// <summary>
-        /// 遍历所属部门选中节点
-        /// </summary>
-        /// <param name="node"></param>
-        public void CheckUsertDeptTreeViewNode(TreeNodeCollection node)
-        {
-        
-            foreach (TreeNode n in node)
-            {
-                if (n.Checked)
-                {
-                    //StaffOrgList.Add(new Base_StaffOrganize
-                    //{
-                    //    StaffOrganize_Id = Guid.NewGuid().ToString(),
-                    //    Organization_ID = n.Tag.ToString(),
-                    //    CreateUserName = FrmLogin.loginUserName,
-                    //    CreateUserId = FrmLogin.LoginUserID,
-                    //    CreateDate = DateTime.Now 
-                      
-                    //});
-                }
-                CheckUsertDeptTreeViewNode(n.Nodes);
-            }
-        } 
-        /// <summary>
-        /// 遍历附加属性
-        /// </summary>
-        public void GetAllAppendValue()
-        {
-            //foreach(var control in this.flowLayoutPanel1.Controls)
-            //{
-            //    //遍历所有TextBox...
-            //   // if (control is TextBox)
-            //   // {
-            //   //     TextBox t = (TextBox)control;
-            //   //     if(!string.IsNullOrEmpty(t.Text))
-            //   //     {
-            //   //         appendList.Add(new Base_AppendPropertyInstance { PropertyInstance_ID = Guid.NewGuid().ToString(), Property_Control_ID = t.Name, PropertyInstance_Value = t.Text });
-            //   //     }
-              
-            //   // }
-            //   // if(control is RichTextBox)
-            //   // {
-            //   //     RichTextBox r = (RichTextBox)control;
-            //   //     if (!string.IsNullOrEmpty(r.Text))
-            //   //     {
-            //   //         appendList.Add(new Base_AppendPropertyInstance { PropertyInstance_ID = Guid.NewGuid().ToString(), Property_Control_ID = r.Name, PropertyInstance_Value = r.Text });
-            //   //     }
-                  
-            //   // }
-            //   // if(control is ComboBox)
-            //   // {
-            //   //     ComboBox c = (ComboBox)control;
-            //   //     if(!string.IsNullOrEmpty(c.Text)&& c.Text!= "==请选择==")
-            //   //     {
-            //   //         appendList.Add(new Base_AppendPropertyInstance { PropertyInstance_ID = Guid.NewGuid().ToString(), Property_Control_ID = c.Name, PropertyInstance_Value = c.Text });
-            //   //     }
-                    
-            //   // }
-            //   //// 遍历所有DateTimePicker...
-            //   // if (control is DateTimePicker)
-            //   // {
-            //   //     DateTimePicker d = (DateTimePicker)control;
-            //   //     if (!string.IsNullOrEmpty(d.Text))
-            //   //     {
-            //   //         appendList.Add(new Base_AppendPropertyInstance { PropertyInstance_ID = Guid.NewGuid().ToString(), Property_Control_ID = d.Name, PropertyInstance_Value = d.Text });
-            //   //     }
-            //   // }
-            //}
-        }
+
+        List<RoleRightModel> RoleRightList = new List<RoleRightModel>();
         /// <summary>
         /// 遍历角色权限选中节点
         /// </summary>
         /// <param name="node"></param>
-        public void CheckRoleTreeViewNode(TreeNodeCollection node)
+        public void CheckRoleRightTreeViewNode(TreeNodeCollection node)
         {
 
             foreach (TreeNode n in node)
             {
                 if (n.Checked)
                 {
-                    //RoleList.Add(new Base_UserRole
-                    //{                        
-                    //    UserRole_ID = Guid.NewGuid().ToString(),
-                         
-                    //    //User_ID = User_ID,
-                    //    Roles_ID= n.Tag.ToString(),
-                    //    CreateUserName = FrmLogin.loginUserName,
-                    //    CreateUserId = FrmLogin.LoginUserID,
-                    //    CreateDate = DateTime.Now
-                    //});
+                    RoleRightList.Add(new RoleRightModel
+                    {
+                        //RoleRightID = Guid.NewGuid().ToString(),
+                        RoleID=ID.StrToInt(-1),
+                        Menu_Id = n.Tag.StrToInt(-1),
+                        CreateUserName = GlobalUserHandle.loginUserName,
+                        CreateUserId = GlobalUserHandle.LoginUserID,
+                        CreateDate = DateTime.Now
+                    });
                 }
-                CheckRoleTreeViewNode(n.Nodes);
+                CheckRoleRightTreeViewNode(n.Nodes);
             }
         }
         #endregion

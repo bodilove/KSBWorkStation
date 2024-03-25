@@ -4,6 +4,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,6 +78,27 @@ namespace MainControl.BLL
             return list;
             
         }
+
+        /// <summary>
+        /// 角色权限查询
+        /// </summary>
+        /// <param name="lambda"></param>
+        /// <returns></returns>
+        public List<RoleRightModel> GetRoleRightByCondition(int RoleID)
+        {
+            try
+            {
+
+                return db.Queryable<RoleRightModel>().Where(p=>p.RoleID==RoleID).ToList();
+            }
+            catch (Exception EX)
+            {
+
+                throw EX;
+            }
+        }
+
+
         /// <summary>
         /// 添加 同步
         /// </summary>

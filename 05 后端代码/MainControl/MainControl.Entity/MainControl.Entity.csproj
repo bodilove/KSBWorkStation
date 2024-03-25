@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PermissionModel.cs" />
+    <Compile Include="RoleRightModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="SysMenuModel.cs" />
     <Compile Include="SysLogModel.cs" />

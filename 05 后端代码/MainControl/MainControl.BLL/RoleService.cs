@@ -69,8 +69,19 @@ namespace MainControl.BLL
         /// <returns></returns>
         public int Add(RoleModel m)
         {
-            int result = db.Insertable(m).ExecuteCommand();
-            return result;
+            int RoleID = db.Insertable(m).ExecuteReturnIdentity();
+            //int result = db.Insertable(m).ExecuteCommand();
+            if (m.RoleRightList != null && m.RoleRightList.Count > 0)
+            {
+                m.RoleRightList.ForEach(p => p.RoleID = RoleID);
+
+                db.Deleteable<RoleModel>().Where(p => p.RoleID == RoleID);
+
+
+                db.Insertable(m.RoleRightList).ExecuteCommand();
+            }
+
+            return RoleID;
         }
 
         /// <summary>
@@ -80,6 +91,14 @@ namespace MainControl.BLL
         public int Edit(RoleModel m)
         {
             int result = db.Updateable(m).ExecuteCommand();
+
+            if (m.RoleRightList != null && m.RoleRightList.Count > 0)
+            {
+                db.Deleteable<RoleModel>().Where(p => p.RoleID == m.RoleID);
+
+                db.Insertable(m.RoleRightList).ExecuteCommand();
+            }
+
             return result;
         }
         /// <summary>

@@ -56,6 +56,11 @@ namespace MainControl.Entity
         /// </summary>
         [Description("备注")]
         public string Remark { get; set; }
+        /// <summary>
+        /// 角色权限
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public  List<RoleRightModel> RoleRightList { get; set; }
 
     }
 }
