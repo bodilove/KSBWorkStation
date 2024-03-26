@@ -16,8 +16,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using WeifenLuo.WinFormsUI.Docking;
-//using YX.BLL;
-//using YX.Entity;
 namespace MainControl
 {
     public partial class FrmUserInfo : WindowParent
@@ -31,7 +29,7 @@ namespace MainControl
         //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
 
         //public FrmUserInfo(string ParentId)
-
+        int ParentId = 20;
         FrmUserInfoEdit edit;//编辑窗口
 
        
@@ -39,7 +37,7 @@ namespace MainControl
         public FrmUserInfo()
         {
             InitializeComponent();
-            //SetButton(ParentId, this.toolStrip1);//设置按钮权限
+            SetButton(ParentId, this.toolStrip1);//设置按钮权限
             this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//列自动填充
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//填充满
            

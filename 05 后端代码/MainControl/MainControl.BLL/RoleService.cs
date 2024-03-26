@@ -75,7 +75,7 @@ namespace MainControl.BLL
             {
                 m.RoleRightList.ForEach(p => p.RoleID = RoleID);
 
-                db.Deleteable<RoleModel>().Where(p => p.RoleID == RoleID);
+                db.Deleteable<RoleRightModel>(p => p.RoleID == RoleID).ExecuteCommand();
 
 
                 db.Insertable(m.RoleRightList).ExecuteCommand();
@@ -94,7 +94,7 @@ namespace MainControl.BLL
 
             if (m.RoleRightList != null && m.RoleRightList.Count > 0)
             {
-                db.Deleteable<RoleModel>().Where(p => p.RoleID == m.RoleID);
+                db.Deleteable<RoleRightModel>(p=>p.RoleID== m.RoleID).ExecuteCommand();
 
                 db.Insertable(m.RoleRightList).ExecuteCommand();
             }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Common;
+using MainControl.BLL;
+using MainControl.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +14,7 @@ namespace MainControl
 {
     public partial class WindowParent : DockContent
     {
-        //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
+        SysMenuService menu_bll = new SysMenuService();
         public  WindowParent()
         {
             #region 关闭窗口
@@ -55,41 +58,45 @@ namespace MainControl
             
         }
         #region 按钮权限
-        protected void  SetButton(string ParentId,ToolStrip toolStrip1)
+        protected void  SetButton(int ParentId,ToolStrip toolStrip1)
         {
-            //List<Base_SysMenu> list = menu_bll.GetButtonList(ParentId, FrmLogin.LoginUserID);
-            //foreach (var control in toolStrip1.Items)
-            //{
-            //    if (control is ToolStripButton)
-            //    {
-            //        ToolStripButton t = (ToolStripButton)control;
-            //        if (list != null)
-            //        {
-            //            var name = list.Where(o => o.Menu_Tag == t.Name.Trim()).FirstOrDefault();
-            //            if (name != null)
-            //            {
-            //                if (t.Name == name.Menu_Tag)
-            //                {
-            //                    t.Enabled = true;
-            //                }
-            //                else
-            //                {
-            //                    t.Enabled = false;
-            //                }
-            //            }
-            //            else
-            //            {
-            //                t.Enabled = false;
-            //            }
+            if (GlobalUserHandle.UserNum == "SuperAdmin")
+            {
+                return;
+            }
+            List<SysMenuModel> list = menu_bll.GetButtonList(ParentId, GlobalUserHandle.RoleID);
+            foreach (var control in toolStrip1.Items)
+            {
+                if (control is ToolStripButton)
+                {
+                    ToolStripButton t = (ToolStripButton)control;
+                    if (list != null)
+                    {
+                        var name = list.Where(o => o.Menu_Tag == t.Name.Trim()).FirstOrDefault();
+                        if (name != null)
+                        {
+                            if (t.Name == name.Menu_Tag)
+                            {
+                                t.Enabled = true;
+                            }
+                            else
+                            {
+                                t.Enabled = false;
+                            }
+                        }
+                        else
+                        {
+                            t.Enabled = false;
+                        }
 
-            //        }
-            //        else
-            //        {
-            //            t.Enabled = false;
-            //        }
+                    }
+                    else
+                    {
+                        t.Enabled = false;
+                    }
 
-            //    }
-            //}
+                }
+            }
         }
         #endregion
 

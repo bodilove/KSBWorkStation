@@ -23,14 +23,19 @@ using System.Timers;
 using Test.StartUp;
 using MainControl.User;
 using MainControl.Log;
+using MainControl.BLL;
+using MainControl.Entity;
+using Test.ProjectFileEditor;
+using WeifenLuo.WinFormsUI.Docking;
+using System.Runtime.InteropServices;
 
 namespace MainControl
 {
     public partial class frmMainNew : Form
     {
+        SysMenuService menu_bll = new SysMenuService();
 
-
-
+        List<SysMenuModel> listMenus = new List<SysMenuModel>();
 
         #region 公共变量
         public long allcount = 0;
@@ -103,6 +108,19 @@ namespace MainControl
         {
             InitializeComponent();
 
+           
+                
+            if (GlobalUserHandle.UserNum == "SuperAdmin")
+            {
+                listMenus = menu_bll.QueryList();
+
+            }
+            else
+            {
+                listMenus = menu_bll.GetButtonListAll(GlobalUserHandle.RoleID);
+            }
+
+            CreateMainMenu(menuStrip1, listMenus);
             #region 定时刷新时间
             timer4.Start(); // 启动定时器
             timer4.Enabled = true;
@@ -110,75 +128,179 @@ namespace MainControl
 
 
         }
-
-        //private void 自定义CToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    frmSysConfig fm = new frmSysConfig();
-        //    fm.ShowDialog();
-        //}
+        #region 创建菜单
         /// <summary>
-        /// 菜单-工具-PLC 引擎
+        /// 创建主菜单
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void 选项OToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <param name="menuStrip"></param>
+        /// <param name="list"></param>
+        void CreateMainMenu(MenuStrip menuStrip, List<SysMenuModel> list)
         {
-            frmPLCconfig fm = new frmPLCconfig();
-            fm.ShowDialog();
-        }
-
-        /// <summary>
-        /// 菜单-用户登录
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            frmLoginNew fm = new frmLoginNew();
-
-            if (fm.ShowDialog() == DialogResult.OK)
+            //假如菜单不为空，则先清除菜单 然后再绑定数据
+            if (menuStrip.Items.Count >= 0)
             {
+                menuStrip.Items.Clear();
+            }
 
-         
-                PLCOToolStripMenuItem.Enabled = true;
-                lblUserId.Text = $"用户ID：{ MdlClass.userInfo.UserNum}   用户名称: { MdlClass.userInfo.UserName}";
-                lblMessage.Text = "登录成功。";
-
-                OVserver.ConnectAllPlc(tabConrolMonitor);
-                if (tabConrolMonitor.TabPages.Count > 0)
+            try
+            {
+               var  lst = list.Where(p=>p.ParentId==0).ToList();
+                if (lst != null&& lst.Count>0)
                 {
-                    tabConrolMonitor.SelectedIndex = 1;
-                    tabConrolMonitor.SelectedIndex = 0;
+                    foreach (var item in lst)
+                    {
+                        ToolStripMenuItem mi = new ToolStripMenuItem();
+                        mi.Text = item.Menu_Name;
+                        //mi.Tag = item.Menu_Id;
+                        mi.ForeColor = System.Drawing.Color.White;
+                        CreateMenuItem(mi, item.Menu_Id, list);
+                        menuStrip.Items.Add((ToolStripItem)mi);
+                    }
                 }
-                toolStripMenuItem1.Enabled = false;
-                退出XToolStripMenuItem.Enabled = true;
-                MessageBox.Show(MdlClass.userInfo.UserName + ",欢迎登录.");
-                GetProcesslst();
-                MdlClass.lineSever.Init(tabSation);
-                timer1.Enabled = true;
-                timer1.Start();
-                timer2.Enabled = true;
-                timer2.Start();
-                timer3.Enabled = true;
-                timer3.Start();
-                tlayPanlAll.Enabled = true;
-
-               
             }
-            else
+            catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.Assert(false, ex.Message);
             }
+        }
+        /// <summary>
+        /// 创建子菜单
+        /// </summary>
+        /// <param name="mi"></param>
+        /// <param name="ParentId"></param>
+        /// <param name="list"></param>
+        void CreateMenuItem(ToolStripMenuItem mi, int ParentId, List<SysMenuModel> list)
+        {
+            var lst = list.Where(p => p.ParentId == ParentId).ToList();
+            if (lst != null && lst.Count > 0)
+            {
+                foreach (var item in lst)
+                {
+                    ToolStripMenuItem mitem = new ToolStripMenuItem();
+                    mitem.Text =item.Menu_Name;
+                    mitem.Tag = item.Menu_Id;
+                    //CreateMenuItem(mitem, item.Menu_Id, list);
+                    mi.DropDownItems.Add(mitem);
+                    mitem.Click += new EventHandler(menuStrip1_ItemClicked);
+                }
+            }
+        }
+        /// <summary>
+        /// 点击菜单事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public virtual void menuStrip1_ItemClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var tsmi = sender as ToolStripMenuItem;
+                if (tsmi==null||tsmi.Tag.StrToInt(-1) <= 0)
+                {
+                    return;
+                }
+                //另外补充：方法必须是public否则找不到，为null。
+                String methodName =  $"{tsmi.Text}ToolStripMenuItem_Click";
 
+                //String methodName = $"ToolStripMenuItem_Click";
+                MethodInfo method
+                    = this.GetType().GetMethod(methodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+                if (method == null)
+                {
+                    MessageBox.Show("找不到方法" + methodName, "发生错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    try
+                    {
+                        // 创建EventArgs的实例，或者传递null，如果方法不需要这个参数  
+                        EventArgs eventArgs = EventArgs.Empty;
+
+                        // 创建object[]数组来包含方法的参数  
+                        object[] parameters = new object[] { null, eventArgs }; // 假设sender是null，你可以根据实际情况替换为正确的sender对象  
+
+                        // 调用私有方法  
+                        
+                        method.Invoke(this, parameters);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), tsmi.Text + "发生错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "发生错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        /// <summary>
+        /// 菜单事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem mi= sender as ToolStripMenuItem;
+            if (mi.Tag.StrToInt(-1)>0)
+            {
+                //反射动态实例化窗口
+                var m = listMenus.Where(p => p.Menu_Id == mi.Tag.StrToInt(-1)).FirstOrDefault();
+
+                string FrmWindow = m.Menu_Tag;
+                object MenuID = m.Menu_Id;
+                if (CheckFormIsOpen(FrmWindow.ToString()))
+                {
+                    //DockContent doc = (DockContent)Assembly.Load("YX").CreateInstance("YX." + FrmWindow);
+                    //doc.Show(_frmMain.dockPanel1, DockState.Document);
+
+                    Assembly assembly = Assembly.GetExecutingAssembly(); // 获取当前程序集                   
+                    object[] parameters = new object[1];
+                    parameters[0] = MenuID;
+                    //DockContent obj = (DockContent)assembly.CreateInstance("MainControl." + FrmWindow, true, System.Reflection.BindingFlags.Default, null, parameters, null, null);// 创建类的实例 
+                    //Form obj = (Form)assembly.CreateInstance("MainControl." + FrmWindow, true, System.Reflection.BindingFlags.Default, null, parameters, null, null);// 创建类的实例 
+                    //Form obj = (Form)assembly.CreateInstance("" + FrmWindow, true, System.Reflection.BindingFlags.Default, null, parameters, null, null);// 创建类的实例 
+                    // 创建WinForms实例
+
+                    Type type= assembly.GetTypes().Where(p=>p.Name== FrmWindow).FirstOrDefault();
+                    Form fm = (Form)Activator.CreateInstance(type);
+                    fm.StartPosition = FormStartPosition.CenterParent;
+                    fm.ShowDialog();
+                }
+            }
+        }
+        /// <summary>
+        /// 检查窗体是否已经被打开
+        /// </summary>
+        /// <param name="ChildForm"></param>
+        /// <returns></returns>
+
+        private bool CheckFormIsOpen(string Forms)
+        {
+            bool bResult = true;
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm.Name == Forms)
+                {
+                    frm.BringToFront();
+                    bResult = false;
+                    break;
+                }
+            }
+            return bResult;
+        }
+        #endregion
+
+        
         /// <summary>
         /// 登录后初始化登录界面
         /// </summary>
         private void InitFrmMain()
         {
 
-            PLCOToolStripMenuItem.Enabled = true;
+            PLC配置oolStripMenuItem.Enabled = true;
             lblUserId.Text = $"用户ID：{MdlClass.userInfo.UserNum}   用户名称: {MdlClass.userInfo.UserName}";
             lblMessage.Text = "登录成功。";
 
@@ -188,8 +310,8 @@ namespace MainControl
                 tabConrolMonitor.SelectedIndex = 1;
                 tabConrolMonitor.SelectedIndex = 0;
             }
-            toolStripMenuItem1.Enabled = false;
-            退出XToolStripMenuItem.Enabled = true;
+            登录ToolStripMenuItem.Enabled = false;
+            注销ToolStripMenuItem.Enabled = true;
             //MessageBox.Show(MdlClass.userInfo.UserName + ",欢迎登录.");
             GetProcesslst();
             MdlClass.lineSever.Init(tabSation);
@@ -237,8 +359,8 @@ namespace MainControl
             //pp = MdlClass.PlcdataBll.ByteToPLCDataCommon(bt);
 
 
-            toolStripMenuItem1.Enabled = true;
-            退出XToolStripMenuItem.Enabled = false;
+            登录ToolStripMenuItem.Enabled = true;
+            注销ToolStripMenuItem.Enabled = false;
             tlayPanlAll.Enabled = false;
 
             lblUserId.Text = "用户ID：  " + "   用户名称:   ";
@@ -270,38 +392,7 @@ namespace MainControl
             //登录后初始化主界面
             InitFrmMain();
         }
-
-        private void 退出XToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            DialogResult dr = MessageBox.Show("退出用户登录，PLC连接将会断开，请确认是否继续断开？", "通知", MessageBoxButtons.YesNo);
-            if (dr == DialogResult.Yes)
-            {
-
-                //tlayPanlAll.Enabled = false;//禁用控件
-                //  PLCOToolStripMenuItem.Enabled = false;
-
-                lblUserId.Text = "用户ID：  " + "   用户名称:   ";
-                lblMessage.Text = "未登录。";
-                OVserver.DisConnectAllPlc();
-                toolStripMenuItem1.Enabled = true;
-                退出XToolStripMenuItem.Enabled = false;
-                GC.Collect();
-
-                timer1.Stop();
-                timer1.Enabled = false;
-                timer2.Stop();
-                timer2.Enabled = false;
-                timer3.Stop();
-                timer3.Enabled = false;
-                MessageBox.Show("注销成功, " + MdlClass.userInfo.UserName + ",感谢您的使用.");
-                MdlClass.userInfo = null;
-                MdlClass.lineSever.Dispose();
-                cmbProcessChoose.Items.Clear();
-
-            }
-        }
-
+        
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
 
@@ -1178,7 +1269,84 @@ namespace MainControl
 
         #endregion
 
-       
+        #region
+
+
+        /// <summary>
+        /// 菜单-用户登录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 登录ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmLoginNew fm = new frmLoginNew();
+
+            if (fm.ShowDialog() == DialogResult.OK)
+            {
+
+
+                PLC配置oolStripMenuItem.Enabled = true;
+                lblUserId.Text = $"用户ID：{MdlClass.userInfo.UserNum}   用户名称: {MdlClass.userInfo.UserName}";
+                lblMessage.Text = "登录成功。";
+
+                OVserver.ConnectAllPlc(tabConrolMonitor);
+                if (tabConrolMonitor.TabPages.Count > 0)
+                {
+                    tabConrolMonitor.SelectedIndex = 1;
+                    tabConrolMonitor.SelectedIndex = 0;
+                }
+                登录ToolStripMenuItem.Enabled = false;
+                注销ToolStripMenuItem.Enabled = true;
+                MessageBox.Show(MdlClass.userInfo.UserName + ",欢迎登录.");
+                GetProcesslst();
+                MdlClass.lineSever.Init(tabSation);
+                timer1.Enabled = true;
+                timer1.Start();
+                timer2.Enabled = true;
+                timer2.Start();
+                timer3.Enabled = true;
+                timer3.Start();
+                tlayPanlAll.Enabled = true;
+
+
+            }
+            else
+            {
+
+            }
+
+        }
+        private void 注销ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            DialogResult dr = MessageBox.Show("退出用户登录，PLC连接将会断开，请确认是否继续断开？", "通知", MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+            {
+
+                //tlayPanlAll.Enabled = false;//禁用控件
+                //  PLCOToolStripMenuItem.Enabled = false;
+
+                lblUserId.Text = "用户ID：  " + "   用户名称:   ";
+                lblMessage.Text = "未登录。";
+                OVserver.DisConnectAllPlc();
+                登录ToolStripMenuItem.Enabled = true;
+                注销ToolStripMenuItem.Enabled = false;
+                GC.Collect();
+
+                timer1.Stop();
+                timer1.Enabled = false;
+                timer2.Stop();
+                timer2.Enabled = false;
+                timer3.Stop();
+                timer3.Enabled = false;
+                MessageBox.Show("注销成功, " + MdlClass.userInfo.UserName + ",感谢您的使用.");
+                MdlClass.userInfo = null;
+                MdlClass.lineSever.Dispose();
+                cmbProcessChoose.Items.Clear();
+
+            }
+        }
+
 
         /// <summary>
         /// 数据库配置
@@ -1203,6 +1371,17 @@ namespace MainControl
             fm.ShowDialog();
         }
 
+
+        /// <summary>
+        /// 菜单-工具-PLC 引擎
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PLC配置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPLCconfig fm = new frmPLCconfig();
+            fm.ShowDialog();
+        }
         /// <summary>
         /// 测试工具
         /// </summary>
@@ -1216,7 +1395,7 @@ namespace MainControl
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
-        private void 装配配置CToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 装配配置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmToolHmiInfo fm = new FrmToolHmiInfo();
 
@@ -1231,7 +1410,7 @@ namespace MainControl
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void 用户管理ToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void 用户管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             FrmUserInfo fm = new FrmUserInfo();
@@ -1278,6 +1457,13 @@ namespace MainControl
             fm.ShowDialog();
         }
         #endregion
+
+        #endregion
+
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
 
         
     }

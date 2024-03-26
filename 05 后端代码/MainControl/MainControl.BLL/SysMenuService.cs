@@ -98,6 +98,49 @@ namespace MainControl.BLL
             }
         }
 
+        //获取按钮
+        public List<SysMenuModel> GetButtonList(int ParentId, int RoleID)
+        {
+            try
+            {
+
+                var list = db.Queryable<RoleRightModel>()
+                 .InnerJoin<SysMenuModel>((r, m) => r.Menu_Id == m.Menu_Id)//多个条件用&&
+                 //.Where(r => r.RoleID == RoleID)
+                 .Where((r, m) => r.RoleID == RoleID && m.ParentId==ParentId) //如果用到m需要这么写
+                 //.Select((r, m) => new ViewOrder { Id = o.Id, CustomName = cus.Name })  //ViewOrder是一个新建的类，更多Select用法看下面文档
+                 .Select<SysMenuModel>().ToList(); 
+
+                return list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        //获取角色菜单
+        public List<SysMenuModel> GetButtonListAll( int RoleID)
+        {
+            try
+            {
+
+                var list = db.Queryable<RoleRightModel>()
+                 .InnerJoin<SysMenuModel>((r, m) => r.Menu_Id == m.Menu_Id)//多个条件用&&
+                                                                           //.Where(r => r.RoleID == RoleID)
+                 .Where((r, m) => r.RoleID == RoleID) //如果用到m需要这么写
+                                                                                //.Select((r, m) => new ViewOrder { Id = o.Id, CustomName = cus.Name })  //ViewOrder是一个新建的类，更多Select用法看下面文档
+                 .Select<SysMenuModel>().ToList();
+
+                return list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         /// <summary>
         /// 添加 同步

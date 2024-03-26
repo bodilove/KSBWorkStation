@@ -34,12 +34,12 @@
             this.txt_Password = new System.Windows.Forms.TextBox();
             this.txt_UserName = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.lblMessage = new System.Windows.Forms.Label();
             this.bt_login = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.lblMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -135,6 +135,19 @@
             this.panel3.Size = new System.Drawing.Size(326, 86);
             this.panel3.TabIndex = 4;
             // 
+            // lblMessage
+            // 
+            this.lblMessage.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblMessage.BackColor = System.Drawing.Color.Transparent;
+            this.lblMessage.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblMessage.ForeColor = System.Drawing.Color.White;
+            this.lblMessage.Location = new System.Drawing.Point(4, 51);
+            this.lblMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(320, 32);
+            this.lblMessage.TabIndex = 5;
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // bt_login
             // 
             this.bt_login.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -163,7 +176,6 @@
             this.panel2.Size = new System.Drawing.Size(39, 40);
             this.panel2.TabIndex = 1;
             this.panel2.Click += new System.EventHandler(this.panel2_Click);
-            
             // 
             // panel4
             // 
@@ -204,19 +216,6 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "上海卡适堡汽车工程技术有限公司";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMessage
-            // 
-            this.lblMessage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblMessage.BackColor = System.Drawing.Color.Transparent;
-            this.lblMessage.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblMessage.ForeColor = System.Drawing.Color.White;
-            this.lblMessage.Location = new System.Drawing.Point(4, 51);
-            this.lblMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(320, 32);
-            this.lblMessage.TabIndex = 5;
-            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmLoginNew
             // 
