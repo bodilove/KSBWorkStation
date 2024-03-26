@@ -18,8 +18,7 @@ namespace MainControl
     {
         PermissionService bll =new PermissionService();
 
-        //public FrmUserInfo(string ParentId)
-        public FrmPermissionInfo()
+        public FrmPermissionInfo(int ParentId)
         {
             InitializeComponent();
             //SetButton(ParentId, this.toolStrip1);//设置按钮权限

@@ -37,11 +37,10 @@ namespace MainControl
 
         string filePath = Application.StartupPath + @"\TestSequence.xml";
         MyTest m = null;
-        public FrmToolHmiInfo()
-        //public FrmToolTestInfo(string ParentId)
+        public FrmToolHmiInfo(int ParentId)
         {
             InitializeComponent();
-            //SetButton(ParentId, this.toolStrip1);//设置按钮权限
+            SetButton(ParentId, this.toolStrip1);//设置按钮权限
             //Dictionary<int,string> lst= TShandler.GetTS_FilePathLst();
             //m = new MyTest();
 
@@ -51,7 +50,7 @@ namespace MainControl
             string aa=string.Empty;
         }
    
-        private void FrmToolTestInfo_Load(object sender, EventArgs e)
+        private void FrmToolHmiInfo_Load(object sender, EventArgs e)
         {
             GetComboxList();
 

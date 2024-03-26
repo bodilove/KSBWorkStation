@@ -7,16 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-//using YX.BLL;
-//using YX.Entity;
 
 namespace MainControl
 {
     public partial class WindowParent : DockContent
     {
-        SysMenuService menu_bll = new SysMenuService();
-        public  WindowParent()
+       
+        public WindowParent()
         {
+
             #region 关闭窗口
             System.Windows.Forms.ContextMenuStrip cms = new System.Windows.Forms.ContextMenuStrip();
             // 
@@ -55,7 +54,7 @@ namespace MainControl
 
             #endregion
 
-            
+
         }
         #region 按钮权限
         protected void  SetButton(int ParentId,ToolStrip toolStrip1)
@@ -64,6 +63,7 @@ namespace MainControl
             {
                 return;
             }
+            SysMenuService menu_bll = new SysMenuService();
             List<SysMenuModel> list = menu_bll.GetButtonList(ParentId, GlobalUserHandle.RoleID);
             foreach (var control in toolStrip1.Items)
             {
@@ -136,7 +136,7 @@ namespace MainControl
                     num++;
                 }
             }
-        } 
+        }
         #endregion
 
     }

@@ -29,12 +29,12 @@ namespace MainControl
         //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
 
         //public FrmUserInfo(string ParentId)
-        int ParentId = 20;
+        
         FrmUserInfoEdit edit;//编辑窗口
 
        
         string title =string.Empty;
-        public FrmUserInfo()
+        public FrmUserInfo(int ParentId)
         {
             InitializeComponent();
             SetButton(ParentId, this.toolStrip1);//设置按钮权限

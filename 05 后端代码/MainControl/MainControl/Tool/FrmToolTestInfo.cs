@@ -37,8 +37,7 @@ namespace MainControl
 
         string filePath = Application.StartupPath + @"\TestSequence.xml";
         MyTest m = null;
-        public FrmToolTestInfo()
-        //public FrmToolTestInfo(string ParentId)
+        public FrmToolTestInfo(int ParentId)
         {
             InitializeComponent();
             //SetButton(ParentId, this.toolStrip1);//设置按钮权限

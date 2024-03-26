@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmToolTestInfo));
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmToolHmiInfo));
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.com_Searchwhere = new System.Windows.Forms.ToolStripComboBox();
             this.txt_Search = new System.Windows.Forms.ToolStripTextBox();
+            this.btn_select = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btn_add = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_edit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_delete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_refresh = new System.Windows.Forms.ToolStripButton();
+            this.btn_StartTest = new System.Windows.Forms.ToolStripSplitButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageList1 = new System.Windows.Forms.ImageList();
-            this.btn_select = new System.Windows.Forms.ToolStripButton();
-            this.btn_add = new System.Windows.Forms.ToolStripButton();
-            this.btn_edit = new System.Windows.Forms.ToolStripButton();
-            this.btn_delete = new System.Windows.Forms.ToolStripButton();
-            this.btn_refresh = new System.Windows.Forms.ToolStripButton();
-            this.btn_StartTest = new System.Windows.Forms.ToolStripSplitButton();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -87,6 +88,15 @@
             this.txt_Search.Name = "txt_Search";
             this.txt_Search.Size = new System.Drawing.Size(100, 25);
             // 
+            // btn_select
+            // 
+            this.btn_select.Image = ((System.Drawing.Image)(resources.GetObject("btn_select.Image")));
+            this.btn_select.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_select.Name = "btn_select";
+            this.btn_select.Size = new System.Drawing.Size(52, 22);
+            this.btn_select.Text = "查询";
+            this.btn_select.Click += new System.EventHandler(this.btn_select_Click);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -104,20 +114,65 @@
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // btn_add
+            // 
+            this.btn_add.Image = ((System.Drawing.Image)(resources.GetObject("btn_add.Image")));
+            this.btn_add.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_add.Name = "btn_add";
+            this.btn_add.Size = new System.Drawing.Size(52, 22);
+            this.btn_add.Text = "添加";
+            this.btn_add.Click += new System.EventHandler(this.btn_Add_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btn_edit
+            // 
+            this.btn_edit.Image = ((System.Drawing.Image)(resources.GetObject("btn_edit.Image")));
+            this.btn_edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_edit.Name = "btn_edit";
+            this.btn_edit.Size = new System.Drawing.Size(52, 22);
+            this.btn_edit.Text = "编辑";
+            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // btn_delete
+            // 
+            this.btn_delete.Image = ((System.Drawing.Image)(resources.GetObject("btn_delete.Image")));
+            this.btn_delete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_delete.Name = "btn_delete";
+            this.btn_delete.Size = new System.Drawing.Size(52, 22);
+            this.btn_delete.Text = "删除";
+            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btn_refresh
+            // 
+            this.btn_refresh.Image = ((System.Drawing.Image)(resources.GetObject("btn_refresh.Image")));
+            this.btn_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_refresh.Name = "btn_refresh";
+            this.btn_refresh.Size = new System.Drawing.Size(52, 22);
+            this.btn_refresh.Text = "刷新";
+            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
+            // 
+            // btn_StartTest
+            // 
+            this.btn_StartTest.Image = global::MainControl.Properties.Resources._502;
+            this.btn_StartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_StartTest.Name = "btn_StartTest";
+            this.btn_StartTest.Size = new System.Drawing.Size(88, 22);
+            this.btn_StartTest.Text = "运行测试";
+            this.btn_StartTest.ButtonClick += new System.EventHandler(this.btn_StartTest_ButtonClick);
             // 
             // dataGridView1
             // 
@@ -181,61 +236,7 @@
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "folder.png");
             // 
-            // btn_select
-            // 
-            this.btn_select.Image = ((System.Drawing.Image)(resources.GetObject("btn_select.Image")));
-            this.btn_select.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_select.Name = "btn_select";
-            this.btn_select.Size = new System.Drawing.Size(52, 22);
-            this.btn_select.Text = "查询";
-            this.btn_select.Click += new System.EventHandler(this.btn_select_Click);
-            // 
-            // btn_add
-            // 
-            this.btn_add.Image = ((System.Drawing.Image)(resources.GetObject("btn_add.Image")));
-            this.btn_add.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_add.Name = "btn_add";
-            this.btn_add.Size = new System.Drawing.Size(52, 22);
-            this.btn_add.Text = "添加";
-            this.btn_add.Click += new System.EventHandler(this.btn_Add_Click);
-            // 
-            // btn_edit
-            // 
-            this.btn_edit.Image = ((System.Drawing.Image)(resources.GetObject("btn_edit.Image")));
-            this.btn_edit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_edit.Name = "btn_edit";
-            this.btn_edit.Size = new System.Drawing.Size(52, 22);
-            this.btn_edit.Text = "编辑";
-            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
-            // 
-            // btn_delete
-            // 
-            this.btn_delete.Image = ((System.Drawing.Image)(resources.GetObject("btn_delete.Image")));
-            this.btn_delete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_delete.Name = "btn_delete";
-            this.btn_delete.Size = new System.Drawing.Size(52, 22);
-            this.btn_delete.Text = "删除";
-            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
-            // 
-            // btn_refresh
-            // 
-            this.btn_refresh.Image = ((System.Drawing.Image)(resources.GetObject("btn_refresh.Image")));
-            this.btn_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_refresh.Name = "btn_refresh";
-            this.btn_refresh.Size = new System.Drawing.Size(52, 22);
-            this.btn_refresh.Text = "刷新";
-            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
-            // 
-            // btn_StartTest
-            // 
-            this.btn_StartTest.Image = global::MainControl.Properties.Resources._502;
-            this.btn_StartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_StartTest.Name = "btn_StartTest";
-            this.btn_StartTest.Size = new System.Drawing.Size(88, 22);
-            this.btn_StartTest.Text = "运行测试";
-            this.btn_StartTest.ButtonClick += new System.EventHandler(this.btn_StartTest_ButtonClick);
-            // 
-            // FrmToolTestInfo
+            // FrmToolHmiInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -245,9 +246,9 @@
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Name = "FrmToolTestInfo";
-            this.Text = "测试工具管理";
-            this.Load += new System.EventHandler(this.FrmToolTestInfo_Load);
+            this.Name = "FrmToolHmiInfo";
+            this.Text = "装配配置";
+            this.Load += new System.EventHandler(this.FrmToolHmiInfo_Load);
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

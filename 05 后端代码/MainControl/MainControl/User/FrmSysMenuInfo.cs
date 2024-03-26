@@ -22,14 +22,13 @@ namespace MainControl
 
         SysLogService System_Bll = new SysLogService();
         string title = string.Empty;
-        //public FrmUserInfo(string ParentId)
-
+       
         FrmMenuEdit edit;//编辑窗口
         
-        public FrmSysMenuInfo()
+        public FrmSysMenuInfo(int ParentId)
         {
             InitializeComponent();
-            //SetButton(ParentId, this.toolStrip1);//设置按钮权限
+            SetButton(ParentId, this.toolStrip1);//设置按钮权限
             this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//列自动填充
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//填充满
 

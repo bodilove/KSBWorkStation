@@ -47,7 +47,6 @@
             this.用户ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.用户管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.角色管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.权限管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.菜单管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -579,7 +578,6 @@
             this.用户ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.用户管理ToolStripMenuItem,
             this.角色管理ToolStripMenuItem,
-            this.权限管理ToolStripMenuItem,
             this.菜单管理ToolStripMenuItem});
             this.用户ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.用户ToolStripMenuItem.Name = "用户ToolStripMenuItem";
@@ -600,19 +598,12 @@
             this.角色管理ToolStripMenuItem.Text = "角色管理";
             this.角色管理ToolStripMenuItem.Click += new System.EventHandler(this.角色管理ToolStripMenuItem_Click);
             // 
-            // 权限管理ToolStripMenuItem
-            // 
-            this.权限管理ToolStripMenuItem.Name = "权限管理ToolStripMenuItem";
-            this.权限管理ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.权限管理ToolStripMenuItem.Text = "权限管理";
-            this.权限管理ToolStripMenuItem.Click += new System.EventHandler(this.权限管理ToolStripMenuItem_Click);
-            // 
             // 菜单管理ToolStripMenuItem
             // 
             this.菜单管理ToolStripMenuItem.Name = "菜单管理ToolStripMenuItem";
             this.菜单管理ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.菜单管理ToolStripMenuItem.Text = "菜单管理";
-            this.菜单管理ToolStripMenuItem.Click += new System.EventHandler(this.菜单管理toolStripMenuItem_Click);
+            this.菜单管理ToolStripMenuItem.Click += new System.EventHandler(this.菜单管理ToolStripMenuItem_Click);
             // 
             // 帮助HToolStripMenuItem
             // 
@@ -3908,7 +3899,6 @@
         private System.Windows.Forms.ToolStripMenuItem 用户ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 用户管理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 角色管理ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 权限管理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 帮助HToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         private System.Windows.Forms.Label lbltitle;

@@ -247,7 +247,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "FrmToolTestInfo";
-            this.Text = "装配管理";
+            this.Text = "测试配置";
             this.Load += new System.EventHandler(this.FrmToolTestInfo_Load);
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();

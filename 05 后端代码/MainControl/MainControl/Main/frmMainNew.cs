@@ -218,7 +218,7 @@ namespace MainControl
                         EventArgs eventArgs = EventArgs.Empty;
 
                         // 创建object[]数组来包含方法的参数  
-                        object[] parameters = new object[] { null, eventArgs }; // 假设sender是null，你可以根据实际情况替换为正确的sender对象  
+                        object[] parameters = new object[] { sender, eventArgs }; // 假设sender是null，你可以根据实际情况替换为正确的sender对象  
 
                         // 调用私有方法  
                         
@@ -1279,6 +1279,8 @@ namespace MainControl
         /// <param name="e"></param>
         private void 登录ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
             frmLoginNew fm = new frmLoginNew();
 
             if (fm.ShowDialog() == DialogResult.OK)
@@ -1318,7 +1320,8 @@ namespace MainControl
         }
         private void 注销ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
             DialogResult dr = MessageBox.Show("退出用户登录，PLC连接将会断开，请确认是否继续断开？", "通知", MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
             {
@@ -1355,6 +1358,8 @@ namespace MainControl
         /// <param name="e"></param>
         private void 数据库配置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
             FrmDBConfigEdit fm = new FrmDBConfigEdit();
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
@@ -1366,6 +1371,8 @@ namespace MainControl
         /// <param name="e"></param>
         private void 站位配置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
             FrmStationConfig fm = new FrmStationConfig();
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
@@ -1379,6 +1386,8 @@ namespace MainControl
         /// <param name="e"></param>
         private void PLC配置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
             frmPLCconfig fm = new frmPLCconfig();
             fm.ShowDialog();
         }
@@ -1389,7 +1398,9 @@ namespace MainControl
         /// <param name="e"></param>
         private void 测试配置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmToolTestInfo fm = new FrmToolTestInfo();
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
+            FrmToolTestInfo fm = new FrmToolTestInfo(ParentId);
 
             //frmStart fm=new frmStart();
             fm.StartPosition = FormStartPosition.CenterParent;
@@ -1397,7 +1408,9 @@ namespace MainControl
         }
         private void 装配配置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmToolHmiInfo fm = new FrmToolHmiInfo();
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId =mitem==null? -1: mitem.Tag.StrToInt(-1);
+            FrmToolHmiInfo fm = new FrmToolHmiInfo(ParentId);
 
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
@@ -1412,8 +1425,9 @@ namespace MainControl
         /// <param name="e"></param>
         private void 用户管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            FrmUserInfo fm = new FrmUserInfo();
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
+            FrmUserInfo fm = new FrmUserInfo(ParentId);
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
@@ -1424,7 +1438,9 @@ namespace MainControl
         /// <param name="e"></param>
         private void 角色管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmRoleInfo fm = new FrmRoleInfo();
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
+            FrmRoleInfo fm = new FrmRoleInfo(ParentId);
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
@@ -1435,13 +1451,18 @@ namespace MainControl
         /// <param name="e"></param>
         private void 权限管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmPermissionInfo fm = new FrmPermissionInfo();
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
+            FrmPermissionInfo fm = new FrmPermissionInfo(ParentId);
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
-        private void 菜单管理toolStripMenuItem_Click(object sender, EventArgs e)
+        private void 菜单管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmSysMenuInfo fm = new FrmSysMenuInfo();
+
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
+            FrmSysMenuInfo fm = new FrmSysMenuInfo(ParentId);
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }
@@ -1452,7 +1473,9 @@ namespace MainControl
         #region 日志
         private void 系统日志ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmSysLogInfo fm = new FrmSysLogInfo();
+            ToolStripMenuItem mitem = sender as ToolStripMenuItem;
+            int ParentId = mitem == null ? -1 : mitem.Tag.StrToInt(-1);
+            FrmSysLogInfo fm = new FrmSysLogInfo(ParentId);
             fm.StartPosition = FormStartPosition.CenterParent;
             fm.ShowDialog();
         }

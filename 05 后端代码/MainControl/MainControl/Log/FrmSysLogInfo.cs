@@ -21,10 +21,10 @@ namespace MainControl.Log
         SysLogService bll = new SysLogService();
 
         //public FrmUserInfo(string ParentId)
-        public FrmSysLogInfo()
+        public FrmSysLogInfo(int ParentId)
         {
             InitializeComponent();
-            //SetButton(ParentId, this.toolStrip1);//设置按钮权限
+            SetButton(ParentId, this.toolStrip1);//设置按钮权限
             this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//列自动填充
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//填充满
 

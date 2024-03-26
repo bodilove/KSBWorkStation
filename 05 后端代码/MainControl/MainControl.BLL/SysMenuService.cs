@@ -107,7 +107,7 @@ namespace MainControl.BLL
                 var list = db.Queryable<RoleRightModel>()
                  .InnerJoin<SysMenuModel>((r, m) => r.Menu_Id == m.Menu_Id)//多个条件用&&
                  //.Where(r => r.RoleID == RoleID)
-                 .Where((r, m) => r.RoleID == RoleID && m.ParentId==ParentId) //如果用到m需要这么写
+                 .Where((r, m) => r.RoleID == RoleID && m.ParentId==ParentId && m.DeleteMark == 0) //如果用到m需要这么写
                  //.Select((r, m) => new ViewOrder { Id = o.Id, CustomName = cus.Name })  //ViewOrder是一个新建的类，更多Select用法看下面文档
                  .Select<SysMenuModel>().ToList(); 
 
@@ -127,9 +127,8 @@ namespace MainControl.BLL
             {
 
                 var list = db.Queryable<RoleRightModel>()
-                 .InnerJoin<SysMenuModel>((r, m) => r.Menu_Id == m.Menu_Id)//多个条件用&&
-                                                                           //.Where(r => r.RoleID == RoleID)
-                 .Where((r, m) => r.RoleID == RoleID) //如果用到m需要这么写
+                 .InnerJoin<SysMenuModel>((r, m) => r.Menu_Id == m.Menu_Id)//多个条件用&&                               
+                 .Where((r, m) => r.RoleID == RoleID && m.DeleteMark == 0) //如果用到m需要这么写
                                                                                 //.Select((r, m) => new ViewOrder { Id = o.Id, CustomName = cus.Name })  //ViewOrder是一个新建的类，更多Select用法看下面文档
                  .Select<SysMenuModel>().ToList();
 
