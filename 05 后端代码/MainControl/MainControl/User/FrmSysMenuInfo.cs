@@ -218,6 +218,12 @@ namespace MainControl
         {
             try
             {
+                if (this.treeView1.SelectedNode == null)
+                {
+                    MessageBox.Show("请选择节点！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 edit = new FrmMenuEdit(this);
                 // 订阅子窗体的事件
                 edit.DataUpdated += btn_refresh_Click;
@@ -249,6 +255,11 @@ namespace MainControl
         {
             try
             {
+                if (this.treeView1.SelectedNode == null)
+                {
+                    MessageBox.Show("请选择节点！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (dataGridView1.DataSource == null)
                 {
                     MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

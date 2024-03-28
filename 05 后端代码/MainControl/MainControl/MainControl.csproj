@@ -151,6 +151,12 @@
     <Compile Include="Main\PLCFunctionCode.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Tool\FrmToolHmiEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tool\FrmToolHmiEdit.designer.cs">
+      <DependentUpon>FrmToolHmiEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tool\FrmToolHmiInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="System\FrmDBConfigEdit.resx">
       <DependentUpon>FrmDBConfigEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tool\FrmToolHmiEdit.resx">
+      <DependentUpon>FrmToolHmiEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tool\FrmToolHmiInfo.resx">
       <DependentUpon>FrmToolHmiInfo.cs</DependentUpon>

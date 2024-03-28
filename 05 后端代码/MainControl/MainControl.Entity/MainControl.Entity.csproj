@@ -44,9 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumConditional.cs" />
     <Compile Include="PermissionModel.cs" />
     <Compile Include="RoleRightModel.cs" />
     <Compile Include="RoleModel.cs" />
+    <Compile Include="ProcessSteps.cs" />
     <Compile Include="SysMenuModel.cs" />
     <Compile Include="SysLogModel.cs" />
     <Compile Include="UserModel.cs" />

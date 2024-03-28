@@ -22,32 +22,34 @@ using System.Xml.Linq;
 using static Test.ProjectFileEditor.frmMain;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Test.ProjectTest;
+using MainControl.Entity;
+using System.Reflection;
+using MainControl.BLL;
+using System.Diagnostics;
 
 namespace MainControl
 {
     public partial class FrmToolHmiInfo : WindowParent
     {
-        //SystemOrganization_Bll organization_bll = new SystemOrganization_Bll();
-        //// SystemUserInfo_Dal user_dal = new SystemUserInfo_Dal();
-        //SystemUserInfo_Bll user_bll = new SystemUserInfo_Bll();
-        //SystemMenu_Bll menu_bll = new SystemMenu_Bll();
-        //TSHandler TShandler = new TSHandler(Application.StartupPath + @"\TestSequence.xml");
+       ProcessStepsService bll=new ProcessStepsService();
 
-        UserManager m_UserManage = new UserManager();
+        //string filePath = Application.StartupPath + @"\TestSequence.xml";
+        //MyTest m = null;
 
-        string filePath = Application.StartupPath + @"\TestSequence.xml";
-        MyTest m = null;
+        SysLogService System_Bll = new SysLogService();
+        string title = string.Empty;
+
+        FrmToolHmiEdit edit;//编辑窗口
         public FrmToolHmiInfo(int ParentId)
         {
             InitializeComponent();
             SetButton(ParentId, this.toolStrip1);//设置按钮权限
-            //Dictionary<int,string> lst= TShandler.GetTS_FilePathLst();
-            //m = new MyTest();
+           
+            ////加载xml数据文件
+            //XmlDocument xmlDoc = LoadXmlDoc(filePath);
+            //m = XmlHelper<MyTest>.DeserializeToObject(xmlDoc.InnerXml);
 
-            //加载xml数据文件
-            XmlDocument xmlDoc = LoadXmlDoc(filePath);
-            m = XmlHelper<MyTest>.DeserializeToObject(xmlDoc.InnerXml);
-            string aa=string.Empty;
+            title = this.Text;
         }
    
         private void FrmToolHmiInfo_Load(object sender, EventArgs e)
@@ -72,7 +74,7 @@ namespace MainControl
             dt.Columns.Add(Value);
 
             DataRow dr1 = dt.NewRow();
-            dr1["Name"] = "项目名称";
+            dr1["Name"] = "测试步骤";
             dr1["Value"] = "Name";
 
             //DataRow dr2 = dt.NewRow();
@@ -99,17 +101,16 @@ namespace MainControl
         {
             try
             {
+                int SelectNodeIndex = 0;
+                if (treeView1.SelectedNode != null)
+                {
+                    SelectNodeIndex = treeView1.SelectedNode.Index;//选中节点下标
+                }
+
                 treeView1.Nodes.Clear();
-                //list = organization_bll.GetOrganizations();
+                List<ProcessSteps> list = bll.QueryList();
                 if (Program.CurrentConfig != null)
                 {
-                    //dgvlocalStConfig.Rows.Clear();
-
-                    //foreach (LocalStationConfig lst in )
-                    //{
-                    //    dgvlocalStConfig.Rows.Add(new object[] { lst.StationNum, lst.StationName });
-                    //}
-
                     var parents = Program.CurrentConfig.localStlst;
 
                     //var parents = list.Where(o => o.ParentId == "0");
@@ -117,76 +118,140 @@ namespace MainControl
                     {
                         TreeNode tn = new TreeNode();
                         tn.Text = $"[{item.StationNum}]{item.StationName}";
-                        tn.Tag = item.StationNum;
+                        tn.Tag = "0";
+                        tn.Name = item.StationNum;
                         tn.ImageIndex = 0;
-                        //FillTree(tn, list);
+                        FillTree(tn, list);
                         treeView1.Nodes.Add(tn);
                     }
+
+                    if (treeView1.Nodes.Count > 0)//展开一级节点
+                    {
+                        treeView1.Nodes[SelectNodeIndex].Expand();
+                        treeView1.Nodes[SelectNodeIndex].Checked = true; ;
+                    }
                 }
+
+
             }
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }
 
-        //private void FillTree(TreeNode node, List<Base_Organization> list)
-        //{
-
-        //    var childs = list.Where(o => o.ParentId == node.Tag.ToString());
-        //    if (childs.Count() > 0)
-        //    {
-        //        foreach (var item in childs)
-        //        {
-        //            TreeNode tnn = new TreeNode();
-        //            tnn.Text = item.Organization_Name;
-        //            tnn.Tag = item.Organization_ID;
-        //            tnn.ImageIndex = 0;
-        //            if (item.ParentId == node.Tag.ToString())
-        //            {
-        //                FillTree(tnn, list);
-        //            }
-        //            node.Nodes.Add(tnn);
-        //        }
-
-        //    }
-        //}
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void FillTree(TreeNode node, List<ProcessSteps> list)
         {
-            string Organization_ID = e.Node.Tag.ToString();
-            //e.Node.BackColor = Color.Blue;
 
-            StringBuilder SqlWhere = new StringBuilder();
-            IList<SqlParameter> IList_param = new List<SqlParameter>();
-            //if (!string.IsNullOrEmpty(Organization_ID))
-            //{
-            //    SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
-            //    IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID ));
-            //}
-            dataGridView1.DataSource = null;
-            DataTable dt= new DataTable();
-            if (m != null)
+            var childs = list.Where(o =>o.StationNum==node.Name.ToString()&& o.ParentId == node.Tag.StrToInt(-1));
+            if (childs.Count() > 0)
             {
-                TestSequences item = m.TestSequences.Where(p => p.StationNum == Organization_ID).FirstOrDefault();
-                if (item != null && item.TS != null)
+                foreach (var item in childs)
                 {
-                    item.TS.ForEach(o => o.StationNum = Organization_ID);
-                    this.dataGridView1.DataSource = item.TS;
+                    TreeNode tnn = new TreeNode();
+                    tnn.Text = item.ProcessName;
+                    tnn.Tag = item.ProcessID;
+                    tnn.Name = item.StationNum.ToString();
+                    tnn.ImageIndex = 0;
+                    if (item.ParentId == node.Tag.StrToInt(-1))
+                    {
+                        FillTree(tnn, list);
+                    }
+                    node.Nodes.Add(tnn);
                 }
-                
+
             }
-            
-            //this.dataGridView1.DataSource = user_bll.GetUserInfoByOrganization_Id(SqlWhere, IList_param);
+        }
+
+        /// <summary>
+        /// 绑定节点菜单数据
+        /// </summary>
+        /// <param name="MenuID"></param>
+        private async void BindView()
+        {
+            try
+            {
+                int ProcessID = treeView1.SelectedNode.Tag.StrToInt(-1);
+                string StationNum = treeView1.SelectedNode.Name.ToString();
+                this.dataGridView1.DataSource = null;
+                // 假设有一个实体类
+                var entity = new ProcessSteps();
+                // 使用反射获取实体的属性
+                PropertyInfo[] properties = entity.GetType().GetProperties();
+                foreach (PropertyInfo property in properties)
+                {
+                    // 添加列，列名为中文字段名
+                    DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                    column.HeaderText = property.GetCustomAttribute<DescriptionAttribute>()?.Description ?? property.Name;
+                    column.DataPropertyName = property.Name;
+                    dataGridView1.Columns.Add(column);
+                    if (
+                        property.Name == "ParentId" ||
+                        property.Name == "CreateUserId" ||
+                        property.Name == "ModifyUserId" ||
+                        property.Name == "DeleteMark" ||
+                        property.Name == "ProcessType")
+                    {
+                        column.Visible = false;
+                    }
+                    if (ProcessID <= 0)
+                    {
+                        if (
+                           property.Name == "Ulimit" ||
+                           property.Name == "Llimit" ||
+                           property.Name == "Unit")
+                        {
+                            column.Visible = false;
+                        }
+
+                    }
+                }
+               
+                List<ProcessSteps> list = await bll.QueryListAsync(StationNum,ProcessID);
+
+                this.dataGridView1.DataSource = list;
+            }
+            catch (Exception ex)
+            {
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+        private async void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            //int ProcessID = e.Node.Tag.StrToInt(-1);
+            //string StationNum=e.Node.Name.ToString();
+            //e.Node.BackColor = Color.Blue;
+            //var list = await bll.QueryListAsync(StationNum, ProcessID);
+
+            //if (list != null && list.Count>0)
+            //{
+            //    this.dataGridView1.DataSource =list;
+            //}
+            BindView();
 
         }
 
@@ -208,47 +273,19 @@ namespace MainControl
             //  StringBuilder SqlWhere = new StringBuilder();
             //  IList<SqlParameter> IList_param = new List<SqlParameter>();
 
-            string Organization_ID=string.Empty;
-            if (!string.IsNullOrEmpty(txt_Search.Text))
-            {
-                //SqlWhere.Append(" and U." + com_Searchwhere.ComboBox.SelectedValue.ToString() + " like @obj ");
-                //IList_param.Add(new SqlParameter("@obj", '%' + txt_Search.Text.Trim() + '%'));
-            }
-            if (!string.IsNullOrEmpty(treeView1.SelectedNode.Tag.ToString()))
-            {
-                Organization_ID = treeView1.SelectedNode.Tag.ToString();
-                //SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
-                //IList_param.Add(new SqlParameter("@Organization_ID", treeView1.SelectedNode.Tag.ToString()));
-            }
-            if (m != null)
-            {
-
-                //TestSequences item = m.TestSequences.Where(p => p.StationNum .Contains(Organization_ID)).FirstOrDefault();
-
-                List<TS> lstTS=new List<TS>();
-                
-                List<TestSequences> lstTestSequences =new List<TestSequences>();
-                if (String.IsNullOrEmpty(Organization_ID))
-                {
-                    lstTestSequences = m.TestSequences;
-                }
-                else
-                {
-                    lstTestSequences = m.TestSequences.Where(p => p.StationNum.Contains(Organization_ID)).ToList();
-                }
-
-                foreach (TestSequences item in lstTestSequences)
-                {
-                    lstTS.AddRange( item.TS.Where(p=>p.Name.Contains(txt_Search.Text)).ToList());
-                }
-
-                if (lstTS != null && lstTS.Count>0)
-                {
-                    //item.TS.ForEach(o => o.StationNum = Organization_ID);
-                    this.dataGridView1.DataSource = lstTS;
-                }
-
-            }
+            //string Organization_ID=string.Empty;
+            //if (!string.IsNullOrEmpty(txt_Search.Text))
+            //{
+            //    //SqlWhere.Append(" and U." + com_Searchwhere.ComboBox.SelectedValue.ToString() + " like @obj ");
+            //    //IList_param.Add(new SqlParameter("@obj", '%' + txt_Search.Text.Trim() + '%'));
+            //}
+            //if (!string.IsNullOrEmpty(treeView1.SelectedNode.Tag.ToString()))
+            //{
+            //    Organization_ID = treeView1.SelectedNode.Tag.ToString();
+            //    //SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
+            //    //IList_param.Add(new SqlParameter("@Organization_ID", treeView1.SelectedNode.Tag.ToString()));
+            //}
+            BindView();
         }
 
         /// <summary>
@@ -260,121 +297,36 @@ namespace MainControl
         {
             try
             {
-                //FrmUserInfoEdit edit = new FrmUserInfoEdit(this);
-                //edit.ShowDialog();
-                TreeNode treeNode= treeView1.SelectedNode;
-                if (treeNode == null)
+                if (this.treeView1.SelectedNode == null)
                 {
-                    MessageBox.Show("请选择工位节点！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                string StationNum = treeView1.SelectedNode.Tag.ToString();
-                if (String.IsNullOrEmpty(StationNum))
-                {
-                    MessageBox.Show("请选择工位节点！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                   
+                    MessageBox.Show("请选择节点！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                Test.ProjectFileEditor.frmMain frm = new Test.ProjectFileEditor.frmMain();
-
-                frm.StationNum = StationNum;
-                frm.OptionType = 0;
-
-                // 订阅弹出窗口的事件
-                frm.CustomControlClicked += PopupForm_ObjectSelected;
-                frm.ShowDialog();
-               
-
-                //if (lstTS.SelectedItems.Count == 0)
-                //{
-                //    frm.ShowDialog();
-                //}
-                //else
-                //{
-                //    frm.LoadFile(
-                //        TShandler.GetTS_Name(lstTS.SelectedIndex + 1),
-                //        TShandler.GetTS_FilePath(lstTS.SelectedIndex + 1)
-                //        );
-                //}
+                edit = new FrmToolHmiEdit(this);
+                // 订阅子窗体的事件
+                edit.DataUpdated += btn_refresh_Click;
+                edit.ShowDialog();
             }
+
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }
-        /// <summary>
-        /// 弹出窗口对象获取
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PopupForm_ObjectSelected(object sender, MyNewValueEventArgs e)
-        {
-            // 在主窗口中获取弹出窗口的对象值
-            ProjectTS ts = e.NewValue;
-
-            //添加项目
-            if (ts != null)
-            {
-
-                //if (m.TestSequences == null)
-                //{
-
-                //    m.TestSequences.Add(new ts);
-                //}
-                TestSequences testSequences = m.TestSequences.Where(p=>p.StationNum==ts.StationNum).FirstOrDefault();
-                if (testSequences == null)
-                {
-                    testSequences=new TestSequences() { 
-                        StationNum = ts.StationNum,
-                        TS = new List<TS>() { new TS() { ID = 1.ToString(),StationNum=ts.StationNum, Name = ts.Name, FilePath = ts.FilePath } }
-                    };
-                    m.TestSequences.Add(testSequences);
-                }
-                else
-                {
-                    if ((testSequences.TS == null))
-                    {
-                        testSequences.TS.Add(new TS() { ID = 1.ToString(), Name = ts.Name, StationNum = ts.StationNum, FilePath = ts.FilePath });
-                    }
-                    else
-                    {
-                        testSequences.TS.Add(new TS() { ID = (testSequences.TS.Count+1).ToString(), StationNum = ts.StationNum, Name = ts.Name, FilePath = ts.FilePath });
-                    }
-                    
-
-                }
-                int result = SaveXMLData(filePath, m);
-
-                if (result == 1)
-                {
-                    //MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.dataGridView1.DataSource = null;
-                    this.dataGridView1.DataSource = testSequences.TS;
-                }
-                else
-                {
-                    MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("添加项目信息为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            // 在这里处理获取到的对象值，例如显示在主窗体上
-            //MessageBox.Show($"Selected Object: {selectedObject.Name}", "Object Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
+        
 
         /// <summary>
         /// 编辑项目
@@ -385,174 +337,74 @@ namespace MainControl
         {
             try
             {
-                //判断是否选择编辑的行
                 if (dataGridView1.DataSource == null)
                 {
                     MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
+                    DataGridViewRow dr = dataGridView1.SelectedRows[0];
 
-                    string StationNum = treeView1.SelectedNode.Tag.ToString();
-                    if (String.IsNullOrEmpty(StationNum))
-                    {
-                        MessageBox.Show("请选择工位节点！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    //DataGridViewRow dr = dataGridView1.SelectedRows[0];
-
-                    //if (dr != null)
-                    //{
-                    //    FrmUserInfoEdit edit = new FrmUserInfoEdit(this,ref dr);
-                    //    edit.ShowDialog();
-                    //}
-                    DataGridViewRow dr = null;
-                    if (dataGridView1.SelectedRows == null)
-                    {
-                        MessageBox.Show("请选择要编辑的测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    else
-                    {
-                        dr = dataGridView1.SelectedRows[0];
-
-                    }
-
-
-                    TestSequences testItems = m.TestSequences.Where(p => p.StationNum == StationNum).FirstOrDefault();
-                    if (testItems == null)
-                    {
-                        MessageBox.Show("没有配置测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    
                     if (dr != null)
                     {
-                        Test.ProjectFileEditor.frmMain frm = new Test.ProjectFileEditor.frmMain();
-                        //frm.OptionType = 1;
-                        //frm.StationNum = StationNum;
-
-                        string Name = dr.Cells["Name"].Value.ToString();
-                        string FilePath= dr.Cells["FilePath"].Value.ToString();
-
-                        frm.LoadFile( Name, FilePath );
-                        
-                        int result = SaveXMLData(filePath, m);
-
-                        if (result == 1)
-                        {
-                            MessageBox.Show("编辑成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            this.dataGridView1.DataSource = null;
-                            this.dataGridView1.DataSource = testItems.TS;
-                        }
-                        else
-                        {
-                            MessageBox.Show("编辑失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
+                        edit = new FrmToolHmiEdit(this, ref dr);
+                        // 订阅子窗体的事件
+                        edit.DataUpdated += btn_refresh_Click;
+                        edit.ShowDialog();
                     }
                 }
             }
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }
-
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_delete_Click(object sender, EventArgs e)
         {
             try
             {
-               
-                string StationNum = treeView1.SelectedNode.Tag.ToString();
-                if (String.IsNullOrEmpty(StationNum))
+                if (dataGridView1.DataSource == null)
                 {
-                    MessageBox.Show("请选择删除的工位节点！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("没有选择任何数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                TestSequences testItems = m.TestSequences.Where(p => p.StationNum == StationNum).FirstOrDefault();
-                if (testItems == null)
-                {
-                    MessageBox.Show("没有配置测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                DataGridViewRow dr = null;
-                if (dataGridView1.SelectedRows == null)
-                {
-                    MessageBox.Show("请选择要删除的测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else
-                {
-                    dr = dataGridView1.SelectedRows[0];
-
-                }
+                DataGridViewRow dr = dataGridView1.SelectedRows[0];
                 if (dr != null)
                 {
-
-                    //MyTest m=new MyTest();
-                    if (m.TestSequences != null && m.TestSequences.Count > 0)
-                    {
-                        
-                        if (testItems != null)
-                        {
-                            string ID = dr.Cells["ID"].Value.ToString();
-                            //移除删除项
-                            if (testItems.TS != null && testItems.TS.Count > 0)
-                            {
-                                foreach (var item in testItems.TS)
-                                {
-                                    if (item.ID == ID)
-                                    {
-                                        testItems.TS.Remove(item);
-                                        break;
-                                    }
-
-                                }
-                            }
-                            //将项目顺序重新怕列
-                            if (testItems.TS != null && testItems.TS.Count > 0)
-                            {
-                                for (int i=0;i< testItems.TS.Count;i++)
-                                {
-                                    testItems.TS[i].ID = (i+1).ToString();
-
-                                }
-                            }
-
-                        }
-                        else {
-
-                            MessageBox.Show("没有选择需要删除的测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("没有选择需要删除的测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    //int result = bll.DeleteSysMenu(dr.Cells["Menu_Id"].Value.ToString());
-
-                    int result = SaveXMLData(filePath,m);
-
+                    ProcessSteps m = dr.DataBoundItem as ProcessSteps;
+                    int result = bll.DeleteIsLogic(m.ProcessID.StrToInt(-1));
                     if (result == 1)
                     {
-                        this.dataGridView1.DataSource = null;
-                        this.dataGridView1.DataSource = testItems.TS;
-
                         MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        
+                        System_Bll.AddLog(new SysLogModel
+                        {
+                            CreateUserID = GlobalUserHandle.LoginUserID,
+                            CreateUserName = GlobalUserHandle.loginUserName,
+                            LocalIP = GlobalUserHandle.LocalIP,
+                            Module = title,
+                            Method = MethodBase.GetCurrentMethod().Name,
+                            LogMessage = $"{title}-工位：{m.StationNum}，工艺：{m.ProcessName}删除成功！",
+                            Type = "系统消息",
+                            ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                        });
+                        //int MeunID = treeView1.SelectedNode.Tag.StrToInt(0);
+                        BindView();
                     }
                     else
                     {
@@ -562,231 +414,67 @@ namespace MainControl
             }
             catch (Exception ex)
             {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
+                System_Bll.AddLog(new SysLogModel
+                {
+                    CreateUserID = GlobalUserHandle.LoginUserID,
+                    CreateUserName = GlobalUserHandle.loginUserName,
+                    LocalIP = GlobalUserHandle.LocalIP,
+                    Module = title,
+                    Method = MethodBase.GetCurrentMethod().Name,
+                    LogMessage = ex.Message,
+                    Type = "系统错误！",
+                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                });
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void btn_refresh_Click(object sender, EventArgs e)
-        {
-            //if (treeView1.SelectedNode != null)
-            //{
-            //    string Organization_ID = treeView1.SelectedNode.Tag.ToString();
-            //    //StringBuilder SqlWhere = new StringBuilder();
-            //    //IList<SqlParameter> IList_param = new List<SqlParameter>();
-            //    //if (!string.IsNullOrEmpty(Organization_ID))
-            //    //{
-            //    //    SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
-            //    //    IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID));
-            //    //}
-            //    if (m != null)
-            //    {
-            //        TestSequences item = m.TestSequences.Where(p => p.StationNum == Organization_ID).FirstOrDefault();
-            //        if (item != null && item.TS != null)
-            //        {
-            //            item.TS.ForEach(o => o.StationNum = Organization_ID);
-            //            this.dataGridView1.DataSource = item.TS;
-            //        }
-
-            //    }
-
-            //}
-            string Organization_ID = string.Empty;
-            if (!string.IsNullOrEmpty(txt_Search.Text))
-            {
-                //SqlWhere.Append(" and U." + com_Searchwhere.ComboBox.SelectedValue.ToString() + " like @obj ");
-                //IList_param.Add(new SqlParameter("@obj", '%' + txt_Search.Text.Trim() + '%'));
-            }
-            if (!string.IsNullOrEmpty(treeView1.SelectedNode.Tag.ToString()))
-            {
-                Organization_ID = treeView1.SelectedNode.Tag.ToString();
-                //SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
-                //IList_param.Add(new SqlParameter("@Organization_ID", treeView1.SelectedNode.Tag.ToString()));
-            }
-            if (m != null)
-            {
-
-                //TestSequences item = m.TestSequences.Where(p => p.StationNum .Contains(Organization_ID)).FirstOrDefault();
-
-                List<TS> lstTS = new List<TS>();
-
-                List<TestSequences> lstTestSequences = new List<TestSequences>();
-                if (String.IsNullOrEmpty(Organization_ID))
-                {
-                    lstTestSequences = m.TestSequences;
-                }
-                else
-                {
-                    lstTestSequences = m.TestSequences.Where(p => p.StationNum.Contains(Organization_ID)).ToList();
-                }
-
-                foreach (TestSequences item in lstTestSequences)
-                {
-                    lstTS.AddRange(item.TS.Where(p => p.Name.Contains(txt_Search.Text)).ToList());
-                }
-
-                if (lstTS != null && lstTS.Count > 0)
-                {
-                    //item.TS.ForEach(o => o.StationNum = Organization_ID);
-                    this.dataGridView1.DataSource = lstTS;
-                }
-
-            }
-
-        }
-
-        private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //BindTreeView(organization_bll.GetOrganizations());
-            //if (treeView1.Nodes.Count > 0)//展开一级节点
-            //{
-            //    treeView1.Nodes[0].Expand();
-            //}
-        }
-
-
-        frmTest_Wide frm = null;
         /// <summary>
-        /// 运行测试
+        /// 刷新
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_StartTest_ButtonClick(object sender, EventArgs e)
+        private void btn_refresh_Click(object sender, EventArgs e)
         {
-
-            try
+            if (treeView1.SelectedNode != null)
             {
-
-                //判断是否选择编辑的行
-                if (dataGridView1.DataSource == null)
+                int ProcessID = treeView1.SelectedNode.Tag.StrToInt(-1);
+                string StationNum = treeView1.SelectedNode.Name.ToString();
+                //StringBuilder SqlWhere = new StringBuilder();
+                //IList<SqlParameter> IList_param = new List<SqlParameter>();
+                //if (!string.IsNullOrEmpty(Organization_ID))
+                //{
+                //    SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
+                //    IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID));
+                //}
+                if (!string.IsNullOrEmpty(StationNum))
                 {
-                    MessageBox.Show("请选择要编辑的行!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    //BindTreeView();
+                    BindView();
+
                 }
                 else
                 {
-                    DataGridViewRow dr = null;
-                    if (dataGridView1.SelectedRows == null)
-                    {
-                        MessageBox.Show("请选择要删除的测试项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    else
-                    {
-                        dr = dataGridView1.SelectedRows[0];
-
-                    }
-                    if (dr != null)
-                    {
-                        string ID = dr.Cells["ID"].Value.ToString();
-                        string Name = dr.Cells["Name"].Value.ToString();
-                        string FilePath = dr.Cells["FilePath"].Value.ToString();
-
-                        this.Hide();
-                        //$"用户ID：{MdlClass.userInfo.UserNum}   用户名称: {MdlClass.userInfo.UserName}";
-                        //Dictionary<int, string> dicPath = TShandler.GetTS_FilePathLst();
-                        string userName = MdlClass.userInfo.UserName;
-                        frm = new frmTest_Wide();
-                        frm.mUser.Name = userName;
-                        frm.mUser.Description = m_UserManage.Description(userName);
-                        frm.m_dbConnection = m_UserManage.DbConnection;
-
-                        frm.ProjectFile = FilePath;
-                        frm.ShowDialog();
-                        this.Show();
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //System_Bll.WriteLogToDB(new Entity.Base_Log
-                //{
-                //    CreateUserID = FrmLogin.LoginUserID,
-                //    CreateUserName = FrmLogin.loginUserName,
-                //    LocalIP = FrmLogin.LocalIP,
-                //    LogMessage = ex.Message,
-                //    Type = "系统错误！",
-                //    ClassName = typeof(FrmUserInfo).ToString()
-                //});
-                MessageBox.Show(ex.Message);
-            }
-
-           
-        }
-
-        #region  读取xml
-        public XmlDocument LoadXmlDoc(string filePath)
-        {
-            //加载xml文档格式
-            XmlDocument doc = new XmlDocument();
-            try
-            {
-                //读取文件内容xml数据（先定义编码）
-                string str = string.Empty;
-                //using (StreamReader sr = new StreamReader(filePath, Encoding.GetEncoding("utf-8")))
-                using (StreamReader sr = new StreamReader(filePath, Encoding.GetEncoding("GB2312")))
-                {
-                    str = sr.ReadToEnd();
-                    sr.DiscardBufferedData();
-                    sr.Close();
+                    
                 }
 
-
-                //注册命名空间
-                //XmlNamespaceManager xnm = new XmlNamespaceManager(doc.NameTable);
-                //xnm.AddNamespace("x", "urn:http://www.w3.org/1999/xhtml");
-                ////取值的时候一定要把x加进去
-                //string xml = doc.SelectSingleNode("/x:Company/x:State", xnm).InnerText;
-                doc.LoadXml(str);
-
             }
-            catch (Exception ex)
-            {
-                //Logger.Error1(ex, $"读取追溯数据文件：{filePath}出错");
-            }
+            
 
-            return doc;
         }
         /// <summary>
-        /// 保存xml
+        /// 树形刷新
         /// </summary>
-        /// <returns></returns>
-        public int SaveXMLData(string filePath, MyTest m)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int result = 0;
-            try
+            BindTreeView();
+            if (treeView1.Nodes.Count > 0)//展开一级节点
             {
-                // 创建路径
-                //string xmlPath = SysConfig.XmlPath;
-                //DirectoryUtil.CreateDirectory(xmlPath);//创建文件夹
-                //将对象转换为xml
-                string data = XmlHelper<MyTest>.SerializeToXml(m);
-                XmlDocument xml = new XmlDocument();
-                xml.AppendChild(xml.CreateXmlDeclaration("1.0", "", "no"));
-                xml.LoadXml(data);
-
-                //创建xml文件
-                xml.Save($"{filePath}");
-                result = 1;
+                treeView1.Nodes[0].Expand();
             }
-            catch (Exception ex)
-            {
-                //Logger.Error($"SaveXMLData：保存xml失败！{ex.Message.ToString()}");
-            }
-            return result;
-
         }
-        #endregion
 
-       
+
     }
 }

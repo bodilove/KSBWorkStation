@@ -172,7 +172,7 @@
             this.btn_StartTest.Name = "btn_StartTest";
             this.btn_StartTest.Size = new System.Drawing.Size(88, 22);
             this.btn_StartTest.Text = "运行测试";
-            this.btn_StartTest.ButtonClick += new System.EventHandler(this.btn_StartTest_ButtonClick);
+            this.btn_StartTest.Visible = false;
             // 
             // dataGridView1
             // 
@@ -278,10 +278,10 @@
         private System.Windows.Forms.ToolStripButton btn_refresh;
         public System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSplitButton btn_StartTest;
+        public System.Windows.Forms.TreeView treeView1;
     }
 }
