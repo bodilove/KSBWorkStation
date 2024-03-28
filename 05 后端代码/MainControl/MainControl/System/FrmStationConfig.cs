@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace MainControl
 {
-    public partial class FrmStationConfig : Form
+    public partial class FrmStationConfig : WindowParent
     {
         //public SystemConfig CurrentConfig = null;
         DataGridView CurrentDgv = null;
@@ -24,7 +24,8 @@ namespace MainControl
             //SystemConfig gf = new SystemConfig();
 
             //CurrentConfig = gf;
-          
+            InitView(this);//初始化标题放大缩小
+
         }
 
         /// <summary>

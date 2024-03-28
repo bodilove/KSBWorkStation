@@ -72,6 +72,8 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTestTime = new System.Windows.Forms.Label();
             this.lblResult = new System.Windows.Forms.Label();
+            this.btnClearCount = new System.Windows.Forms.Button();
+            this.btnQuit = new System.Windows.Forms.Button();
             this.btnClearCounter = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.lblFail = new System.Windows.Forms.Label();
@@ -81,6 +83,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.chkBreakOnError = new System.Windows.Forms.CheckBox();
+            this.btnTogglePPM = new System.Windows.Forms.Button();
             this.tblChooseKind = new System.Windows.Forms.TableLayoutPanel();
             this.ckbNormalTest = new System.Windows.Forms.RadioButton();
             this.ckbAnalysis = new System.Windows.Forms.RadioButton();
@@ -93,9 +96,6 @@
             this.ColRes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnClearCount = new System.Windows.Forms.Button();
-            this.btnQuit = new System.Windows.Forms.Button();
-            this.btnTogglePPM = new System.Windows.Forms.Button();
             this.SubStepBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusInfo.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -300,6 +300,38 @@
             this.lblResult.Text = "PASS";
             this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnClearCount
+            // 
+            this.btnClearCount.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
+            this.btnClearCount.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClearCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClearCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnClearCount.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnClearCount.Location = new System.Drawing.Point(2, 376);
+            this.btnClearCount.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClearCount.Name = "btnClearCount";
+            this.btnClearCount.Size = new System.Drawing.Size(217, 56);
+            this.btnClearCount.TabIndex = 4;
+            this.btnClearCount.Text = "清除计数";
+            this.btnClearCount.UseVisualStyleBackColor = true;
+            this.btnClearCount.Click += new System.EventHandler(this.btnClearCount_Click);
+            // 
+            // btnQuit
+            // 
+            this.btnQuit.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
+            this.btnQuit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnQuit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnQuit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnQuit.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnQuit.Location = new System.Drawing.Point(2, 436);
+            this.btnQuit.Margin = new System.Windows.Forms.Padding(2);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(217, 56);
+            this.btnQuit.TabIndex = 1;
+            this.btnQuit.Text = "退出";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            // 
             // btnClearCounter
             // 
             this.btnClearCounter.Controls.Add(this.tableLayoutPanel6);
@@ -426,6 +458,21 @@
             this.chkBreakOnError.UseVisualStyleBackColor = true;
             this.chkBreakOnError.Visible = false;
             this.chkBreakOnError.CheckedChanged += new System.EventHandler(this.chkBreakOnError_CheckedChanged);
+            // 
+            // btnTogglePPM
+            // 
+            this.btnTogglePPM.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
+            this.btnTogglePPM.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTogglePPM.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnTogglePPM.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnTogglePPM.Location = new System.Drawing.Point(2, 316);
+            this.btnTogglePPM.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTogglePPM.Name = "btnTogglePPM";
+            this.btnTogglePPM.Size = new System.Drawing.Size(216, 56);
+            this.btnTogglePPM.TabIndex = 5;
+            this.btnTogglePPM.Text = "切换PPM/%";
+            this.btnTogglePPM.UseVisualStyleBackColor = true;
+            this.btnTogglePPM.Click += new System.EventHandler(this.btnTogglePPM_Click);
             // 
             // tblChooseKind
             // 
@@ -698,53 +745,6 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "点检";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnClearCount
-            // 
-            this.btnClearCount.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
-            this.btnClearCount.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnClearCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnClearCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnClearCount.ForeColor = System.Drawing.SystemColors.Info;
-            this.btnClearCount.Location = new System.Drawing.Point(2, 376);
-            this.btnClearCount.Margin = new System.Windows.Forms.Padding(2);
-            this.btnClearCount.Name = "btnClearCount";
-            this.btnClearCount.Size = new System.Drawing.Size(217, 56);
-            this.btnClearCount.TabIndex = 4;
-            this.btnClearCount.Text = "清除计数";
-            this.btnClearCount.UseVisualStyleBackColor = true;
-            this.btnClearCount.Click += new System.EventHandler(this.btnClearCount_Click);
-            // 
-            // btnQuit
-            // 
-            this.btnQuit.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
-            this.btnQuit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnQuit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnQuit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnQuit.ForeColor = System.Drawing.SystemColors.Info;
-            this.btnQuit.Location = new System.Drawing.Point(2, 436);
-            this.btnQuit.Margin = new System.Windows.Forms.Padding(2);
-            this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(217, 56);
-            this.btnQuit.TabIndex = 1;
-            this.btnQuit.Text = "退出";
-            this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
-            // 
-            // btnTogglePPM
-            // 
-            this.btnTogglePPM.BackgroundImage = global::Test.ProjectTest.Properties.Resources.button;
-            this.btnTogglePPM.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTogglePPM.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnTogglePPM.ForeColor = System.Drawing.SystemColors.Info;
-            this.btnTogglePPM.Location = new System.Drawing.Point(2, 316);
-            this.btnTogglePPM.Margin = new System.Windows.Forms.Padding(2);
-            this.btnTogglePPM.Name = "btnTogglePPM";
-            this.btnTogglePPM.Size = new System.Drawing.Size(216, 56);
-            this.btnTogglePPM.TabIndex = 5;
-            this.btnTogglePPM.Text = "切换PPM/%";
-            this.btnTogglePPM.UseVisualStyleBackColor = true;
-            this.btnTogglePPM.Click += new System.EventHandler(this.btnTogglePPM_Click);
             // 
             // SubStepBindingSource
             // 

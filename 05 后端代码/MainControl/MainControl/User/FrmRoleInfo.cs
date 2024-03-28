@@ -28,6 +28,7 @@ namespace MainControl.User
         {
             InitializeComponent();
             SetButton(ParentId, this.toolStrip1);//设置按钮权限
+            InitView(this);//初始化标题放大缩小
             this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//列自动填充
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//填充满
 

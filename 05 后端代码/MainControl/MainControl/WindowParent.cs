@@ -56,6 +56,27 @@ namespace MainControl
 
 
         }
+
+       
+        protected void InitView(Form form)
+        {
+            /*
+             * 一、固定窗体大小
+                方法一：选中窗体--属性--FormBorderStyle--FixedSingle
+                方法二：将Form中，MaximumSize和MinmunSize的值设置为与当前的Form的Size值一样。如均设为688,631（作者采用的第一种做法，因此这里显示的不一样）
+             * 
+             * 二、隐藏窗体相关按钮
+             * 
+            屏蔽最大化 / 最小化：设置MaximizeBox为False，设置MinimizeBox为False；此外，还可以设置FormBorder格式为FixedToolWindow，直接隐藏上边框
+            屏蔽右上角三个按钮：设置属性Control为False
+            */
+            //form.MaximizeBox = false;
+            form.MinimizeBox=false;
+
+        }
+
+
+
         #region 按钮权限
         protected void  SetButton(int ParentId,ToolStrip toolStrip1)
         {

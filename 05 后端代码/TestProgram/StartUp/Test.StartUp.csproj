@@ -128,6 +128,10 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MainControl\Common\Common.csproj">
+      <Project>{748FA0BE-D55F-4558-8D8B-53FB091A3A11}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Test.Common.csproj">
       <Project>{200C6DDC-1715-43A9-BB2C-D43A6D20F44A}</Project>
       <Name>Test.Common</Name>

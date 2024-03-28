@@ -40,7 +40,9 @@ namespace MainControl
         public FrmToolTestInfo(int ParentId)
         {
             InitializeComponent();
-            //SetButton(ParentId, this.toolStrip1);//设置按钮权限
+            SetButton(ParentId, this.toolStrip1);//设置按钮权限
+            InitView(this);//初始化标题放大缩小
+
             //Dictionary<int,string> lst= TShandler.GetTS_FilePathLst();
             //m = new MyTest();
 
@@ -693,10 +695,10 @@ namespace MainControl
                         this.Hide();
                         //$"用户ID：{MdlClass.userInfo.UserNum}   用户名称: {MdlClass.userInfo.UserName}";
                         //Dictionary<int, string> dicPath = TShandler.GetTS_FilePathLst();
-                        string userName = MdlClass.userInfo.UserName;
+                        string userName = GlobalUserHandle.UserNum;
                         frm = new frmTest_Wide();
                         frm.mUser.Name = userName;
-                        frm.mUser.Description = m_UserManage.Description(userName);
+                        frm.mUser.Description = m_UserManage.Description(GlobalUserHandle.loginUserName);
                         frm.m_dbConnection = m_UserManage.DbConnection;
 
                         frm.ProjectFile = FilePath;

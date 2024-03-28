@@ -12,6 +12,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Configuration;
 using Test.Common;
+using Common;
 
 namespace Test.StartUp
 {
@@ -57,8 +58,9 @@ namespace Test.StartUp
             bool bRet = true;
 
             m_dbConnection = new SqlConnection();
-            string con = ConfigurationManager.ConnectionStrings["UTopConnectionString"].ToString();
-            
+
+            //string con = ConfigurationManager.ConnectionStrings["UTopConnectionString"].ToString();
+            string con = SysAppConfig.appCnfigDoc.AppConfigGet("MySqlConnection");
             m_dbConnection.ConnectionString = con;
 
             try

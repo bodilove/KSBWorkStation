@@ -44,7 +44,7 @@ namespace MainControl
         {
             InitializeComponent();
             SetButton(ParentId, this.toolStrip1);//设置按钮权限
-           
+            InitView(this);//初始化标题放大缩小
             ////加载xml数据文件
             //XmlDocument xmlDoc = LoadXmlDoc(filePath);
             //m = XmlHelper<MyTest>.DeserializeToObject(xmlDoc.InnerXml);
@@ -64,6 +64,8 @@ namespace MainControl
             }
 
         }
+        
+
         private void GetComboxList()
         {
             DataTable dt = new DataTable();
@@ -208,6 +210,10 @@ namespace MainControl
                     if (ProcessID <= 0)
                     {
                         if (
+
+                             property.Name == "Conditional" ||
+                           property.Name == "IsKeyCode" ||
+                            property.Name == "KeyCodeFormat" ||
                            property.Name == "Ulimit" ||
                            property.Name == "Llimit" ||
                            property.Name == "Unit")
@@ -435,30 +441,32 @@ namespace MainControl
         /// <param name="e"></param>
         private void btn_refresh_Click(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode != null)
-            {
-                int ProcessID = treeView1.SelectedNode.Tag.StrToInt(-1);
-                string StationNum = treeView1.SelectedNode.Name.ToString();
-                //StringBuilder SqlWhere = new StringBuilder();
-                //IList<SqlParameter> IList_param = new List<SqlParameter>();
-                //if (!string.IsNullOrEmpty(Organization_ID))
-                //{
-                //    SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
-                //    IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID));
-                //}
-                if (!string.IsNullOrEmpty(StationNum))
-                {
-                    //BindTreeView();
-                    BindView();
+            //if (treeView1.SelectedNode != null)
+            //{
+            //    int ProcessID = treeView1.SelectedNode.Tag.StrToInt(-1);
+            //    string StationNum = treeView1.SelectedNode.Name.ToString();
+            //    //StringBuilder SqlWhere = new StringBuilder();
+            //    //IList<SqlParameter> IList_param = new List<SqlParameter>();
+            //    //if (!string.IsNullOrEmpty(Organization_ID))
+            //    //{
+            //    //    SqlWhere.Append(" AND S.Organization_ID =@Organization_ID");
+            //    //    IList_param.Add(new SqlParameter("@Organization_ID", Organization_ID));
+            //    //}
+            //    if (!string.IsNullOrEmpty(StationNum))
+            //    {
+            //        //BindTreeView();
 
-                }
-                else
-                {
-                    
-                }
 
-            }
-            
+            //    }
+            //    else
+            //    {
+
+            //    }
+
+
+            //}
+            BindView();
+
 
         }
         /// <summary>

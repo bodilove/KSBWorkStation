@@ -60,7 +60,7 @@
     <Compile Include="Common\Enum\EnumUtil.cs" />
     <Compile Include="Common\Md5Helper.cs" />
     <Compile Include="Common\OperationType.cs" />
-    <Compile Include="Common\SysConfig.cs" />
+    <Compile Include="Common\SysAppConfig.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Common\ValidateUtil.cs" />
     <Compile Include="GlobalLogHandle.cs" />

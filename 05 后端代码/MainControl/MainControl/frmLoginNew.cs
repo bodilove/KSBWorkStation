@@ -27,6 +27,8 @@ namespace MainControl
         SystemConfig sysConfig = new SystemConfig();
         string title = string.Empty;
         string LocalIP=string.Empty;
+
+        string connectionString = SysAppConfig.appCnfigDoc.AppConfigGet("MySqlConnection");
         public frmLoginNew()
         {
             InitializeComponent();
@@ -52,26 +54,38 @@ namespace MainControl
             try
             {
                 MdlClass.sysSet = MdlClass.sysSet.Load(MdlClass.SysConfigPath + @"\SysConfig.cfg");
-                if (MdlClass.sysSet == null)
+                if (String.IsNullOrEmpty(connectionString))
                 {
-                    lblMessage.Text = "缺少配置文件:SysConfig.cfg！";
+                    lblMessage.Text = "缺少配置链接配置:MainControl.exe.config！";
                     return;
                 }
-                Common.GlobalResources.dbserver = MdlClass.sysSet.DataSource;
-                Common.GlobalResources.dbname = MdlClass.sysSet.InitialCatalog;
-                Common.GlobalResources.userid = MdlClass.sysSet.UserID;
-                Common.GlobalResources.password = MdlClass.sysSet.Password;
+                //Common.GlobalResources.dbserver = MdlClass.sysSet.DataSource;
+                //Common.GlobalResources.dbname = MdlClass.sysSet.InitialCatalog;
+                //Common.GlobalResources.userid = MdlClass.sysSet.UserID;
+                //Common.GlobalResources.password = MdlClass.sysSet.Password;
                 lblMessage.Text = "正在连接数据库。。。";
-                //Application.DoEvents();
-                Thread.Sleep(100);
-                GlobalResources.SqlConnectTest();
+                Application.DoEvents();
+                Thread.Sleep(50);
+                //GlobalResources.SqlConnectTest();
 
                 bool IsValidConnection = helper.GetClient().Ado.IsValidConnection();
                 //if (!GlobalResources.SqlConnectTest())
                 if (!IsValidConnection)
                 {
-                    MessageBox.Show("连接数据库失败");
                     lblMessage.Text = "连接数据库失败！";
+
+                    DialogResult dr = MessageBox.Show("数据库链接失败，是否配置数据库链接字符串.", "提示：", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+                    if (dr == DialogResult.Yes)
+                    {
+                        FrmDBConfigEdit fm = new FrmDBConfigEdit();
+                        fm.StartPosition = FormStartPosition.CenterParent;
+                        fm.ShowDialog();
+
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
                 }
                 else
                 {
@@ -81,17 +95,29 @@ namespace MainControl
             catch (Exception ex)
             {
                 lblMessage.Text = "连接数据库失败！";
-                System_Bll.AddLog(new SysLogModel
+                helper = new SqlsugarMyClient();
+                bool IsValidConnection = helper.GetClient().Ado.IsValidConnection();
+                if (IsValidConnection)
                 {
-                    CreateUserID = 0,
-                    CreateUserName = "",
-                    LocalIP = LocalIP,
-                    Module = title,
-                    Method = MethodBase.GetCurrentMethod().Name,
-                    LogMessage = ex.Message,
-                    Type = "系统错误！",
-                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
-                });
+                    lblMessage.Text = "连接数成功！";
+                    bll = new UserService();
+                    System_Bll = new SysLogService();
+                    System_Bll.AddLog(new SysLogModel
+                    {
+                        CreateUserID = 0,
+                        CreateUserName = "",
+                        LocalIP = LocalIP,
+                        Module = title,
+                        Method = MethodBase.GetCurrentMethod().Name,
+                        LogMessage = ex.Message,
+                        Type = "系统错误！",
+                        ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                    });
+                }
+                else
+                {
+                    
+                }
             }
         }
         /// <summary>
@@ -107,17 +133,21 @@ namespace MainControl
             {
 
                 this.Close();
-                System_Bll.AddLog(new SysLogModel
+                bool IsValidConnection = helper.GetClient().Ado.IsValidConnection();
+                if (IsValidConnection)
                 {
-                    CreateUserID = GlobalUserHandle.LoginUserID,
-                    CreateUserName = GlobalUserHandle.loginUserName,
-                    LocalIP = LocalIP,
-                    Module = title,
-                    Method = MethodBase.GetCurrentMethod().Name,
-                    LogMessage ="退出登录",
-                    Type = "系统消息！",
-                    ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
-                });
+                    System_Bll.AddLog(new SysLogModel
+                    {
+                        CreateUserID = GlobalUserHandle.LoginUserID,
+                        CreateUserName = GlobalUserHandle.loginUserName,
+                        LocalIP = LocalIP,
+                        Module = title,
+                        Method = MethodBase.GetCurrentMethod().Name,
+                        LogMessage = "关闭登录",
+                        Type = "登录！",
+                        ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
+                    });
+                }
             }
         }
         /// <summary>
@@ -153,19 +183,44 @@ namespace MainControl
 
             if (String.IsNullOrEmpty(UserName))
             {
-                MessageBox.Show("用户名不能为空，请输入用户名！", "");
+                lblMessage.Text = "用户名不能为空，请输入用户名！";
                 txt_UserName.Focus();
                 return;
             }
             if (String.IsNullOrEmpty(Password))
             {
-                MessageBox.Show("密码不能为空，请输入密码！", "");
+                lblMessage.Text = "密码不能为空，请输入密码！";
                 txt_Password.Focus();
                 return;
             }
 
             try
             {
+
+                //helper = new SqlsugarMyClient();
+                bool IsValidConnection = helper.GetClient().Ado.IsValidConnection();
+                if (IsValidConnection)
+                {
+                    lblMessage.Text = "连接数成功！";
+                    bll = new UserService();
+                    System_Bll = new SysLogService();
+                }
+                else
+                {
+                    DialogResult dr = MessageBox.Show("数据库链接失败，是否配置数据库链接字符串.", "提示：", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dr == DialogResult.Yes)
+                    {
+                        FrmDBConfigEdit fm = new FrmDBConfigEdit();
+                        fm.StartPosition = FormStartPosition.CenterParent;
+                        fm.ShowDialog();
+
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+                }
+
                 UserModel m= bll.GetUserLoginInfo(UserName, DESEncrypt.Encrypt(Password, "1"));
 
                 if (m != null)
@@ -179,7 +234,7 @@ namespace MainControl
 
                     if (m.Password.ToUpper() != DESEncrypt.Encrypt(Password, "1").ToUpper())
                     {
-                        MessageBox.Show("用户名密码错误，请重新输入！", "");
+                        lblMessage.Text = "用户名密码错误，请重新输入！";
                         return;
                     }
                     else
@@ -194,7 +249,7 @@ namespace MainControl
                             Module = title,
                             Method = MethodBase.GetCurrentMethod().Name,
                             LogMessage = "登录成功",
-                            Type = "系统消息！",
+                            Type = "登录！",
                             ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
                         });
 
@@ -210,7 +265,7 @@ namespace MainControl
                 }
                 else
                 {
-                    MessageBox.Show("用户名或密码错误，请重新输入！", "");
+                    lblMessage.Text="用户名或密码错误，请重新输入！";
                     txt_UserName.Focus();
                     txt_UserName.SelectAll();
                     return;
@@ -219,7 +274,7 @@ namespace MainControl
             }
             catch (Exception ex){
 
-                MessageBox.Show($"系统错误：{ex.Message}！", "错误");
+                lblMessage.Text=$"系统错误：{ex.Message}！";
                 txt_UserName.Focus();
                 //txt_UserName.SelectAll();
                 System_Bll.AddLog(new SysLogModel
@@ -229,8 +284,8 @@ namespace MainControl
                     LocalIP = LocalIP,
                     Module = title,
                     Method = MethodBase.GetCurrentMethod().Name,
-                    LogMessage = ex.Message,
-                    Type = "系统错误！",
+                    LogMessage = $"系统错误:{ex.Message}",
+                    Type = "登录！",
                     ClassName = MethodBase.GetCurrentMethod().DeclaringType.FullName
                 });
 

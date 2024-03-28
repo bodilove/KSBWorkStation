@@ -1,4 +1,5 @@
-﻿using Common.SysConfig.Model;
+﻿using Common;
+using Common.SysConfig.Model;
 using Newtonsoft.Json;
 using SqlSugar;
 using System;
@@ -24,7 +25,8 @@ namespace ORMSqlSugar
 
             if (dbtype == SqlSugar.DbType.SqlServer)
             {
-                ConnectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+                ConnectionString = SysAppConfig.appCnfigDoc.AppConfigGet("MySqlConnection");
+                //ConnectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
                // ConnectionString = ConnTools.init().GetSqlServerConn();
             }
             else if (dbtype == SqlSugar.DbType.Oracle)

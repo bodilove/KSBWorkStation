@@ -1874,7 +1874,11 @@ namespace Test.ProjectTest
             {
                 DictionaryRecord.Clear();
                 DictionaryRecord.Add("FailTimes", 0);
-                InitCounter();
+                #region 注释Static表
+                //InitCounter();
+
+                #endregion
+
                 this.CreateVariables();
                 this.CreateObjects();
             }
@@ -3788,81 +3792,82 @@ namespace Test.ProjectTest
             //    lblPPM.Text = ((int)(PPM * 1000000)).ToString();
             //else
             lblPPM.Text = PPM.ToString("p2");
+            #region 注释 by LHB 2024-03-28
+            //if (m_dbConnection.State == ConnectionState.Closed)
+            //    m_dbConnection.Open();
+            //DataContext dc = new DataContext(m_dbConnection);
+            //ITable<Statistic> TabStatistic = dc.GetTable<Statistic>();
+            //var query = from u in TabStatistic where u.PartNr == Prj.PartNumber select u;
+            //foreach (var q in query)
+            //{
+            //    Statistic t = new Statistic();
+            //    t.PartNr = q.PartNr;
+            //    t.PassCount = PassCount;
+            //    t.FailCount = FailCount;
 
-            if (m_dbConnection.State == ConnectionState.Closed)
-                m_dbConnection.Open();
-            DataContext dc = new DataContext(m_dbConnection);
-            ITable<Statistic> TabStatistic = dc.GetTable<Statistic>();
-            var query = from u in TabStatistic where u.PartNr == Prj.PartNumber select u;
-            foreach (var q in query)
-            {
-                Statistic t = new Statistic();
-                t.PartNr = q.PartNr;
-                t.PassCount = PassCount;
-                t.FailCount = FailCount;
-
-                DateTime dt = (DateTime)q.Date;
-                if (dt.ToShortDateString() == DateTime.Now.ToShortDateString())
-                {
-                    if (runtimes > 0)
-                    {
-                        if ((int)q.DayID == 0)
-                        {
-                            t.DayID = 1;
-                        }
-                        else
-                        {
-                            t.DayID = (int)q.DayID + 1;
-                        }
-                    }
-                    else
-                    {
-                        if ((int)q.DayID == 0)
-                        {
-                            t.DayID = 1;
-                        }
-                        else
-                        {
-                            t.DayID = (int)q.DayID;
-                        }
-                    }
-                }
-                else
-                {
-                    t.DayID = 1;
-                }
-                if (runtimes > 0)
-                {
-                    if ((int)q.ID == 0)
-                    {
-                        t.ID = 1;
-                    }
-                    else
-                    {
-                        t.ID = (int)q.ID + 1;
-                    }
-                }
-                else
-                {
-                    if ((int)q.ID == 0)
-                    {
-                        t.ID = 1;
-                    }
-                    else
-                    {
-                        t.ID = (int)q.ID;
-                    }
-                }
+            //    DateTime dt = (DateTime)q.Date;
+            //    if (dt.ToShortDateString() == DateTime.Now.ToShortDateString())
+            //    {
+            //        if (runtimes > 0)
+            //        {
+            //            if ((int)q.DayID == 0)
+            //            {
+            //                t.DayID = 1;
+            //            }
+            //            else
+            //            {
+            //                t.DayID = (int)q.DayID + 1;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if ((int)q.DayID == 0)
+            //            {
+            //                t.DayID = 1;
+            //            }
+            //            else
+            //            {
+            //                t.DayID = (int)q.DayID;
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        t.DayID = 1;
+            //    }
+            //    if (runtimes > 0)
+            //    {
+            //        if ((int)q.ID == 0)
+            //        {
+            //            t.ID = 1;
+            //        }
+            //        else
+            //        {
+            //            t.ID = (int)q.ID + 1;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if ((int)q.ID == 0)
+            //        {
+            //            t.ID = 1;
+            //        }
+            //        else
+            //        {
+            //            t.ID = (int)q.ID;
+            //        }
+            //    }
 
 
-                //t.ID = q.ID + 1;
-                t.Date = (DateTime)DateTime.Now;
-                ID = (int)t.ID;
-                DayID = (int)t.DayID;
-                TabStatistic.InsertOnSubmit(t);
-                TabStatistic.DeleteOnSubmit(q);
-            }
-            dc.SubmitChanges();
+            //    //t.ID = q.ID + 1;
+            //    t.Date = (DateTime)DateTime.Now;
+            //    ID = (int)t.ID;
+            //    DayID = (int)t.DayID;
+            //    TabStatistic.InsertOnSubmit(t);
+            //    TabStatistic.DeleteOnSubmit(q);
+            //}
+            //dc.SubmitChanges();
+            #endregion
 
         }
 
@@ -3960,13 +3965,17 @@ namespace Test.ProjectTest
         {
             PassCount = 0;
             FailCount = 0;
+            #region 注释 LHB 2024-03-28
             UpdateCounter();
+            #endregion
         }
 
         private void btnTogglePPM_Click(object sender, EventArgs e)
         {
             bPPM = !bPPM;
+            #region 注释 LHB 2024-03-28
             UpdateCounter();
+            #endregion
         }
 
         private void frmTest_Wide_FormClosing(object sender, FormClosingEventArgs e)
